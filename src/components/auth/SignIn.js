@@ -31,7 +31,7 @@ class SignIn extends Component {
   }
 
   render() {
-    return <button onClick={this.onSignInClick}>Sign In</button>;
+    return <button onClick={this.onSignInClick.bind(this)}>Sign In</button>;
   }
 
 }

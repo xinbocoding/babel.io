@@ -1,5 +1,6 @@
 import app from 'firebase/app';
 import 'firebase/auth';
+import 'firebase/firestore';
 
 class Firebase {
     constructor() {
@@ -14,8 +15,9 @@ class Firebase {
         appId: "1:406257357332:web:3ea887869e07a0de"
       });
 
-      // intialize auth
+      // shortcuts
       this.auth = app.auth();
+      this.firestore = app.firestore();
     }
   }
 
