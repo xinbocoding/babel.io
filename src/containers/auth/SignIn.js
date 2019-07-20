@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { auth } from 'firebase';
+import { connect } from 'react-redux';
 
 class SignIn extends Component {
 
@@ -8,7 +9,7 @@ class SignIn extends Component {
     // initliaze provider
     let provider = new auth.GoogleAuthProvider();
 
-    auth().signInWithPopup(provider).then(function(result) {
+    auth().signInWithPopup(provider).then(function (result) {
       // This gives you a Google Access Token. You can use it to access the Google API.
       var token = result.credential.accessToken;
       // The signed-in user info.
@@ -16,7 +17,7 @@ class SignIn extends Component {
       // log
       console.log(result);
 
-    }).catch(function(error) {
+    }).catch(function (error) {
       // Handle Errors here.
       var errorCode = error.code;
       var errorMessage = error.message;
@@ -36,4 +37,24 @@ class SignIn extends Component {
 
 }
 
-export default SignIn;
+const mapStateToProps = (state) => {
+  return {
+    user: state.user
+  }
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    signIn: (name, idToken) {
+      dispatch({
+        type: 'SIGN_IN_USER',
+        payload: {
+          name,
+          idToken
+        }
+      })
+    }
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(SignIn);

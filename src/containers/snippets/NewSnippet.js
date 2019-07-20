@@ -12,7 +12,7 @@ class NewSnippet extends React.Component {
   }
 
   handleCodeChange(event) {
-    this.setState({code: event.target.value});
+    this.setState({ code: event.target.value });
   }
 
   handleSubmit() {
