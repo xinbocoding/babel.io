@@ -1,44 +1,58 @@
 import { combineReducers } from 'redux';
-import firebase from '../services/firebase';
-/**
- * Combined reducers:
- * https://redux.js.org/api/combinereducers
- */
 
-function userReducer(state = {}, action) {
-  switch (action.type) {
-    case 'SIGN_IN_USER':
-      state = {
-        name: action.payload.name,
-        token: action.payload.idToken
+// state.currentUser
+function currentUserReducer(state = {}, action) {
+  switch(action.type) {
+    case 'SIGN_IN_SUCCESS':
+      return {
+        ...action.data,
+        isSignedIn: true
       }
-      break;
+    case 'SIGN_IN_FAILED':
+    case 'SIGN_OUT_SUCCESS':
+    case 'SIGN_OUT_FAILED':
     default:
-      return state;
+      return {
+        name: 'Guest',
+        isSignedIn: false
+      }
   }
-  return state;
 }
 
-function snippetReducer(state = {}, action) {
-  let newState = Object.assign({}, state);
-  switch (action.type) {
-    case 'CREATE_SNIPPET':
-      let snippets = firebase.firestore.collection('snippets');
-      snippets.add({
-        code: action.payload['code'],
-        lang: "text"
-      })
-      break;
+// state.publicSnippets
+function userSnippetsReducer(state = {}, action) {
+  switch(action.type) {
+    case 'USER_SNIPPETS_REQUEST_START':
+      return {
+        ...state,
+        isLoading: true,
+        isError: false
+      }
+    case 'USER_SNIPPETS_REQUEST_SUCCESS':
+      return {
+        ...state,
+        isLoading: false,
+        isError: false,
+        items: action.data.snippets
+      }
+    case 'USER_SNIPPETS_REQUEST_ERROR':
+      return {
+        ...state,
+        isLoading: false,
+        isError: true
+      }
     default:
-      return state;
+      return {
+        isLoading: false,
+        isError: false,
+        items: []
+      }
   }
-
-  return newState;
 }
 
 let reducerMap = {
-  user: userReducer,
-  snippet: snippetReducer
+  currentUser: currentUserReducer,
+  userSnippets: userSnippetsReducer,
 }
 
 const combinedReducers = combineReducers(reducerMap)

@@ -1,15 +1,19 @@
 import React from 'react';
-import { BrowserRouter as Router, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
-import SignIn from './components/auth/SignIn';
-import NewSnippet from './containers/snippets/NewSnippet';
+import LandingPage from './components/LandingPage';
+import SnippetsIndexPage from './components/SnippetsIndexPage';
+import SnippetsNewPage from './components/SnippetsNewPage';
 
 function App() {
   return (
     <React.Fragment>
-      <SignIn />
       <Router>
-        <Route exact path="/snippets/new" component={NewSnippet} />
+        <Switch>
+          <Route exact path="/" component={LandingPage} />
+          <Route exact path="/snippets" component={SnippetsIndexPage} />
+          <Route exact path="/snippets/new" component={SnippetsNewPage} />
+        </Switch>
       </Router>
     </React.Fragment>
   );

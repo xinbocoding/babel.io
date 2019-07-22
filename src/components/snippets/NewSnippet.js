@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux'
+import { createSnippetAction } from '../../actions/snippets';
 
 class NewSnippet extends React.Component {
 
@@ -16,7 +17,8 @@ class NewSnippet extends React.Component {
   }
 
   handleSubmit() {
-    this.props.create(this.state.code);
+    this.props.reduxDispatch({type: 'SUCCESS'})
+    this.props.create(this.state.code, "text");
   }
 
   render() {
@@ -30,20 +32,17 @@ class NewSnippet extends React.Component {
 }
 
 //define reference rules
-const mapStateToProps = (state /*, ownProps*/) => {
+function mapStateToProps(state) {
   return {
-
+    newSnippet: state.sinppet
   }
 }
 
 // mapping actions(methods/functions) to component props
-const mapDispatchToProps = (dispatch) => {
+function mapDispatchToProps(dispatch) {
   return {
-    create: (code) => {
-      dispatch({
-        type: 'CREATE_SNIPPET',
-        payload: { code }
-      });
+    create: function(code, lang) {
+      dispatch(createSnippetAction(code, lang));
     }
   }
 }
