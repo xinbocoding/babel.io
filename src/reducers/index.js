@@ -2,7 +2,7 @@ import { combineReducers } from 'redux';
 
 // state.currentUser
 function currentUserReducer(state = {}, action) {
-  switch(action.type) {
+  switch (action.type) {
     case 'SIGN_IN_SUCCESS':
       return {
         ...action.data,
@@ -21,7 +21,7 @@ function currentUserReducer(state = {}, action) {
 
 // state.publicSnippets
 function userSnippetsReducer(state = {}, action) {
-  switch(action.type) {
+  switch (action.type) {
     case 'USER_SNIPPETS_REQUEST_START':
       return {
         ...state,
@@ -50,9 +50,38 @@ function userSnippetsReducer(state = {}, action) {
   }
 }
 
+function lastCreatedSnippetReducer(state = {}, action) {
+  switch (action.type) {
+    case 'CREATE_SNIPPET_SUCCESS':
+      return {
+        id: action.data.id
+      }
+    default:
+      return {
+        id: undefined
+      }
+  }
+}
+
+function snippetDetailPageReducer(state = {}, action) {
+  switch (action.type) {
+    case 'LOAD_SNIPPET_SUCCESS':
+      return {
+        ...state,
+        snippet: action.data.snippet
+      }
+    default:
+      return {
+        snippet: undefined
+      }
+  }
+}
+
 let reducerMap = {
+  snippetDetailPage: snippetDetailPageReducer,
   currentUser: currentUserReducer,
   userSnippets: userSnippetsReducer,
+  lastCreatedSnippet: lastCreatedSnippetReducer
 }
 
 const combinedReducers = combineReducers(reducerMap)

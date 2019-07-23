@@ -1,19 +1,19 @@
 import React from 'react';
 import SignIn from './auth/SignIn';
+import AppBar from '@material-ui/core/AppBar';
+import Toolbar from '@material-ui/core/Toolbar';
+import Typography from '@material-ui/core/Typography';
 
 class NavBar extends React.Component {
   render() {
     return (
-      <nav>
-        <div className="nav-wrapper">
-          <a href="#" className="brand-logo">Logo</a>
-          <ul id="nav-mobile" className="right hide-on-med-and-down">
-            <li><a href="badges.html">Components</a></li>
-            <li><a href="collapsible.html">JavaScript</a></li>
-            <li><SignIn /></li>
-          </ul>
-        </div>
-      </nav>
+      <AppBar position="static">
+        <Toolbar>
+          <Typography variant="h6" color="inherit">
+            <SignIn />
+          </Typography>
+        </Toolbar>
+      </AppBar>
     )
   }
 }

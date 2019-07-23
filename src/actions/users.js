@@ -10,6 +10,7 @@ export const userSignInAction = () => {
       dispatch({
         type: 'SIGN_IN_SUCCESS',
         data: {
+          id: result.user.uid,
           name: result.user.displayName,
           token: result.credential.accessToken,
         }

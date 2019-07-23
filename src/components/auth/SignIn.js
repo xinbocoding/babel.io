@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import { auth } from 'firebase';
 import { connect } from 'react-redux';
 import { userSignInAction, userSignOutAction } from '../../actions/users';
+import Button from '@material-ui/core/Button';
 
 class SignIn extends Component {
 
@@ -9,12 +9,13 @@ class SignIn extends Component {
     if (this.props.user.isSignedIn === true) {
       return (
         <React.Fragment>
-          <a href="#" onClick={this.props.signOut}>Sign Out</a>
+          <Button edge="end" color="inherit">{this.props.user.name}</Button>
+          <Button color="inherit" onClick={this.props.signOut}>Sign Out</Button>
         </React.Fragment>
       );
+    } else {
+      return <Button color="inherit" onClick={this.props.signIn}>Sign In</Button>;
     }
-
-    return <a href="#" onClick={this.props.signIn}>Sign In</a>;
   }
 
 }

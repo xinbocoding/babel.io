@@ -1,8 +1,13 @@
 import React from 'react';
+import SnippetForm from './snippets/SnippetForm';
+import NavBar from './NavBar';
 
 class SnippetsNewPage extends React.Component {
   render() {
-    return <div>New snippet page</div>
+    return <div>
+      <NavBar />
+      <SnippetForm />
+    </div>
   }
 }
 

@@ -23,23 +23,52 @@ export const loadUserSnippetsAction = (userId) => {
 }
 
 // define a action function: createSnippet
-export const createSnippetAction = (code, lang) => {
+export const createSnippetAction = (userId, lang, code) => {
   return (dispatch) => {
-
-    dispatch({type: 'CREATE_SNIPPET_START'});
+    dispatch({ type: 'CREATE_SNIPPET_START' });
 
     firebase.firestore().collection('snippets').add({
-      code: code,
-      lang: lang
+      userId, code, lang
     }).then((doc) => {
       dispatch({
-        type: 'CREAT_SNIPPET_SUCCESS',
-        data: doc
+        type: 'CREATE_SNIPPET_SUCCESS',
+        data: {
+          id: doc.id
+        }
       })
     }).catch((error) => {
       dispatch({
-        type: 'CREAT_SNIPPET_ERROR'
+        type: 'CREATE_SNIPPET_ERROR',
+        data: {
+          error
+        }
       })
     })
+  }
+}
+
+
+export function loadSnippetAction(id) {
+  return (dispatch) => {
+    firebase.firestore()
+      .collection("snippets").doc(id).get()
+      .then(function (doc) {
+        if (doc.exists) {
+          dispatch({
+            type: 'LOAD_SNIPPET_SUCCESS',
+            data: {
+              snippet: doc.data()
+            }
+          })
+        }
+      })
+      .catch(function (error) {
+        dispatch({
+          type: 'LOAD_SNIPPET_FAILED',
+          data: {
+            error
+          }
+        })
+      })
   }
 }
