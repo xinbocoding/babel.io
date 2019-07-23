@@ -26,9 +26,10 @@ export const loadUserSnippetsAction = (userId) => {
 export const createSnippetAction = (lang, code) => {
   return (dispatch) => {
     dispatch({ type: 'CREATE_SNIPPET_START' });
-
     firebase.firestore().collection('snippets').add({
-      code, lang
+      userId: firebase.auth().currentUser.uid,
+      code,
+      lang
     }).then((doc) => {
       dispatch({
         type: 'CREATE_SNIPPET_SUCCESS',

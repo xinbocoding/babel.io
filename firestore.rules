@@ -3,7 +3,7 @@ service cloud.firestore {
   match /databases/{database}/documents {
     match /snippets/{snippetId} {
     	allow read;
-      allow update, delete, create: if request.auth != null;
+      allow update, delete, create: if request.auth.uid == request.resource.data.userId;
     }
   }
 }
