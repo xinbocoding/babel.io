@@ -1,8 +1,8 @@
-import app from 'firebase/app';
+import firebase from 'firebase/app';
 import 'firebase/auth';
 import 'firebase/firestore';
 
-let firebaseService = app.initializeApp({
+const firebaseApp = firebase.initializeApp({
   apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
   authDomain: process.env.REACT_APP_FIREBASE_AUTH_DOMAIN,
   databaseURL: process.env.REACT_APP_FIREBASE_DATABASE_URL,
@@ -12,4 +12,10 @@ let firebaseService = app.initializeApp({
   appId: process.env.REACT_APP_FIREBASE_APP_ID
 });
 
-export default firebaseService;
+export function firebaseConnect(store) {
+  firebase.auth().onAuthStateChanged((user) => {
+    store.dispatch({ type: 'SIGIN_RESTORE', data: { user } });
+  })
+}
+
+export default firebaseApp;

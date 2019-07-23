@@ -1,5 +1,5 @@
 import { combineReducers } from 'redux';
-import firebase from '../services/firebase';
+import firebase from '../services/firebaseApp';
 
 // state.currentUser
 function currentUserReducer(state = {}, action) {
@@ -17,12 +17,12 @@ function currentUserReducer(state = {}, action) {
         name: 'Guest',
         isSignedIn: false
       }
-    default:
-      const currentUser = firebase.auth().currentUser;
-      if (currentUser != null) {
+    case 'SIGIN_RESTORE':
+      if (action.data.user != null) {
+        let user = action.data.user;
         return {
-          id: currentUser.uid,
-          name: currentUser.displayName,
+          id: user.uid,
+          name: user.displayName,
           isSignedIn: true
         }
       } else {
@@ -31,6 +31,12 @@ function currentUserReducer(state = {}, action) {
           name: 'Guest',
           isSignedIn: false
         }
+      }
+    default:
+      return {
+        id: null,
+        name: 'Guest',
+        isSignedIn: false
       }
 
   }

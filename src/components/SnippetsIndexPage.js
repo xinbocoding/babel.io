@@ -6,9 +6,15 @@ import UserSnippets from './snippets/UserSnippets';
 
 class SnippetsIndexPage extends React.Component {
 
-  componentDidMount() {
-    this.props.loadSnippets(this.props.user.id);
+  constructor(props, context) {
+    super(props, context);
   }
+
+  // componentWillReceiveProps() {
+  //   if (this.props.user.id) {
+  //     this.props.loadSnippets(this.props.user.id);
+  //   }
+  // }
 
   render() {
     return <div>

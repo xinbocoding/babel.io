@@ -9,7 +9,10 @@ import { Provider } from 'react-redux';
 import { createStore, applyMiddleware } from 'redux';
 import thunk from 'redux-thunk';
 import combinedReducers from './reducers';
+import { firebaseConnect } from './services/firebaseApp';
+
 const store = createStore(combinedReducers, {}, applyMiddleware(thunk));
+firebaseConnect(store);
 
 ReactDOM.render(
     <Provider store={store}><App /></Provider>,

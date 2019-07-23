@@ -1,10 +1,11 @@
-import firebase from '../services/firebase';
+import firebase from '../services/firebaseApp';
 
 export const loadUserSnippetsAction = (userId) => {
   return (dispatch) => {
     dispatch({ type: 'USER_SNIPPETS_REQUEST_START' });
 
-    firebase.firestore().collection('snippets').get()
+    firebase.firestore().collection('snippets')
+      .where('userId', '==', userId).get()
       .then((snapshot) => {
         dispatch({
           type: 'USER_SNIPPETS_REQUEST_SUCCESS',

@@ -1,35 +1,36 @@
 import { auth } from 'firebase';
-import firebase from '../services/firebase';
+import app from '../services/firebaseApp';
+import firebase from 'firebase';
 
 export const userSignInAction = () => {
   return (dispatch) => {
     // initliaze provider
     let provider = new auth.GoogleAuthProvider();
 
-    auth()
-      .setPersistence(auth.Auth.Persistence.LOCAL)
+    app.auth()
+      .setPersistence(firebase.auth.Auth.Persistence.LOCAL)
       .then(() => {
-
-        firebase.auth().signInWithPopup(provider).then((result) => {
-          dispatch({
-            type: 'SIGN_IN_SUCCESS',
-            data: {
-              id: result.user.uid,
-              name: result.user.displayName,
-              token: result.credential.accessToken,
-            }
-          })
-        }).catch((error) => {
-          dispatch({
-            type: 'SIGIN_IN_FAILED',
-            data: {
-              error: {
-                code: error.code,
-                message: error.message,
+        app.auth().signInWithPopup(provider)
+          .then((result) => {
+            dispatch({
+              type: 'SIGN_IN_SUCCESS',
+              data: {
+                id: result.user.uid,
+                name: result.user.displayName,
+                token: result.credential.accessToken,
               }
-            }
-          })
-        });
+            })
+          }).catch((error) => {
+            dispatch({
+              type: 'SIGIN_IN_FAILED',
+              data: {
+                error: {
+                  code: error.code,
+                  message: error.message,
+                }
+              }
+            })
+          });
 
       })
       .catch(function (error) {
@@ -40,7 +41,7 @@ export const userSignInAction = () => {
 
 export const userSignOutAction = () => {
   return (dispatch) => {
-    firebase.auth().signOut().then(function () {
+    app.auth().signOut().then(function () {
       dispatch({
         type: 'SIGN_OUT_SUCCESS'
       })
