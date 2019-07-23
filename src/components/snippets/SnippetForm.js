@@ -30,7 +30,7 @@ class SnippetForm extends React.Component {
   }
 
   onSaveClicked(event) {
-    this.props.save(this.props.user.id, this.state.lang, this.state.code);
+    this.props.create(this.state.lang, this.state.code);
   }
 
   render() {
@@ -75,15 +75,14 @@ class SnippetForm extends React.Component {
 
 const mapStateToProps = (state) => {
   return {
-    user: state.currentUser,
     snippet: state.lastCreatedSnippet
   }
 }
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    save: (userId, lang, code) => {
-      dispatch(createSnippetAction(userId, lang, code))
+    create: (lang, code) => {
+      dispatch(createSnippetAction(lang, code))
     }
   }
 }
