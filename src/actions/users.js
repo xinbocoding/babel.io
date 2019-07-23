@@ -6,36 +6,45 @@ export const userSignInAction = () => {
     // initliaze provider
     let provider = new auth.GoogleAuthProvider();
 
-    firebase.auth().signInWithPopup(provider).then((result) => {
-      dispatch({
-        type: 'SIGN_IN_SUCCESS',
-        data: {
-          id: result.user.uid,
-          name: result.user.displayName,
-          token: result.credential.accessToken,
-        }
+    auth()
+      .setPersistence(auth.Auth.Persistence.LOCAL)
+      .then(() => {
+
+        firebase.auth().signInWithPopup(provider).then((result) => {
+          dispatch({
+            type: 'SIGN_IN_SUCCESS',
+            data: {
+              id: result.user.uid,
+              name: result.user.displayName,
+              token: result.credential.accessToken,
+            }
+          })
+        }).catch((error) => {
+          dispatch({
+            type: 'SIGIN_IN_FAILED',
+            data: {
+              error: {
+                code: error.code,
+                message: error.message,
+              }
+            }
+          })
+        });
+
       })
-    }).catch((error) => {
-      dispatch({
-        type: 'SIGIN_IN_FAILED',
-        data: {
-          error: {
-            code: error.code,
-            message: error.message,
-          }
-        }
-      })
-    });
+      .catch(function (error) {
+        console.log('Firebase: set persistence failed. ', error);
+      });
   }
 }
 
 export const userSignOutAction = () => {
   return (dispatch) => {
-    firebase.auth().signOut().then(function() {
+    firebase.auth().signOut().then(function () {
       dispatch({
         type: 'SIGN_OUT_SUCCESS'
       })
-    }).catch(function(error) {
+    }).catch(function (error) {
       dispatch({
         type: 'SIGN_OUT_FAILED',
         error: error

@@ -1,4 +1,5 @@
 import { combineReducers } from 'redux';
+import firebase from '../services/firebase';
 
 // state.currentUser
 function currentUserReducer(state = {}, action) {
@@ -11,11 +12,27 @@ function currentUserReducer(state = {}, action) {
     case 'SIGN_IN_FAILED':
     case 'SIGN_OUT_SUCCESS':
     case 'SIGN_OUT_FAILED':
-    default:
       return {
+        id: null,
         name: 'Guest',
         isSignedIn: false
       }
+    default:
+      const currentUser = firebase.auth().currentUser;
+      if (currentUser != null) {
+        return {
+          id: currentUser.uid,
+          name: currentUser.displayName,
+          isSignedIn: true
+        }
+      } else {
+        return {
+          id: null,
+          name: 'Guest',
+          isSignedIn: false
+        }
+      }
+
   }
 }
 
