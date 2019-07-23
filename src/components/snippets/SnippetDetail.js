@@ -5,19 +5,29 @@ import { connect } from 'react-redux';
 class SnippetDetial extends React.Component {
 
   componentDidMount() {
-    // loadSnippetAction
+    this.props.loadSnippet(this.props.snippetId);
   }
 
   render() {
-    return <div>Code details: {this.props.snippetId}</div>
+    if (this.props.snippet) {
+      return <div>
+        <div>id: {this.props.snippet.id}</div>
+        <div>lang: {this.props.snippet.lang}</div>
+        <div>code: {this.props.snippet.code}</div>
+      </div>
+    } else {
+      return <div>loading</div>;
+    }
+
   }
+
 }
 
 // const mapDispatch
 //  loadSnippet: action
 const mapStateToProps = (store) => {
   return {
-    detailSnippet: store.snippetDetailPage.snippet
+    snippet: store.snippetDetailPage.snippet
   }
 }
 
