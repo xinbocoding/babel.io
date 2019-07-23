@@ -1,7 +1,6 @@
 import React from 'react';
 import TextField from '@material-ui/core/TextField';
 import FormControl from '@material-ui/core/FormControl';
-import InputLabel from '@material-ui/core/InputLabel';
 import Container from '@material-ui/core/Container';
 import Button from '@material-ui/core/Button';
 import { createSnippetAction } from '../../actions/snippets';

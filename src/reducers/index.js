@@ -1,5 +1,4 @@
 import { combineReducers } from 'redux';
-import firebase from '../services/firebaseApp';
 
 // state.currentUser
 function currentUserReducer(state = {}, action) {

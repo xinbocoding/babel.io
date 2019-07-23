@@ -1,20 +1,16 @@
 import React from 'react';
-import NavBar from './NavBar';
+import NavBar from '../NavBar';
 import { connect } from 'react-redux';
-import { loadUserSnippetsAction } from '../actions/snippets';
-import UserSnippets from './snippets/UserSnippets';
+import { loadUserSnippetsAction } from '../../actions/snippets';
+import UserSnippets from '../snippets/UserSnippets';
 
 class SnippetsIndexPage extends React.Component {
 
-  constructor(props, context) {
-    super(props, context);
+  componentWillReceiveProps() {
+    if (this.props.user.id) {
+      this.props.loadSnippets(this.props.user.id);
+    }
   }
-
-  // componentWillReceiveProps() {
-  //   if (this.props.user.id) {
-  //     this.props.loadSnippets(this.props.user.id);
-  //   }
-  // }
 
   render() {
     return <div>

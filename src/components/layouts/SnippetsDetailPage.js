@@ -1,5 +1,5 @@
 import React from 'react';
-import SnippetDetail from './snippets/SnippetDetail';
+import SnippetDetail from '../snippets/SnippetDetail';
 
 class SnippetsDetailPage extends React.Component {
 
