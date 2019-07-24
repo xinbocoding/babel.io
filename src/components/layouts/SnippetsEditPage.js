@@ -3,7 +3,7 @@ import SnippetForm from '../snippets/SnippetForm';
 import NavBar from '../NavBar';
 import { Container } from '@material-ui/core';
 
-class SnippetsNewPage extends React.Component {
+class SnippetsEditPage extends React.Component {
   render() {
     return (
       <Container>
@@ -14,4 +14,4 @@ class SnippetsNewPage extends React.Component {
   }
 }
 
-export default SnippetsNewPage;
+export default SnippetsEditPage;

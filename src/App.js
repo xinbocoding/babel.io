@@ -2,8 +2,9 @@ import React from 'react';
 import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-dom';
 import PrivateRoute from './components/Router/PrivateRoute';
 import HomePage from './components/layouts/HomePage';
-import SnippetsIndexPage from './components/layouts/SnippetsIndexPage';
+import SnippetsPage from './components/layouts/SnippetsPage';
 import SnippetsNewPage from './components/layouts/SnippetsNewPage';
+import SnippetsEditPage from './components/layouts/SnippetsEditPage';
 import SnippetsDetailPage from './components/layouts/SnippetsDetailPage';
 import { connect } from 'react-redux';
 import firebase from 'firebase/app';
@@ -37,8 +38,9 @@ class App extends React.Component {
                 <HomePage />
               )
             }} />
-            <PrivateRoute exact path="/snippets" component={SnippetsIndexPage} auth={this.props.user} />
+            <PrivateRoute exact path="/snippets" component={SnippetsPage} user={this.props.user} />
             <Route exact path="/snippets/new" component={SnippetsNewPage} />
+            <Route exact path="/snippets/:id/edit" component={SnippetsEditPage} />
             <Route path="/snippets/:id" component={SnippetsDetailPage} />
           </Switch>
         </Router>

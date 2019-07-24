@@ -4,27 +4,33 @@ import { connect } from 'react-redux';
 import { loadUserSnippetsAction } from '../../actions/snippets';
 import UserSnippets from '../snippets/UserSnippets';
 
-class SnippetsIndexPage extends React.Component {
+class SnippetsPage extends React.Component {
 
-  componentWillReceiveProps() {
-    if (this.props.user.id) {
+  componentDidMount() {
+    if (this.props.user) {
       this.props.loadSnippets(this.props.user.id);
     }
   }
 
   render() {
-    return <div>
-      <div><NavBar /></div>
+    if (!this.props.user) {
+      return <div>N/A</div>;
+    }
+
+    return (
       <div>
-        <UserSnippets snippets={this.props.snippets} />
+        <div><NavBar /></div>
+        <div>
+          <UserSnippets snippets={this.props.snippets} />
+        </div>
       </div>
-    </div>
+    )
   }
 }
 
 const mapStateToProps = (state) => {
   return {
-    user: state.currentUser,
+    user: state.auth.user,
     snippets: state.userSnippets.items
   }
 }
@@ -37,4 +43,4 @@ const mapDispatchToProps = (dispatch) => {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(SnippetsIndexPage);
+export default connect(mapStateToProps, mapDispatchToProps)(SnippetsPage);
