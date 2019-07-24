@@ -5,7 +5,10 @@ import Container from '@material-ui/core/Container';
 import Button from '@material-ui/core/Button';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
+import { Controlled as CodeMirror } from 'react-codemirror2';
 import { createSnippetAction } from '../../actions/snippets';
+import 'codemirror/lib/codemirror.css';
+import 'codemirror/theme/monokai.css';
 
 class SnippetForm extends React.Component {
   constructor(props) {
@@ -23,8 +26,8 @@ class SnippetForm extends React.Component {
     this.setState({ lang: event.target.value });
   }
 
-  onCodeChanged(event) {
-    this.setState({ code: event.target.value });
+  onCodeChanged(editor, data, value) {
+    this.setState({ code: value });
   }
 
   onSaveClicked() {
@@ -32,15 +35,18 @@ class SnippetForm extends React.Component {
   }
 
   render() {
-    if (this.props.snippet.id !== undefined) {
+    const { snippet } = this.props;
+    const { code, lang } = this.state;
+
+    if (snippet.id !== undefined) {
       return (
-        <Redirect to={{ pathname: `/snippets/${this.props.snippet.id}` }} />
+        <Redirect to={{ pathname: `/snippets/${snippet.id}` }} />
       );
     }
 
     return (
       <Container maxWidth="sm">
-        <h1>{this.props.snippet.id}</h1>
+        <h1>{snippet.id}</h1>
         <FormControl fullWidth>
           <TextField
             id="lang"
@@ -52,16 +58,12 @@ class SnippetForm extends React.Component {
           />
         </FormControl>
         <FormControl fullWidth>
-          <TextField
-            multiline
-            id="code"
-            label="Code"
-            rows="20"
-            rowsMax="20"
-            margin="normal"
-            variant="outlined"
-            onChange={this.onCodeChanged}
+          <CodeMirror
             value={code}
+            options={{
+              lineNumbers: true,
+            }}
+            onBeforeChange={this.onCodeChanged}
           />
         </FormControl>
         <FormControl fullWidth>
@@ -74,11 +76,9 @@ class SnippetForm extends React.Component {
   }
 }
 
-const mapStateToProps = function (state) {
-  return {
-    snippet: state.lastCreatedSnippet,
-  };
-};
+const mapStateToProps = state => ({
+  snippet: state.lastCreatedSnippet,
+});
 
 const mapDispatchToProps = dispatch => ({
   create: (lang, code) => {
