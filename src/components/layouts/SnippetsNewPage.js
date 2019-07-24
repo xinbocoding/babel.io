@@ -7,8 +7,8 @@ class SnippetsNewPage extends React.Component {
   render() {
     return (
       <Container>
-        <NavBar />
-        <SnippetForm />
+        <NavBar/>
+        <SnippetForm/>
       </Container>
     );
   }

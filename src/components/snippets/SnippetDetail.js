@@ -15,7 +15,7 @@ class SnippetDetial extends React.Component {
         <div>lang: {this.props.snippet.lang}</div>
         <div>code: {this.props.snippet.code}</div>
       </div>
-    } else {
+    } else{
       return <div>loading</div>;
     }
 
@@ -29,7 +29,7 @@ const mapStateToProps = (store) => {
   return {
     snippet: store.snippetDetailPage.snippet
   }
-}
+};
 
 const mapDispatchToProps = (dispatch) => {
   return {
@@ -37,7 +37,7 @@ const mapDispatchToProps = (dispatch) => {
       dispatch(loadSnippetAction(id))
     }
   }
-}
+};
 
 
 export default connect(mapStateToProps, mapDispatchToProps)(SnippetDetial);

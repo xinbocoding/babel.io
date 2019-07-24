@@ -8,8 +8,8 @@ class SnippetsDetailPage extends React.Component {
   render() {
     return (
       <Container>
-        <NavBar />
-        <SnippetDetail snippetId={this.props.match.params.id} />
+        <NavBar/>
+        <SnippetDetail snippetId={this.props.match.params.id}/>
       </Container>
     );
   }

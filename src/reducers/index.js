@@ -4,7 +4,7 @@ import { combineReducers } from 'redux';
 function authReducer(state = {}, action) {
   switch (action.type) {
     case 'AUTH_STATE_CHANGED':
-      return { user: action.data.user }
+      return { user: action.data.user };
     default:
       return { ...state };
   }
@@ -18,20 +18,20 @@ function userSnippetsReducer(state = {}, action) {
         ...state,
         isLoading: true,
         isError: false
-      }
+      };
     case 'USER_SNIPPETS_REQUEST_SUCCESS':
       return {
         ...state,
         isLoading: false,
         isError: false,
         items: action.data.snippets
-      }
+      };
     case 'USER_SNIPPETS_REQUEST_ERROR':
       return {
         ...state,
         isLoading: false,
         isError: true
-      }
+      };
     default:
       return { ...state }
   }
@@ -42,7 +42,7 @@ function lastCreatedSnippetReducer(state = {}, action) {
     case 'CREATE_SNIPPET_SUCCESS':
       return {
         id: action.data.id
-      }
+      };
     default:
       return {
         id: undefined
@@ -56,7 +56,7 @@ function snippetDetailPageReducer(state = {}, action) {
       return {
         ...state,
         snippet: action.data.snippet
-      }
+      };
     default:
       return {
         snippet: undefined
@@ -69,8 +69,8 @@ let reducerMap = {
   auth: authReducer,
   userSnippets: userSnippetsReducer,
   lastCreatedSnippet: lastCreatedSnippetReducer
-}
+};
 
-const combinedReducers = combineReducers(reducerMap)
+const combinedReducers = combineReducers(reducerMap);
 
 export default combinedReducers;

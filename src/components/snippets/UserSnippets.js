@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 class UserSnippets extends React.Component {
 
@@ -12,7 +13,7 @@ class UserSnippets extends React.Component {
   renderItems(items) {
     if (items) {
       return items.map((item) => {
-        return <li key={item.id}>{item.code}</li>
+        return <li><Link to={"/snippets/" + item.id} key={item.id}>{item.id}</Link></li>
       })
     }
   }
@@ -21,8 +22,6 @@ class UserSnippets extends React.Component {
     return <ul>{this.renderItems(this.props.snippets)}</ul>
   }
 }
-
-
 
 
 export default UserSnippets;

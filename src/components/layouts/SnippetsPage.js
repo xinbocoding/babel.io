@@ -3,6 +3,7 @@ import NavBar from '../NavBar';
 import { connect } from 'react-redux';
 import { loadUserSnippetsAction } from '../../actions/snippets';
 import UserSnippets from '../snippets/UserSnippets';
+import { Link } from 'react-router-dom';
 
 class SnippetsPage extends React.Component {
 
@@ -19,9 +20,10 @@ class SnippetsPage extends React.Component {
 
     return (
       <div>
-        <div><NavBar /></div>
+        <div><NavBar/></div>
         <div>
-          <UserSnippets snippets={this.props.snippets} />
+          <Link to="/snippets/new">New Snippet</Link>
+          <UserSnippets snippets={this.props.snippets}/>
         </div>
       </div>
     )
@@ -33,7 +35,7 @@ const mapStateToProps = (state) => {
     user: state.auth.user,
     snippets: state.userSnippets.items
   }
-}
+};
 
 const mapDispatchToProps = (dispatch) => {
   return {
@@ -41,6 +43,6 @@ const mapDispatchToProps = (dispatch) => {
       dispatch(loadUserSnippetsAction(userId))
     }
   }
-}
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(SnippetsPage);

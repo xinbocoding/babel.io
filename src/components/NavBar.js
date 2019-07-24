@@ -22,7 +22,7 @@ class NavBar extends React.Component {
       <AppBar position="static" className={classes.appBar}>
         <Toolbar className={classes.toolbar}>
           <Typography variant="h6" color="inherit">
-            <SignIn />
+            <SignIn/>
           </Typography>
         </Toolbar>
       </AppBar>

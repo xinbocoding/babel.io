@@ -21,7 +21,7 @@ export const loadUserSnippetsAction = (userId) => {
         reason
       }))
   }
-}
+};
 
 // define a action function: createSnippet
 export const createSnippetAction = (lang, code) => {
@@ -47,7 +47,7 @@ export const createSnippetAction = (lang, code) => {
       })
     })
   }
-}
+};
 
 
 export function loadSnippetAction(id) {

@@ -10,15 +10,15 @@ class HomePage extends React.Component {
     return (
       <Container maxWidth="md">
         <Grid container justify="flex-end">
-          <SignIn />
+          <SignIn/>
         </Grid>
 
         <Grid container>
-          <HomeHeadline />
+          <HomeHeadline/>
         </Grid>
 
         <Grid container>
-          <HomeExample />
+          <HomeExample/>
         </Grid>
       </Container>
     );

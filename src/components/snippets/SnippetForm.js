@@ -14,7 +14,7 @@ class SnippetForm extends React.Component {
     this.state = {
       lang: "javascript",
       code: ""
-    }
+    };
     this.onLangChanged = this.onLangChanged.bind(this);
     this.onCodeChanged = this.onCodeChanged.bind(this);
     this.onSaveClicked = this.onSaveClicked.bind(this);
@@ -34,7 +34,7 @@ class SnippetForm extends React.Component {
 
   render() {
     if (this.props.snippet.id !== undefined) {
-      return <Redirect to={{ pathname: "/snippets/" + this.props.snippet.id }} />
+      return <Redirect to={{ pathname: "/snippets/" + this.props.snippet.id }}/>
     }
 
     return (
@@ -72,11 +72,11 @@ class SnippetForm extends React.Component {
 
 }
 
-const mapStateToProps = function(state) {
+const mapStateToProps = function (state) {
   return {
     snippet: state.lastCreatedSnippet
   }
-}
+};
 
 const mapDispatchToProps = (dispatch) => {
   return {
@@ -84,6 +84,6 @@ const mapDispatchToProps = (dispatch) => {
       dispatch(createSnippetAction(lang, code))
     }
   }
-}
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(SnippetForm);
