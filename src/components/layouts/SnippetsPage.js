@@ -19,7 +19,9 @@ class SnippetsPage extends React.Component {
 
     return (
       <div>
-        <div><NavBar /></div>
+        <div>
+          <NavBar />
+        </div>
         <div>
           <Link to="/snippets/new">New Snippet</Link>
           <UserSnippets snippets={this.props.snippets} />
@@ -40,4 +42,7 @@ const mapDispatchToProps = dispatch => ({
   },
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(SnippetsPage);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(SnippetsPage);

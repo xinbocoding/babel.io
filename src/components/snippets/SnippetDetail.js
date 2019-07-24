@@ -12,15 +12,15 @@ class SnippetDetial extends React.Component {
       return (
         <div>
           <div>
-id:
+            id:
             {this.props.snippet.id}
           </div>
           <div>
-lang:
+            lang:
             {this.props.snippet.lang}
           </div>
           <div>
-code:
+            code:
             {this.props.snippet.code}
           </div>
         </div>
@@ -42,5 +42,7 @@ const mapDispatchToProps = dispatch => ({
   },
 });
 
-
-export default connect(mapStateToProps, mapDispatchToProps)(SnippetDetial);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(SnippetDetial);

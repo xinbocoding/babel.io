@@ -11,7 +11,13 @@ class UserSnippets extends React.Component {
 
   renderItems(items) {
     if (items) {
-      return items.map(item => <li><Link to={`/snippets/${item.id}`} key={item.id}>{item.id}</Link></li>);
+      return items.map(item => (
+        <li>
+          <Link to={`/snippets/${item.id}`} key={item.id}>
+            {item.id}
+          </Link>
+        </li>
+      ));
     }
   }
 
@@ -19,6 +25,5 @@ class UserSnippets extends React.Component {
     return <ul>{this.renderItems(this.props.snippets)}</ul>;
   }
 }
-
 
 export default UserSnippets;

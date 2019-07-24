@@ -6,10 +6,13 @@ export const userSignInAction = () => {
   // initliaze provider
   const provider = new auth.GoogleAuthProvider();
 
-  app.auth()
+  app
+    .auth()
     .setPersistence(firebase.auth.Auth.Persistence.LOCAL)
     .then(() => {
-      app.auth().signInWithPopup(provider)
+      app
+        .auth()
+        .signInWithPopup(provider)
         .then((result) => {
           // dispatch({
           //   type: 'SIGN_IN_SUCCESS',
@@ -19,16 +22,17 @@ export const userSignInAction = () => {
           //     token: result.credential.accessToken,
           //   }
           // })
-        }).catch((error) => {
-        // dispatch({
-        //   type: 'SIGIN_IN_FAILED',
-        //   data: {
-        //     error: {
-        //       code: error.code,
-        //       message: error.message,
-        //     }
-        //   }
-        // })
+        })
+        .catch((error) => {
+          // dispatch({
+          //   type: 'SIGIN_IN_FAILED',
+          //   data: {
+          //     error: {
+          //       code: error.code,
+          //       message: error.message,
+          //     }
+          //   }
+          // })
         });
     })
     .catch((error) => {
@@ -39,15 +43,19 @@ export const userSignInAction = () => {
 
 export const userSignOutAction = () => {
   // return (dispatch) => {
-  app.auth().signOut().then(() => {
-    // dispatch({
-    //   type: 'SIGN_OUT_SUCCESS'
-    // })
-  }).catch((error) => {
-    // dispatch({
-    //   type: 'SIGN_OUT_FAILED',
-    //   error: error
-    // })
-  });
+  app
+    .auth()
+    .signOut()
+    .then(() => {
+      // dispatch({
+      //   type: 'SIGN_OUT_SUCCESS'
+      // })
+    })
+    .catch((error) => {
+      // dispatch({
+      //   type: 'SIGN_OUT_FAILED',
+      //   error: error
+      // })
+    });
   // }
 };

@@ -13,7 +13,9 @@ const auth = JSON.parse(localStorage.getItem('APP_AUTH'));
 const store = createStore(combinedReducers, { auth }, applyMiddleware(thunk));
 
 ReactDOM.render(
-  <Provider store={store}><App /></Provider>,
+  <Provider store={store}>
+    <App />
+  </Provider>,
   document.getElementById('root'),
 );
 

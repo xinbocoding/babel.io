@@ -8,12 +8,20 @@ class SignIn extends Component {
     if (this.props.user) {
       return (
         <React.Fragment>
-          <Button edge="end" color="inherit">{this.props.user.name}</Button>
-          <Button color="inherit" onClick={this.props.signOut}>Sign Out</Button>
+          <Button edge="end" color="inherit">
+            {this.props.user.name}
+          </Button>
+          <Button color="inherit" onClick={this.props.signOut}>
+            Sign Out
+          </Button>
         </React.Fragment>
       );
     }
-    return <Button color="inherit" onClick={this.props.signIn}>Sign In</Button>;
+    return (
+      <Button color="inherit" onClick={this.props.signIn}>
+        Sign In
+      </Button>
+    );
   }
 }
 
@@ -26,4 +34,7 @@ const mapDispatchToProps = () => ({
   signOut: userSignOutAction,
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(SignIn);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(SignIn);

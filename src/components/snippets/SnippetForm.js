@@ -33,7 +33,9 @@ class SnippetForm extends React.Component {
 
   render() {
     if (this.props.snippet.id !== undefined) {
-      return <Redirect to={{ pathname: `/snippets/${this.props.snippet.id}` }} />;
+      return (
+        <Redirect to={{ pathname: `/snippets/${this.props.snippet.id}` }} />
+      );
     }
 
     return (
@@ -63,7 +65,9 @@ class SnippetForm extends React.Component {
           />
         </FormControl>
         <FormControl fullWidth>
-          <Button variant="contained" onClick={this.onSaveClicked}>Save</Button>
+          <Button variant="contained" onClick={this.onSaveClicked}>
+            Save
+          </Button>
         </FormControl>
       </Container>
     );
@@ -82,4 +86,7 @@ const mapDispatchToProps = dispatch => ({
   },
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(SnippetForm);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(SnippetForm);

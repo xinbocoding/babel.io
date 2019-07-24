@@ -10,5 +10,4 @@ const SnippetsNewPage = () => (
   </Container>
 );
 
-
 export default SnippetsNewPage;
