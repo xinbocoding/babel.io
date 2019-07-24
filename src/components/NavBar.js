@@ -3,19 +3,32 @@ import SignIn from './auth/SignIn';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
+import { withStyles } from '@material-ui/core/styles';
+
+let styled = withStyles({
+  appBar: {
+    boxShadow: "none",
+  },
+  toolbar: {
+    borderBottom: "1px solid whitesmoke"
+  }
+});
 
 class NavBar extends React.Component {
+
   render() {
+    const { classes } = this.props;
     return (
-      <AppBar position="static">
-        <Toolbar>
+      <AppBar position="static" className={classes.appBar}>
+        <Toolbar className={classes.toolbar}>
           <Typography variant="h6" color="inherit">
             <SignIn />
           </Typography>
         </Toolbar>
       </AppBar>
-    )
+    );
   }
+
 }
 
-export default NavBar;
+export default styled(NavBar);
