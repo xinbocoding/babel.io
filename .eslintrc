@@ -1,15 +1,18 @@
 {
   "extends": [
     "eslint:recommended",
-    "plugin:prettier/recommended",
-    "airbnb"
+    "prettier",
+    "airbnb",
   ],
   "plugins": [
     "prettier"
   ],
+  "env": {
+    "browser": true,
+    "node": true
+  },
   "rules": {
-    "prettier/prettier": "warn",
-    "react/prop-types": "warn",
+    "react/prop-types": "none",
     "react/destructuring-assignment": "warn",
     "react/jsx-filename-extension": [
       1,
