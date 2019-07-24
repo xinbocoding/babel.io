@@ -1,8 +1,8 @@
 import React from 'react';
-import SignIn from '../auth/SignIn';
 import { Container } from '@material-ui/core';
-import HomeHeadline from '../home/HomeHeadline';
 import Grid from '@material-ui/core/Grid';
+import SignIn from '../auth/SignIn';
+import HomeHeadline from '../home/HomeHeadline';
 import HomeExample from '../home/HomeExample';
 
 class HomePage extends React.Component {
@@ -10,20 +10,19 @@ class HomePage extends React.Component {
     return (
       <Container maxWidth="md">
         <Grid container justify="flex-end">
-          <SignIn/>
+          <SignIn />
         </Grid>
 
         <Grid container>
-          <HomeHeadline/>
+          <HomeHeadline />
         </Grid>
 
         <Grid container>
-          <HomeExample/>
+          <HomeExample />
         </Grid>
       </Container>
     );
   }
-
 }
 
 export default HomePage;

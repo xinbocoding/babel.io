@@ -3,17 +3,16 @@ import TextField from '@material-ui/core/TextField';
 import FormControl from '@material-ui/core/FormControl';
 import Container from '@material-ui/core/Container';
 import Button from '@material-ui/core/Button';
-import { createSnippetAction } from '../../actions/snippets';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
+import { createSnippetAction } from '../../actions/snippets';
 
 class SnippetForm extends React.Component {
-
   constructor(props) {
     super(props); // this.state = null
     this.state = {
-      lang: "javascript",
-      code: ""
+      lang: 'javascript',
+      code: '',
     };
     this.onLangChanged = this.onLangChanged.bind(this);
     this.onCodeChanged = this.onCodeChanged.bind(this);
@@ -28,13 +27,13 @@ class SnippetForm extends React.Component {
     this.setState({ code: event.target.value });
   }
 
-  onSaveClicked(event) {
+  onSaveClicked() {
     this.props.create(this.state.lang, this.state.code);
   }
 
   render() {
     if (this.props.snippet.id !== undefined) {
-      return <Redirect to={{ pathname: "/snippets/" + this.props.snippet.id }}/>
+      return <Redirect to={{ pathname: `/snippets/${this.props.snippet.id}` }} />;
     }
 
     return (
@@ -47,7 +46,7 @@ class SnippetForm extends React.Component {
             margin="normal"
             variant="outlined"
             onChange={this.onLangChanged}
-            value={this.state.lang}
+            value={lang}
           />
         </FormControl>
         <FormControl fullWidth>
@@ -60,30 +59,27 @@ class SnippetForm extends React.Component {
             margin="normal"
             variant="outlined"
             onChange={this.onCodeChanged}
-            value={this.state.code}
+            value={code}
           />
         </FormControl>
         <FormControl fullWidth>
           <Button variant="contained" onClick={this.onSaveClicked}>Save</Button>
         </FormControl>
       </Container>
-    )
+    );
   }
-
 }
 
 const mapStateToProps = function (state) {
   return {
-    snippet: state.lastCreatedSnippet
-  }
+    snippet: state.lastCreatedSnippet,
+  };
 };
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    create: (lang, code) => {
-      dispatch(createSnippetAction(lang, code))
-    }
-  }
-};
+const mapDispatchToProps = dispatch => ({
+  create: (lang, code) => {
+    dispatch(createSnippetAction(lang, code));
+  },
+});
 
 export default connect(mapStateToProps, mapDispatchToProps)(SnippetForm);

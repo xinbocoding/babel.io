@@ -4,7 +4,7 @@ import app from '../services/firebaseApp';
 export const userSignInAction = () => {
   // return (dispatch) => {
   // initliaze provider
-  let provider = new auth.GoogleAuthProvider();
+  const provider = new auth.GoogleAuthProvider();
 
   app.auth()
     .setPersistence(firebase.auth.Auth.Persistence.LOCAL)
@@ -29,10 +29,9 @@ export const userSignInAction = () => {
         //     }
         //   }
         // })
-      });
-
+        });
     })
-    .catch(function (error) {
+    .catch((error) => {
       console.log('Firebase: set persistence failed. ', error);
     });
   // }
@@ -40,11 +39,11 @@ export const userSignInAction = () => {
 
 export const userSignOutAction = () => {
   // return (dispatch) => {
-  app.auth().signOut().then(function () {
+  app.auth().signOut().then(() => {
     // dispatch({
     //   type: 'SIGN_OUT_SUCCESS'
     // })
-  }).catch(function (error) {
+  }).catch((error) => {
     // dispatch({
     //   type: 'SIGN_OUT_FAILED',
     //   error: error
@@ -52,4 +51,3 @@ export const userSignOutAction = () => {
   });
   // }
 };
-

@@ -17,23 +17,23 @@ function userSnippetsReducer(state = {}, action) {
       return {
         ...state,
         isLoading: true,
-        isError: false
+        isError: false,
       };
     case 'USER_SNIPPETS_REQUEST_SUCCESS':
       return {
         ...state,
         isLoading: false,
         isError: false,
-        items: action.data.snippets
+        items: action.data.snippets,
       };
     case 'USER_SNIPPETS_REQUEST_ERROR':
       return {
         ...state,
         isLoading: false,
-        isError: true
+        isError: true,
       };
     default:
-      return { ...state }
+      return { ...state };
   }
 }
 
@@ -41,12 +41,12 @@ function lastCreatedSnippetReducer(state = {}, action) {
   switch (action.type) {
     case 'CREATE_SNIPPET_SUCCESS':
       return {
-        id: action.data.id
+        id: action.data.id,
       };
     default:
       return {
-        id: undefined
-      }
+        id: undefined,
+      };
   }
 }
 
@@ -55,20 +55,20 @@ function snippetDetailPageReducer(state = {}, action) {
     case 'LOAD_SNIPPET_SUCCESS':
       return {
         ...state,
-        snippet: action.data.snippet
+        snippet: action.data.snippet,
       };
     default:
       return {
-        snippet: undefined
-      }
+        snippet: undefined,
+      };
   }
 }
 
-let reducerMap = {
+const reducerMap = {
   snippetDetailPage: snippetDetailPageReducer,
   auth: authReducer,
   userSnippets: userSnippetsReducer,
-  lastCreatedSnippet: lastCreatedSnippetReducer
+  lastCreatedSnippet: lastCreatedSnippetReducer,
 };
 
 const combinedReducers = combineReducers(reducerMap);

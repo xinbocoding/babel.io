@@ -1,10 +1,9 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { userSignInAction, userSignOutAction } from '../../actions/users';
 import Button from '@material-ui/core/Button';
+import { userSignInAction, userSignOutAction } from '../../actions/users';
 
 class SignIn extends Component {
-
   render() {
     if (this.props.user) {
       return (
@@ -13,24 +12,18 @@ class SignIn extends Component {
           <Button color="inherit" onClick={this.props.signOut}>Sign Out</Button>
         </React.Fragment>
       );
-    } else{
-      return <Button color="inherit" onClick={this.props.signIn}>Sign In</Button>;
     }
+    return <Button color="inherit" onClick={this.props.signIn}>Sign In</Button>;
   }
-
 }
 
-const mapStateToProps = (state) => {
-  return {
-    user: state.auth.user
-  }
-};
+const mapStateToProps = state => ({
+  user: state.auth.user,
+});
 
-const mapDispatchToProps = () => {
-  return {
-    signIn: userSignInAction,
-    signOut: userSignOutAction
-  }
-};
+const mapDispatchToProps = () => ({
+  signIn: userSignInAction,
+  signOut: userSignOutAction,
+});
 
 export default connect(mapStateToProps, mapDispatchToProps)(SignIn);

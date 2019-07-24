@@ -2,7 +2,6 @@ import React from 'react';
 import Box from '@material-ui/core/Box';
 
 class HomeHeadline extends React.Component {
-
   render() {
     return (
       <Box className="headline">

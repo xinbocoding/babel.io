@@ -1,14 +1,14 @@
 import React from 'react';
+import { Container } from '@material-ui/core';
 import SnippetForm from '../snippets/SnippetForm';
 import NavBar from '../NavBar';
-import { Container } from '@material-ui/core';
 
 class SnippetsNewPage extends React.Component {
   render() {
     return (
       <Container>
-        <NavBar/>
-        <SnippetForm/>
+        <NavBar />
+        <SnippetForm />
       </Container>
     );
   }
