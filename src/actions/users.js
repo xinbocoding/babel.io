@@ -1,46 +1,61 @@
-import { auth } from 'firebase';
-import firebase from '../services/firebase';
+import firebase, { auth } from 'firebase';
+import app from '../services/firebaseApp';
 
 export const userSignInAction = () => {
-  return (dispatch) => {
-    // initliaze provider
-    let provider = new auth.GoogleAuthProvider();
+  // return (dispatch) => {
+  // initliaze provider
+  const provider = new auth.GoogleAuthProvider();
 
-    firebase.auth().signInWithPopup(provider).then((result) => {
-      dispatch({
-        type: 'SIGN_IN_SUCCESS',
-        data: {
-          id: result.user.uid,
-          name: result.user.displayName,
-          token: result.credential.accessToken,
-        }
-      })
-    }).catch((error) => {
-      dispatch({
-        type: 'SIGIN_IN_FAILED',
-        data: {
-          error: {
-            code: error.code,
-            message: error.message,
-          }
-        }
-      })
+  app
+    .auth()
+    .setPersistence(firebase.auth.Auth.Persistence.LOCAL)
+    .then(() => {
+      app
+        .auth()
+        .signInWithPopup(provider)
+        .then((result) => {
+          // dispatch({
+          //   type: 'SIGN_IN_SUCCESS',
+          //   data: {
+          //     id: result.user.uid,
+          //     name: result.user.displayName,
+          //     token: result.credential.accessToken,
+          //   }
+          // })
+        })
+        .catch((error) => {
+          // dispatch({
+          //   type: 'SIGIN_IN_FAILED',
+          //   data: {
+          //     error: {
+          //       code: error.code,
+          //       message: error.message,
+          //     }
+          //   }
+          // })
+        });
+    })
+    .catch((error) => {
+      console.log('Firebase: set persistence failed. ', error);
     });
-  }
-}
+  // }
+};
 
 export const userSignOutAction = () => {
-  return (dispatch) => {
-    firebase.auth().signOut().then(function() {
-      dispatch({
-        type: 'SIGN_OUT_SUCCESS'
-      })
-    }).catch(function(error) {
-      dispatch({
-        type: 'SIGN_OUT_FAILED',
-        error: error
-      })
+  // return (dispatch) => {
+  app
+    .auth()
+    .signOut()
+    .then(() => {
+      // dispatch({
+      //   type: 'SIGN_OUT_SUCCESS'
+      // })
+    })
+    .catch((error) => {
+      // dispatch({
+      //   type: 'SIGN_OUT_FAILED',
+      //   error: error
+      // })
     });
-  }
-}
-
+  // }
+};

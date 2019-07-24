@@ -1,21 +1,12 @@
 import { combineReducers } from 'redux';
 
 // state.currentUser
-function currentUserReducer(state = {}, action) {
+function authReducer(state = {}, action) {
   switch (action.type) {
-    case 'SIGN_IN_SUCCESS':
-      return {
-        ...action.data,
-        isSignedIn: true
-      }
-    case 'SIGN_IN_FAILED':
-    case 'SIGN_OUT_SUCCESS':
-    case 'SIGN_OUT_FAILED':
+    case 'AUTH_STATE_CHANGED':
+      return { user: action.data.user };
     default:
-      return {
-        name: 'Guest',
-        isSignedIn: false
-      }
+      return { ...state };
   }
 }
 
@@ -26,27 +17,23 @@ function userSnippetsReducer(state = {}, action) {
       return {
         ...state,
         isLoading: true,
-        isError: false
-      }
+        isError: false,
+      };
     case 'USER_SNIPPETS_REQUEST_SUCCESS':
       return {
         ...state,
         isLoading: false,
         isError: false,
-        items: action.data.snippets
-      }
+        items: action.data.snippets,
+      };
     case 'USER_SNIPPETS_REQUEST_ERROR':
       return {
         ...state,
         isLoading: false,
-        isError: true
-      }
+        isError: true,
+      };
     default:
-      return {
-        isLoading: false,
-        isError: false,
-        items: []
-      }
+      return { ...state };
   }
 }
 
@@ -54,12 +41,12 @@ function lastCreatedSnippetReducer(state = {}, action) {
   switch (action.type) {
     case 'CREATE_SNIPPET_SUCCESS':
       return {
-        id: action.data.id
-      }
+        id: action.data.id,
+      };
     default:
       return {
-        id: undefined
-      }
+        id: undefined,
+      };
   }
 }
 
@@ -68,22 +55,22 @@ function snippetDetailPageReducer(state = {}, action) {
     case 'LOAD_SNIPPET_SUCCESS':
       return {
         ...state,
-        snippet: action.data.snippet
-      }
+        snippet: action.data.snippet,
+      };
     default:
       return {
-        snippet: undefined
-      }
+        snippet: undefined,
+      };
   }
 }
 
-let reducerMap = {
+const reducerMap = {
   snippetDetailPage: snippetDetailPageReducer,
-  currentUser: currentUserReducer,
+  auth: authReducer,
   userSnippets: userSnippetsReducer,
-  lastCreatedSnippet: lastCreatedSnippetReducer
-}
+  lastCreatedSnippet: lastCreatedSnippetReducer,
+};
 
-const combinedReducers = combineReducers(reducerMap)
+const combinedReducers = combineReducers(reducerMap);
 
 export default combinedReducers;
