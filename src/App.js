@@ -14,14 +14,18 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     firebase.auth().onAuthStateChanged((user) => {
-      props.dispatch({
-        type: 'AUTH_STATE_CHANGED', data: {
-          user: user ? ({
-            name: user.displayName,
-            id: user.uid
-          }) : null
+
+      let data = user ? ({
+        user: {
+          name: user.displayName,
+          id: user.uid
         }
+      }) : ({
+        user: null
       });
+
+      props.dispatch({ type: 'AUTH_STATE_CHANGED', data });
+      localStorage.setItem("APP_AUTH", JSON.stringify(data));
     });
   }
 
@@ -35,8 +39,8 @@ class App extends React.Component {
               return isSignedIn ? (
                 <Redirect to="/snippets" />
               ) : (
-                <HomePage />
-              )
+                  <HomePage />
+                )
             }} />
             <PrivateRoute exact path="/snippets" component={SnippetsPage} user={this.props.user} />
             <Route exact path="/snippets/new" component={SnippetsNewPage} />
