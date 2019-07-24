@@ -12,7 +12,7 @@ import combinedReducers from './reducers';
 import { firebaseConnect } from './services/firebaseApp';
 
 const store = createStore(combinedReducers, {}, applyMiddleware(thunk));
-firebaseConnect(store);
+// firebaseConnect(store);
 
 ReactDOM.render(
     <Provider store={store}><App /></Provider>,

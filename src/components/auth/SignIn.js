@@ -6,7 +6,7 @@ import Button from '@material-ui/core/Button';
 class SignIn extends Component {
 
   render() {
-    if (this.props.user.isSignedIn === true) {
+    if (this.props.user) {
       return (
         <React.Fragment>
           <Button edge="end" color="inherit">{this.props.user.name}</Button>
@@ -22,14 +22,14 @@ class SignIn extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    user: state.currentUser
+    user: state.auth.user
   }
 };
 
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = () => {
   return {
-    signIn: () => dispatch(userSignInAction()),
-    signOut: () => dispatch(userSignOutAction())
+    signIn: userSignInAction,
+    signOut: userSignOutAction
   }
 }
 

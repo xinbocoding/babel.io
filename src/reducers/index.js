@@ -1,43 +1,12 @@
 import { combineReducers } from 'redux';
 
 // state.currentUser
-function currentUserReducer(state = {}, action) {
+function authReducer(state = {}, action) {
   switch (action.type) {
-    case 'SIGN_IN_SUCCESS':
-      return {
-        ...action.data,
-        isSignedIn: true
-      }
-    case 'SIGN_IN_FAILED':
-    case 'SIGN_OUT_SUCCESS':
-    case 'SIGN_OUT_FAILED':
-      return {
-        id: null,
-        name: 'Guest',
-        isSignedIn: false
-      }
-    case 'SIGIN_RESTORE':
-      if (action.data.user != null) {
-        let user = action.data.user;
-        return {
-          id: user.uid,
-          name: user.displayName,
-          isSignedIn: true
-        }
-      } else {
-        return {
-          id: null,
-          name: 'Guest',
-          isSignedIn: false
-        }
-      }
+    case 'AUTH_STATE_CHANGED':
+      return { user: action.data.user }
     default:
-      return {
-        id: null,
-        name: 'Guest',
-        isSignedIn: false
-      }
-
+      return { ...state };
   }
 }
 
@@ -64,11 +33,7 @@ function userSnippetsReducer(state = {}, action) {
         isError: true
       }
     default:
-      return {
-        isLoading: false,
-        isError: false,
-        items: []
-      }
+      return { ...state }
   }
 }
 
@@ -101,7 +66,7 @@ function snippetDetailPageReducer(state = {}, action) {
 
 let reducerMap = {
   snippetDetailPage: snippetDetailPageReducer,
-  currentUser: currentUserReducer,
+  auth: authReducer,
   userSnippets: userSnippetsReducer,
   lastCreatedSnippet: lastCreatedSnippetReducer
 }

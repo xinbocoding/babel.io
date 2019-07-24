@@ -10,7 +10,7 @@ import { Redirect } from 'react-router-dom';
 class SnippetForm extends React.Component {
 
   constructor(props) {
-    super(props);
+    super(props); // this.state = null
     this.state = {
       lang: "javascript",
       code: ""
@@ -72,7 +72,7 @@ class SnippetForm extends React.Component {
 
 }
 
-const mapStateToProps = (state) => {
+const mapStateToProps = function(state) {
   return {
     snippet: state.lastCreatedSnippet
   }

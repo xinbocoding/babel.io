@@ -12,10 +12,4 @@ const firebaseApp = firebase.initializeApp({
   appId: process.env.REACT_APP_FIREBASE_APP_ID
 });
 
-export function firebaseConnect(store) {
-  firebase.auth().onAuthStateChanged((user) => {
-    store.dispatch({ type: 'SIGIN_RESTORE', data: { user } });
-  })
-}
-
 export default firebaseApp;
