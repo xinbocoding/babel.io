@@ -84,6 +84,25 @@ class CodeEditor extends React.Component {
 
     // remove all overlap marks
     marks.forEach(m => m.clear());
+
+    // callback
+    this.props.annotationDidChange(this.getAllAnnotations());
+  }
+
+  getAllAnnotations() {
+    return this.editor.getAllMarks()
+      .filter(m => m.attributes.type !== undefined)
+      .map(m => {
+        const range = m.find();
+        const cleanPos = (obj) => ({ line: obj.line, ch: obj.ch });
+        return {
+          type: m.attributes.type,
+          range: {
+            from: cleanPos(range.from),
+            to: cleanPos(range.to),
+          }
+        }
+      });
   }
 
   removeHighlight() {
@@ -92,6 +111,9 @@ class CodeEditor extends React.Component {
       const { from, to } = selection;
       this.findHighlights(from, to).forEach(m => m.clear());
     }
+
+    // callback
+    this.props.annotationDidChange(this.getAllAnnotations());
   }
 
   renderHighlightButton() {
@@ -187,7 +209,8 @@ class CodeEditor extends React.Component {
 CodeEditor.propTypes = {
   mode: PropTypes.string.isRequired,
   code: PropTypes.string.isRequired,
-  codeDidChange: PropTypes.func.isRequired
+  codeDidChange: PropTypes.func.isRequired,
+  annotationDidChange: PropTypes.func.isRequired,
 };
 
 export default CodeEditor;
