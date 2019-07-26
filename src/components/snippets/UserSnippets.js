@@ -5,7 +5,7 @@ class UserSnippets extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      snippets: props.snippets,
+      snippets: props.snippets
     };
   }
 

@@ -51,7 +51,7 @@ class SnippetForm extends React.Component {
 SnippetForm.propTypes = {
   code: PropTypes.string.isRequired,
   mode: PropTypes.string.isRequired,
-  onSubmit: PropTypes.func.isRequired,
+  onSubmit: PropTypes.func.isRequired
 };
 
 export default SnippetForm;

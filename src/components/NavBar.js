@@ -7,11 +7,11 @@ import SignIn from './auth/SignIn';
 
 const styled = withStyles({
   appBar: {
-    boxShadow: 'none',
+    boxShadow: 'none'
   },
   toolbar: {
-    borderBottom: '1px solid whitesmoke',
-  },
+    borderBottom: '1px solid whitesmoke'
+  }
 });
 
 class NavBar extends React.Component {

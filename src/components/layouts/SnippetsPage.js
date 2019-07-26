@@ -33,16 +33,16 @@ class SnippetsPage extends React.Component {
 
 const mapStateToProps = state => ({
   user: state.auth.user,
-  snippets: state.userSnippets.items,
+  snippets: state.userSnippets.items
 });
 
 const mapDispatchToProps = dispatch => ({
-  loadSnippets: (userId) => {
+  loadSnippets: userId => {
     dispatch(loadUserSnippetsAction(userId));
-  },
+  }
 });
 
 export default connect(
   mapStateToProps,
-  mapDispatchToProps,
+  mapDispatchToProps
 )(SnippetsPage);

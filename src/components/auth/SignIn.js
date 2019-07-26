@@ -26,15 +26,15 @@ class SignIn extends Component {
 }
 
 const mapStateToProps = state => ({
-  user: state.auth.user,
+  user: state.auth.user
 });
 
 const mapDispatchToProps = () => ({
   signIn: userSignInAction,
-  signOut: userSignOutAction,
+  signOut: userSignOutAction
 });
 
 export default connect(
   mapStateToProps,
-  mapDispatchToProps,
+  mapDispatchToProps
 )(SignIn);

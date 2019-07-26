@@ -3,7 +3,7 @@ import {
   BrowserRouter as Router,
   Redirect,
   Route,
-  Switch,
+  Switch
 } from 'react-router-dom';
 import { connect } from 'react-redux';
 import firebase from 'firebase/app';
@@ -17,17 +17,17 @@ import SnippetsDetailPage from './components/layouts/SnippetsDetailPage';
 class App extends React.Component {
   constructor(props) {
     super(props);
-    firebase.auth().onAuthStateChanged((user) => {
+    firebase.auth().onAuthStateChanged(user => {
       const data = user
         ? {
-          user: {
-            name: user.displayName,
-            id: user.uid,
-          },
-        }
+            user: {
+              name: user.displayName,
+              id: user.uid
+            }
+          }
         : {
-          user: null,
-        };
+            user: null
+          };
 
       props.dispatch({ type: 'AUTH_STATE_CHANGED', data });
       localStorage.setItem('APP_AUTH', JSON.stringify(data));
@@ -43,7 +43,8 @@ class App extends React.Component {
             <Route
               exact
               path="/"
-              render={() => (isSignedIn ? <Redirect to="/snippets" /> : <HomePage />)
+              render={() =>
+                isSignedIn ? <Redirect to="/snippets" /> : <HomePage />
               }
             />
             <PrivateRoute
@@ -67,14 +68,14 @@ class App extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  user: state.auth.user,
+  user: state.auth.user
 });
 
 const mapDispatchToProps = dispatch => ({
-  dispatch,
+  dispatch
 });
 
 export default connect(
   mapStateToProps,
-  mapDispatchToProps,
+  mapDispatchToProps
 )(App);

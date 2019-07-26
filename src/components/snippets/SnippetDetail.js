@@ -33,16 +33,16 @@ class SnippetDetial extends React.Component {
 // const mapDispatch
 //  loadSnippet: action
 const mapStateToProps = store => ({
-  snippet: store.snippetDetailPage.snippet,
+  snippet: store.snippetDetailPage.snippet
 });
 
 const mapDispatchToProps = dispatch => ({
-  loadSnippet: (id) => {
+  loadSnippet: id => {
     dispatch(loadSnippetAction(id));
-  },
+  }
 });
 
 export default connect(
   mapStateToProps,
-  mapDispatchToProps,
+  mapDispatchToProps
 )(SnippetDetial);

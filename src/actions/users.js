@@ -13,7 +13,7 @@ export const userSignInAction = () => {
       app
         .auth()
         .signInWithPopup(provider)
-        .then((result) => {
+        .then(result => {
           // dispatch({
           //   type: 'SIGN_IN_SUCCESS',
           //   data: {
@@ -23,7 +23,7 @@ export const userSignInAction = () => {
           //   }
           // })
         })
-        .catch((error) => {
+        .catch(error => {
           // dispatch({
           //   type: 'SIGIN_IN_FAILED',
           //   data: {
@@ -35,7 +35,7 @@ export const userSignInAction = () => {
           // })
         });
     })
-    .catch((error) => {
+    .catch(error => {
       console.log('Firebase: set persistence failed. ', error);
     });
   // }
@@ -51,7 +51,7 @@ export const userSignOutAction = () => {
       //   type: 'SIGN_OUT_SUCCESS'
       // })
     })
-    .catch((error) => {
+    .catch(error => {
       // dispatch({
       //   type: 'SIGN_OUT_FAILED',
       //   error: error

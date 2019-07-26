@@ -8,7 +8,6 @@ import PropTypes from 'prop-types';
 import Icon from '@material-ui/core/Icon';
 import * as utils from '../../utils/codeEditorUtils';
 
-
 class CodeEditor extends React.Component {
   constructor(props) {
     super(props);
@@ -16,7 +15,7 @@ class CodeEditor extends React.Component {
     this.state = {
       selection: null,
       mode,
-      code,
+      code
     };
 
     this.editor = null;
@@ -37,7 +36,7 @@ class CodeEditor extends React.Component {
       selection: {
         from,
         to
-      },
+      }
     });
   }
 
@@ -47,7 +46,8 @@ class CodeEditor extends React.Component {
   }
 
   findHighlights(from, to) {
-    return this.editor.findMarks(from, to)
+    return this.editor
+      .findMarks(from, to)
       .filter(m => m.attributes.type === 'highlight')
       .filter(m => m !== undefined);
   }
@@ -60,16 +60,17 @@ class CodeEditor extends React.Component {
 
     // a helper for expand the boundary
     const findBoundary = (compareFunc, valueFunc, initial) => {
-      let reducer = (acc, cur) => compareFunc(acc, this.editor.indexFromPos(valueFunc(cur.find())));
-      let acc = this.editor.indexFromPos(initial);
+      const reducer = (acc, cur) =>
+        compareFunc(acc, this.editor.indexFromPos(valueFunc(cur.find())));
+      const acc = this.editor.indexFromPos(initial);
       return this.editor.posFromIndex(marks.reduce(reducer, acc));
     };
 
     // a helper for expand original FROM and TO
     const expandRange = (from, to) => ({
-      expandFrom: findBoundary(Math.min, (v) => v.from, from),
-      expandTo: findBoundary(Math.max, (v) => v.to, to),
-    })
+      expandFrom: findBoundary(Math.min, v => v.from, from),
+      expandTo: findBoundary(Math.max, v => v.to, to)
+    });
 
     const { expandFrom, expandTo } = expandRange(from, to);
 
@@ -77,18 +78,18 @@ class CodeEditor extends React.Component {
     this.editor.markText(expandFrom, expandTo, {
       css: 'background-color: rgb(255, 255, 0, 0.4);',
       attributes: {
-        type: 'highlight',
-      },
+        type: 'highlight'
+      }
     });
 
     // remove all overlap marks
-    marks.forEach((m) => m.clear());
+    marks.forEach(m => m.clear());
   }
 
   removeHighlight() {
     const { selection } = this.state;
     if (selection) {
-      const { from, to} = selection;
+      const { from, to } = selection;
       this.findHighlights(from, to).forEach(m => m.clear());
     }
   }
@@ -96,8 +97,8 @@ class CodeEditor extends React.Component {
   renderHighlightButton() {
     const { selection } = this.state;
 
-    let disableRemoveHighlight = true, disableAddHighlight = true;
-
+    let disableRemoveHighlight = true;
+    let disableAddHighlight = true;
 
     // no selection
     if (selection) {
@@ -106,9 +107,12 @@ class CodeEditor extends React.Component {
       const textLength = this.editor.getRange(from, to).length;
       const indexOf = this.editor.indexFromPos.bind(this.editor);
       const otherMarks = this.findHighlights(from, to);
-      const isInsideOtherMark = otherMarks.some((m) => {
-        let other = m.find();
-        return indexOf(other.from) <= indexOf(from) && indexOf(to) <= indexOf(other.to);
+      const isInsideOtherMark = otherMarks.some(m => {
+        const other = m.find();
+        return (
+          indexOf(other.from) <= indexOf(from) &&
+          indexOf(to) <= indexOf(other.to)
+        );
       });
 
       // disable "REMOVE HIGHLIGHT" if the current selection has no marks
@@ -119,34 +123,33 @@ class CodeEditor extends React.Component {
     }
 
     return (
-      <ButtonGroup variant="contained" size="large" aria-label="Full-width contained primary button group">
+      <ButtonGroup
+        variant="contained"
+        size="large"
+        aria-label="Full-width contained primary button group"
+      >
         <Button
           disabled={disableRemoveHighlight}
           onClick={() => this.removeHighlight()}
         >
-          <i className="fal fa-eraser"></i>
+          <i className="fal fa-eraser" />
         </Button>
         <Button
           disabled={disableAddHighlight}
           onClick={() => this.addHighlight()}
         >
-          <i className="fal fa-highlighter"></i>
+          <i className="fal fa-highlighter" />
         </Button>
       </ButtonGroup>
     );
-
   }
 
   renderToolbar() {
-    return (
-      <Box mb={1}>
-        {this.renderHighlightButton()}
-      </Box>
-    );
+    return <Box mb={1}>{this.renderHighlightButton()}</Box>;
   }
 
   onBlur(editor, event) {
-    //this.setState({ selection: null });
+    // this.setState({ selection: null });
   }
 
   renderCodeMirror() {
@@ -158,10 +161,12 @@ class CodeEditor extends React.Component {
           value={code}
           options={{
             mode,
-            lineNumbers: true,
+            lineNumbers: true
           }}
           onBlur={(editor, event) => this.onBlur(editor, event)}
-          onBeforeChange={(_editor, _data, value) => this.setState({ code: value })}
+          onBeforeChange={(_editor, _data, value) =>
+            this.setState({ code: value })
+          }
           onSelection={this.onSelection}
           onChange={this.codeDidChange}
         />
@@ -182,7 +187,7 @@ class CodeEditor extends React.Component {
 CodeEditor.propTypes = {
   mode: PropTypes.string.isRequired,
   code: PropTypes.string.isRequired,
-  codeDidChange: PropTypes.func.isRequired,
+  codeDidChange: PropTypes.func.isRequired
 };
 
 export default CodeEditor;
