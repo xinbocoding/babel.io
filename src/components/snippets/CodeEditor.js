@@ -11,11 +11,12 @@ import * as utils from '../../utils/codeEditorUtils';
 class CodeEditor extends React.Component {
   constructor(props) {
     super(props);
-    const { code, mode } = props;
+    const { code, mode, annotations } = props;
     this.state = {
       selection: null,
       mode,
-      code
+      code,
+      annotations,
     };
 
     this.editor = null;
@@ -28,6 +29,16 @@ class CodeEditor extends React.Component {
 
   codeMirrorDidMount(editor) {
     this.editor = editor;
+    this.applyAnnotations(editor, this.state.annotations);
+  }
+
+  applyAnnotations(editor, annotations) {
+    annotations.forEach(ann => {
+      if (ann.type === 'highlight') {
+        const { from, to } = ann.range;
+        this.addHighlightRange(from, to);
+      }
+    });
   }
 
   onSelection(editor, data) {
@@ -54,6 +65,10 @@ class CodeEditor extends React.Component {
 
   addHighlight() {
     const { from, to } = this.state.selection;
+    this.addHighlightRange(from, to);
+  }
+
+  addHighlightRange(from, to) {
 
     // find all marks that overlap with current selection
     const marks = this.findHighlights(from, to);

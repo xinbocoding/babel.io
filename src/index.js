@@ -3,14 +3,18 @@ import ReactDOM from 'react-dom';
 import './index.css';
 // Redux
 import { Provider } from 'react-redux';
-import { applyMiddleware, createStore } from 'redux';
+import { applyMiddleware, createStore, compose } from 'redux';
 import thunk from 'redux-thunk';
 import * as serviceWorker from './serviceWorker';
 import App from './App';
 import combinedReducers from './reducers';
 
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 const auth = JSON.parse(localStorage.getItem('APP_AUTH'));
-const store = createStore(combinedReducers, { auth }, applyMiddleware(thunk));
+const store = createStore(
+  combinedReducers,
+  { auth },
+  composeEnhancers(applyMiddleware(thunk)));
 
 ReactDOM.render(
   <Provider store={store}>

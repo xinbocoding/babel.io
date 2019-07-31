@@ -6,16 +6,33 @@ import { connect } from 'react-redux';
 import { createSnippetAction } from '../../actions/snippets';
 
 class SnippetsNewPage extends React.Component {
+
+  constructor(props) {
+    super(props);
+
+    this.onSuccess = this.onSuccess.bind(this);
+    this.onFailure = this.onFailure.bind(this);
+  }
+
+  onSuccess(doc) {
+    this.props.history.push('/snippets/' + doc.id);
+  }
+
+  onFailure(error) {
+    console.log(error);
+  }
+
   render() {
+    const { create } = this.props;
     return (
       <Container>
         <NavBar />
         <SnippetForm
           mode="javascript"
-          code={`this.codeDidChange = this.codeDidChange.bind(this);
-    this.onSelection = this.onSelection.bind(this);
-    this.onHighlight = this.onHighlight.bind(this);`}
-          onSubmit={(code, mode, annotations) => this.props.createSnippetAction(code, mode, annotations)}
+          code=""
+          onSubmit={(code, mode, annotations) => {
+            create(code, mode, annotations, this.onSuccess, this.onFailure)
+          }}
         />
       </Container>
     )
@@ -23,13 +40,14 @@ class SnippetsNewPage extends React.Component {
 };
 
 const mapStateToProps = () => {
-  return {};
+  return {
+
+  };
 }
 
-const mapDispatchToProps = () => ({
-  createSnippetAction: (code, mode, annotations) => {
-    createSnippetAction(code, mode, annotations)
-    console.log(annotations)
+const mapDispatchToProps = dispatch => ({
+  create: (code, mode, annotations, callback) => {
+    dispatch(createSnippetAction(code, mode, annotations, callback));
   }
 })
 

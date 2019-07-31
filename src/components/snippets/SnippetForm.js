@@ -9,7 +9,11 @@ import CodeEditor from './CodeEditor';
 class SnippetForm extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {}
+    this.state = {
+      mode: props.mode,
+      code: props.code,
+      annotations: props.annotations
+    }
     this.onSubmit = this.onSubmit.bind(this);
   }
 
@@ -18,7 +22,7 @@ class SnippetForm extends React.Component {
   }
 
   render() {
-    const { code, mode } = this.props;
+    const { code, mode, annotations } = this.state;
     return (
       <Container maxWidth="sm">
         <FormControl fullWidth>
@@ -35,6 +39,7 @@ class SnippetForm extends React.Component {
           <CodeEditor
             mode={mode}
             code={code}
+            annotations={annotations}
             codeDidChange={changed => this.setState({ code: changed })}
             annotationDidChange={changed => this.setState({ annotations: changed })}
           />
@@ -52,6 +57,7 @@ class SnippetForm extends React.Component {
 SnippetForm.propTypes = {
   code: PropTypes.string.isRequired,
   mode: PropTypes.string.isRequired,
+  annotations: PropTypes.arrayOf(PropTypes.any),
   onSubmit: PropTypes.func.isRequired
 };
 
