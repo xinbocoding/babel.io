@@ -16,7 +16,7 @@ const SnippetsNewPage = ({ auth, createSnippet, history }) => {
         onSubmit={data => {
           createSnippet(
             {
-              userId: auth.id,
+              userId: auth.user.id,
               ...data
             },
             history

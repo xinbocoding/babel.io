@@ -10,7 +10,7 @@ import { AuthShape, SnippetShape } from '../../utils/shapes';
 class SnippetsIndexPage extends React.Component {
   componentDidMount() {
     const { auth, fetchSnippetsByUserId } = this.props;
-    fetchSnippetsByUserId(auth.id);
+    fetchSnippetsByUserId(auth.user.id);
   }
 
   render() {
@@ -43,10 +43,12 @@ SnippetsIndexPage.defaultProps = {
   snippets: []
 };
 
-const mapStateToProps = state => ({
-  auth: state.auth,
-  snippets: state.snippetIndexPage.snippets
-});
+const mapStateToProps = state => {
+  return {
+    auth: state.auth,
+    snippets: state.snippetIndexPage.snippets
+  };
+};
 
 const mapDispatchToProps = dispatch => ({
   fetchSnippetsByUserId: userId => {

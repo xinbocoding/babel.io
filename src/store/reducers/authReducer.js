@@ -13,8 +13,11 @@ import { Actions } from '../actions/authActions';
 export default function authReducer(state = {}, action) {
   switch (action.type) {
     case Actions.CHANGE_STATE:
-      return action.payload;
+      return {
+        ...state,
+        user: action.payload.user
+      }
     default:
-      return state;
+      return { ...state };
   }
 }

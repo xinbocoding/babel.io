@@ -7,25 +7,13 @@ const PrivateRoute = ({ component: Component, auth, ...rest }) => (
   <Route
     {...rest}
     render={props =>
-      auth === null ? (
+      auth.user === null ? (
         <Redirect to={{ pathname: '/' }} />
       ) : (
-        <Component {...props} />
-      )
+          <Component {...props} />
+        )
     }
   />
 );
-
-// PrivateRoute.propTypes = {
-//   component: PropTypes.oneOf([
-//     PropTypes.func,
-//     PropTypes.objectOf(React.Component)
-//   ]).isRequired,
-//   auth: AuthShape
-// };
-
-// PrivateRoute.defaultProps = {
-//   auth: null
-// };
 
 export default PrivateRoute;

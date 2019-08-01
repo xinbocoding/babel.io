@@ -32,7 +32,7 @@ class App extends React.Component {
               exact
               path="/"
               render={() =>
-                auth !== null ? <Redirect to="/snippets" /> : <HomePage />
+                auth.user !== null ? <Redirect to="/snippets" /> : <HomePage />
               }
             />
             <PrivateRoute

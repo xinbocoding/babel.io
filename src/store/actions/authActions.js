@@ -9,29 +9,31 @@ export const Actions = {
 
 export const observeAuthAction = () => {
   return dispatch => {
-    firebaseService.auth().onAuthStateChanged(user => {
-      const payload = user
+    firebaseService.auth().onAuthStateChanged(result => {
+      const user = result
         ? {
-          id: user.uid,
-          name: user.displayName
+          id: result.uid,
+          name: result.displayName
         }
         : null;
-      dispatch({ type: Actions.CHANGE_STATE, payload });
+      dispatch({ type: Actions.CHANGE_STATE, payload: { user } });
     });
   };
 };
 
-const authProvider = new firebase.auth.GoogleAuthProvider();
+const authProvider = new firebase.auth.GithubAuthProvider();
 
 export const userSignInAction = () => {
+
   return dispatch => {
     const onError = () => {
       dispatch({
         type: Actions.CHANGE_STATE,
-        payload: null
+        payload: {
+          user: null
+        }
       });
     };
-
     // initliaze provider
     firebaseService
       .auth()
@@ -44,12 +46,14 @@ export const userSignInAction = () => {
             dispatch({
               type: Actions.CHANGE_STATE,
               payload: {
-                id: result.user.uid,
-                name: result.user.displayName
+                user: {
+                  id: result.user.uid,
+                  name: result.user.displayName
+                }
               }
             });
           })
-          .catch(onError); // TODO
+          .catch(console.log); // TODO
       })
       .catch(onError); // TODO
   };
@@ -62,8 +66,7 @@ export const userSignOutAction = () => {
       .signOut()
       .then(() => {
         dispatch({
-          type: 'SIGN_OUT_SUCCESS',
-          payload: null
+          type: 'SIGN_OUT_SUCCESS'
         });
       })
       .catch(error => console.log(error)); // TODO

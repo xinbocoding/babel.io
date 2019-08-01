@@ -9,11 +9,11 @@ import {
 import { AuthShape } from '../../utils/shapes';
 
 const SignInButton = ({ auth, signOut, signIn }) => {
-  if (auth) {
+  if (auth.user) {
     return (
       <React.Fragment>
         <Button edge="end" color="inherit">
-          <b>{auth.name}</b>
+          <b>{auth.user.name}</b>
         </Button>
         <Button color="inherit" onClick={signOut}>
           Sign Out

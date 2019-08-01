@@ -11,4 +11,9 @@ export const SnippetShape = PropTypes.shape({
   )
 });
 
-export const AuthShape = PropTypes.shape({ id: PropTypes.string });
+export const AuthShape = PropTypes.shape({
+  user: PropTypes.shape({
+    id: PropTypes.string,
+    name: PropTypes.string
+  })
+});
