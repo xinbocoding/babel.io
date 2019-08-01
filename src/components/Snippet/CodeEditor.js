@@ -5,18 +5,17 @@ import 'codemirror/lib/codemirror.css';
 import 'codemirror/mode/javascript/javascript';
 import { Button, ButtonGroup } from '@material-ui/core';
 import PropTypes from 'prop-types';
-import Icon from '@material-ui/core/Icon';
 import * as utils from '../../utils/codeEditorUtils';
 
 class CodeEditor extends React.Component {
   constructor(props) {
     super(props);
-    const { code, mode, annotations } = props;
+    const { code, mode, marks } = props;
     this.state = {
       selection: null,
       mode,
       code,
-      annotations,
+      marks
     };
 
     this.editor = null;
@@ -29,11 +28,11 @@ class CodeEditor extends React.Component {
 
   codeMirrorDidMount(editor) {
     this.editor = editor;
-    this.applyAnnotations(editor, this.state.annotations);
+    this.applyMarks(editor, this.state.marks);
   }
 
-  applyAnnotations(editor, annotations) {
-    annotations.forEach(ann => {
+  applyMarks(editor, marks) {
+    marks.forEach(ann => {
       if (ann.type === 'highlight') {
         const { from, to } = ann.range;
         this.addHighlightRange(from, to);
@@ -69,7 +68,6 @@ class CodeEditor extends React.Component {
   }
 
   addHighlightRange(from, to) {
-
     // find all marks that overlap with current selection
     const marks = this.findHighlights(from, to);
 
@@ -101,22 +99,23 @@ class CodeEditor extends React.Component {
     marks.forEach(m => m.clear());
 
     // callback
-    this.props.annotationDidChange(this.getAllAnnotations());
+    this.props.marksDidChange(this.getAllMarks());
   }
 
-  getAllAnnotations() {
-    return this.editor.getAllMarks()
+  getAllMarks() {
+    return this.editor
+      .getAllMarks()
       .filter(m => m.attributes.type !== undefined)
       .map(m => {
         const range = m.find();
-        const cleanPos = (obj) => ({ line: obj.line, ch: obj.ch });
+        const cleanPos = obj => ({ line: obj.line, ch: obj.ch });
         return {
           type: m.attributes.type,
           range: {
             from: cleanPos(range.from),
-            to: cleanPos(range.to),
+            to: cleanPos(range.to)
           }
-        }
+        };
       });
   }
 
@@ -127,8 +126,15 @@ class CodeEditor extends React.Component {
       this.findHighlights(from, to).forEach(m => m.clear());
     }
 
-    // callback
-    this.props.annotationDidChange(this.getAllAnnotations());
+    this.props.marksDidChange(this.getAllAnnotations());
+  }
+
+  renderToolbar() {
+    return <Box mb={1}>{this.renderHighlightButton()}</Box>;
+  }
+
+  onBlur(editor, event) {
+    // this.setState({ selection: null });
   }
 
   renderHighlightButton() {
@@ -153,10 +159,10 @@ class CodeEditor extends React.Component {
       });
 
       // disable "REMOVE HIGHLIGHT" if the current selection has no marks
-      disableRemoveHighlight = otherMarks.length == 0;
+      disableRemoveHighlight = otherMarks.length === 0;
 
       // disable "ADD HIGHLIGHT" if the potential highlight is inside another mark
-      disableAddHighlight = textLength == 0 || isInsideOtherMark;
+      disableAddHighlight = textLength === 0 || isInsideOtherMark;
     }
 
     return (
@@ -179,14 +185,6 @@ class CodeEditor extends React.Component {
         </Button>
       </ButtonGroup>
     );
-  }
-
-  renderToolbar() {
-    return <Box mb={1}>{this.renderHighlightButton()}</Box>;
-  }
-
-  onBlur(editor, event) {
-    // this.setState({ selection: null });
   }
 
   renderCodeMirror() {
@@ -225,7 +223,7 @@ CodeEditor.propTypes = {
   mode: PropTypes.string.isRequired,
   code: PropTypes.string.isRequired,
   codeDidChange: PropTypes.func.isRequired,
-  annotationDidChange: PropTypes.func.isRequired,
+  marksDidChange: PropTypes.func.isRequired
 };
 
 export default CodeEditor;

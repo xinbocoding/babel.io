@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-class UserSnippets extends React.Component {
+class SnippetList extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -26,4 +26,4 @@ class UserSnippets extends React.Component {
   }
 }
 
-export default UserSnippets;
+export default SnippetList;

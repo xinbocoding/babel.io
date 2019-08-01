@@ -5,24 +5,26 @@ import Container from '@material-ui/core/Container';
 import Button from '@material-ui/core/Button';
 import PropTypes from 'prop-types';
 import CodeEditor from './CodeEditor';
+import { SnippetShape } from '../../utils/shapes';
 
 class SnippetForm extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      mode: props.mode,
-      code: props.code,
-      annotations: props.annotations
-    }
+    const { code, mode, marks } = props.snippet;
+    this.state = { code, mode, marks };
+
     this.onSubmit = this.onSubmit.bind(this);
   }
 
   onSubmit() {
-    this.props.onSubmit(this.state.code, this.state.mode, this.state.annotations);
+    const { onSubmit } = this.props;
+    const { code, mode, marks } = this.state;
+
+    onSubmit({ code, mode, marks });
   }
 
   render() {
-    const { code, mode, annotations } = this.state;
+    const { code, mode, marks } = this.state;
     return (
       <Container maxWidth="sm">
         <FormControl fullWidth>
@@ -39,9 +41,9 @@ class SnippetForm extends React.Component {
           <CodeEditor
             mode={mode}
             code={code}
-            annotations={annotations}
+            marks={marks}
             codeDidChange={changed => this.setState({ code: changed })}
-            annotationDidChange={changed => this.setState({ annotations: changed })}
+            marksDidChange={changed => this.setState({ marks: changed })}
           />
         </FormControl>
         <FormControl fullWidth>
@@ -55,10 +57,16 @@ class SnippetForm extends React.Component {
 }
 
 SnippetForm.propTypes = {
-  code: PropTypes.string.isRequired,
-  mode: PropTypes.string.isRequired,
-  annotations: PropTypes.arrayOf(PropTypes.any),
+  snippet: SnippetShape,
   onSubmit: PropTypes.func.isRequired
+};
+
+SnippetForm.defaultProps = {
+  snippet: {
+    mode: 'javascript',
+    code: '',
+    marks: []
+  }
 };
 
 export default SnippetForm;
