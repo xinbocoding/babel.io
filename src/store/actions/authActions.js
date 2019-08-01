@@ -12,9 +12,9 @@ export const observeAuthAction = () => {
     firebaseService.auth().onAuthStateChanged(user => {
       const payload = user
         ? {
-            id: user.uid,
-            name: user.displayName
-          }
+          id: user.uid,
+          name: user.displayName
+        }
         : null;
       dispatch({ type: Actions.CHANGE_STATE, payload });
     });

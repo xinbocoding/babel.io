@@ -43,9 +43,9 @@ const mapStateToProps = state => ({
   auth: state.auth
 });
 
-const mapDispatchToProps = () => ({
-  signIn: userSignInAction,
-  signOut: userSignOutAction
+const mapDispatchToProps = dispatch => ({
+  signIn: () => dispatch(userSignInAction()),
+  signOut: () => dispatch(userSignOutAction())
 });
 
 export default connect(

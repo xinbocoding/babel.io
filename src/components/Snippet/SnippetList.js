@@ -1,5 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import Button from '@material-ui/core/Button';
+
 
 class SnippetList extends React.Component {
   constructor(props) {
@@ -10,12 +12,14 @@ class SnippetList extends React.Component {
   }
 
   renderItems(items) {
+    const { deleteSnippet } = this.props;
     if (items) {
       return items.map(item => (
-        <li>
-          <Link to={`/snippets/${item.id}`} key={item.id}>
+        <li key={item.id}>
+          <Link to={`/snippets/${item.id}`}>
             {item.id}
           </Link>
+          <Link to={`/snippets/${item.id}/edit`}>edit</Link>
         </li>
       ));
     }

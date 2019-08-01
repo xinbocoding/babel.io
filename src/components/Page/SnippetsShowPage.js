@@ -7,6 +7,7 @@ import SnippetDetail from '../Snippet/SnippetDetail';
 import NavBar from '../NavBar';
 import { loadSnippetByIdAction } from '../../store/actions/snippetShowPageActions';
 import { SnippetShape } from '../../utils/shapes';
+import { Link } from 'react-router-dom';
 
 class SnippetsShowPage extends React.Component {
   componentDidMount() {
@@ -21,6 +22,8 @@ class SnippetsShowPage extends React.Component {
         <Container>
           <NavBar />
           <SnippetDetail snippet={snippet} />
+          <Link to={`/snippets/${snippet.id}/edit`}>Edit</Link>
+          <Link to="/snippets">Back</Link>
         </Container>
       );
     }

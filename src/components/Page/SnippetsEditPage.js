@@ -10,6 +10,7 @@ import {
   updateSnippetAction
 } from '../../store/actions/snippetEditPageActions';
 import { SnippetShape } from '../../utils/shapes';
+import { Link } from 'react-router-dom';
 
 class SnippetsEditPage extends Component {
   constructor(props) {
@@ -38,6 +39,7 @@ class SnippetsEditPage extends Component {
             snippet={snippet}
             onSubmit={data => updateSnippet(id, data, history)}
           />
+          <Link to={`/snippets/${snippet.id}`}>Back</Link>
         </Container>
       );
     }

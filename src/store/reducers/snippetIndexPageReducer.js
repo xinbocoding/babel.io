@@ -11,6 +11,8 @@ export default function snippetIndexPageReducer(state = [], action) {
         snippets: action.payload.snippets
       };
     default:
-      return [...state];
+      return {
+        ...state
+      };
   }
 }
