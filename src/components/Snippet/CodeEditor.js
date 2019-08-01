@@ -20,7 +20,7 @@ class CodeEditor extends React.Component {
 
     this.editor = null;
 
-    this.codeDidChange = this.codeDidChange.bind(this);
+    this.onCodeChange = this.onCodeChange.bind(this);
     this.onSelection = this.onSelection.bind(this);
 
     this.codeMirrorDidMount = this.codeMirrorDidMount.bind(this);
@@ -50,9 +50,9 @@ class CodeEditor extends React.Component {
     });
   }
 
-  codeDidChange(editor, data, value) {
+  onCodeChange(editor, data, value) {
     this.setState({ code: value });
-    this.props.codeDidChange(value);
+    this.props.onCodeChange(value);
   }
 
   findHighlights(from, to) {
@@ -99,7 +99,7 @@ class CodeEditor extends React.Component {
     marks.forEach(m => m.clear());
 
     // callback
-    this.props.marksDidChange(this.getAllMarks());
+    this.props.onMarksChange(this.getAllMarks());
   }
 
   getAllMarks() {
@@ -126,7 +126,7 @@ class CodeEditor extends React.Component {
       this.findHighlights(from, to).forEach(m => m.clear());
     }
 
-    this.props.marksDidChange(this.getAllAnnotations());
+    this.props.onMarksChange(this.getAllAnnotations());
   }
 
   renderToolbar() {
@@ -203,7 +203,7 @@ class CodeEditor extends React.Component {
             this.setState({ code: value })
           }
           onSelection={this.onSelection}
-          onChange={this.codeDidChange}
+          onChange={this.onCodeChange}
         />
       </Box>
     );
@@ -222,8 +222,8 @@ class CodeEditor extends React.Component {
 CodeEditor.propTypes = {
   mode: PropTypes.string.isRequired,
   code: PropTypes.string.isRequired,
-  codeDidChange: PropTypes.func.isRequired,
-  marksDidChange: PropTypes.func.isRequired
+  onCodeChange: PropTypes.func.isRequired,
+  onMarksChange: PropTypes.func.isRequired
 };
 
 export default CodeEditor;

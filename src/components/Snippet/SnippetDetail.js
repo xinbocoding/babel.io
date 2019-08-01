@@ -9,12 +9,16 @@ const SnippetDetail = ({ snippet }) => {
         {snippet.id}
       </div>
       <div>
-        lang:
-        {snippet.lang}
+        mode:
+        {snippet.mode}
       </div>
       <div>
         code:
         {snippet.code}
+      </div>
+      <div>
+        marks:
+        {JSON.stringify(snippet.marks)}
       </div>
     </div>
   );

@@ -1,3 +1,5 @@
+import firebase from 'firebase/app';
+
 class SnippetService {
   constructor(firebaseService) {
     this.firebaseService = firebaseService;
@@ -45,7 +47,7 @@ class SnippetService {
   create(data) {
     return new Promise((resolve, reject) => {
       this.collection()
-        .add(data)
+        .add({ ...data })
         .then(docRef => resolve(docRef.id))
         .catch(reject);
     });
@@ -55,7 +57,7 @@ class SnippetService {
     return new Promise((resolve, reject) => {
       this.collection()
         .doc(id)
-        .set(data, { merge: true })
+        .set({ ...data }, { merge: true })
         .then(resolve)
         .catch(reject);
     });

@@ -6,44 +6,68 @@ import Button from '@material-ui/core/Button';
 import PropTypes from 'prop-types';
 import CodeEditor from './CodeEditor';
 import { SnippetShape } from '../../utils/shapes';
+import ModeSelect from './ModeSelect';
 
 class SnippetForm extends React.Component {
   constructor(props) {
     super(props);
-    const { code, mode, marks } = props.snippet;
-    this.state = { code, mode, marks };
 
+    this.state = { snippet: props.snippet };
     this.onSubmit = this.onSubmit.bind(this);
   }
 
   onSubmit() {
     const { onSubmit } = this.props;
-    const { code, mode, marks } = this.state;
+    const { snippet } = this.state;
+    onSubmit(snippet);
+  }
 
-    onSubmit({ code, mode, marks });
+  handleChange(name) {
+    return e => {
+      const { snippet } = this.state;
+      if (e.target) {
+        e.preventDefault();
+        this.setState({ snippet: { ...snippet, [name]: e.target.value } });
+      } else {
+        this.setState({ snippet: { ...snippet, [name]: e } });
+      }
+    };
   }
 
   render() {
-    const { code, mode, marks } = this.state;
+    const { snippet } = this.state;
     return (
       <Container maxWidth="sm">
         <FormControl fullWidth>
           <TextField
-            id="lang"
-            label="Language"
+            label="Title"
+            value={snippet.title}
             margin="normal"
-            variant="outlined"
-            onChange={this.onLangChanged}
-            value={mode}
+            onChange={this.handleChange('title')}
+          />
+        </FormControl>
+        <FormControl fullWidth>
+          <TextField
+            multiline
+            label="Description"
+            value={snippet.description}
+            margin="normal"
+            onChange={this.handleChange('description')}
+          />
+        </FormControl>
+        <FormControl fullWidth>
+          <ModeSelect
+            value={snippet.mode}
+            onChange={this.handleChange('mode')}
           />
         </FormControl>
         <FormControl fullWidth>
           <CodeEditor
-            mode={mode}
-            code={code}
-            marks={marks}
-            codeDidChange={changed => this.setState({ code: changed })}
-            marksDidChange={changed => this.setState({ marks: changed })}
+            mode={snippet.mode}
+            code={snippet.code || ''}
+            marks={snippet.marks}
+            onCodeChange={this.handleChange('code')}
+            onMarksChange={this.handleChange('marks')}
           />
         </FormControl>
         <FormControl fullWidth>
@@ -63,6 +87,8 @@ SnippetForm.propTypes = {
 
 SnippetForm.defaultProps = {
   snippet: {
+    title: '',
+    description: '',
     mode: 'javascript',
     code: '',
     marks: []

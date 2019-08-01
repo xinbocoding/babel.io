@@ -3,11 +3,11 @@ import { Container } from '@material-ui/core';
 import ReactRouterPropTypes from 'react-router-prop-types';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 import SnippetDetail from '../Snippet/SnippetDetail';
 import NavBar from '../NavBar';
 import { loadSnippetByIdAction } from '../../store/actions/snippetShowPageActions';
 import { SnippetShape } from '../../utils/shapes';
-import { Link } from 'react-router-dom';
 
 class SnippetsShowPage extends React.Component {
   componentDidMount() {

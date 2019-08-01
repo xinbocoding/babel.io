@@ -3,6 +3,7 @@ import { Container } from '@material-ui/core';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import ReactRouterPropTypes from 'react-router-prop-types';
+import { Link } from 'react-router-dom';
 import SnippetForm from '../Snippet/SnippetForm';
 import NavBar from '../NavBar';
 import {
@@ -10,7 +11,6 @@ import {
   updateSnippetAction
 } from '../../store/actions/snippetEditPageActions';
 import { SnippetShape } from '../../utils/shapes';
-import { Link } from 'react-router-dom';
 
 class SnippetsEditPage extends Component {
   constructor(props) {
