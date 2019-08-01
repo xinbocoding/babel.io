@@ -4,7 +4,8 @@ import { firebaseService } from '../../services';
 const PREFIX = 'global:auth';
 
 export const Actions = {
-  CHANGE_STATE: `${PREFIX}:change-state`
+  SIGN_IN_USER: `${PREFIX}:sign-in-user`,
+  SIGN_OUT_USER: `${PREFIX}:sign-out-user`
 };
 
 export const observeAuthAction = () => {
@@ -12,11 +13,15 @@ export const observeAuthAction = () => {
     firebaseService.auth().onAuthStateChanged(result => {
       const user = result
         ? {
-          id: result.uid,
-          name: result.displayName
-        }
+            id: result.uid,
+            name: result.displayName
+          }
         : null;
-      dispatch({ type: Actions.CHANGE_STATE, payload: { user } });
+      dispatch(
+        user === null
+          ? { type: Actions.SIGN_OUT_USER }
+          : { type: Actions.SIGN_IN_USER, payload: { user } }
+      );
     });
   };
 };
@@ -24,7 +29,6 @@ export const observeAuthAction = () => {
 const authProvider = new firebase.auth.GithubAuthProvider();
 
 export const userSignInAction = () => {
-
   return dispatch => {
     const onError = () => {
       dispatch({
@@ -69,6 +73,6 @@ export const userSignOutAction = () => {
           type: 'SIGN_OUT_SUCCESS'
         });
       })
-      .catch(error => console.log(error)); // TODO
+      .catch(console.log); // TODO
   };
 };
