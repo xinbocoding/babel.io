@@ -3,39 +3,27 @@ import {
   BrowserRouter as Router,
   Redirect,
   Route,
-  Switch,
+  Switch
 } from 'react-router-dom';
 import { connect } from 'react-redux';
-import firebase from 'firebase/app';
+import PropTypes from 'prop-types';
 import PrivateRoute from './components/Router/PrivateRoute';
-import HomePage from './components/layouts/HomePage';
-import SnippetsPage from './components/layouts/SnippetsPage';
-import SnippetsNewPage from './components/layouts/SnippetsNewPage';
-import SnippetsEditPage from './components/layouts/SnippetsEditPage';
-import SnippetsDetailPage from './components/layouts/SnippetsDetailPage';
+import HomePage from './components/Page/HomePage';
+import SnippetsIndexPage from './components/Page/SnippetsIndexPage';
+import SnippetsNewPage from './components/Page/SnippetsNewPage';
+import SnippetsEditPage from './components/Page/SnippetsEditPage';
+import SnippetsShowPage from './components/Page/SnippetsShowPage';
+import { observeAuthAction } from './store/actions/authActions';
+import { AuthShape } from './utils/shapes';
 
 class App extends React.Component {
-  constructor(props) {
-    super(props);
-    firebase.auth().onAuthStateChanged((user) => {
-      const data = user
-        ? {
-          user: {
-            name: user.displayName,
-            id: user.uid,
-          },
-        }
-        : {
-          user: null,
-        };
-
-      props.dispatch({ type: 'AUTH_STATE_CHANGED', data });
-      localStorage.setItem('APP_AUTH', JSON.stringify(data));
-    });
+  constructor({ setupAuthObserver }) {
+    super();
+    setupAuthObserver();
   }
 
   render() {
-    const isSignedIn = this.props.user != null;
+    const { auth } = this.props;
     return (
       <React.Fragment>
         <Router>
@@ -43,22 +31,29 @@ class App extends React.Component {
             <Route
               exact
               path="/"
-              render={() => (isSignedIn ? <Redirect to="/snippets" /> : <HomePage />)
+              render={() =>
+                auth.user !== null ? <Redirect to="/snippets" /> : <HomePage />
               }
             />
             <PrivateRoute
               exact
               path="/snippets"
-              component={SnippetsPage}
-              user={this.props.user}
+              component={SnippetsIndexPage}
+              auth={auth}
             />
-            <Route exact path="/snippets/new" component={SnippetsNewPage} />
-            <Route
+            <PrivateRoute
+              exact
+              path="/snippets/new"
+              component={SnippetsNewPage}
+              auth={auth}
+            />
+            <PrivateRoute
               exact
               path="/snippets/:id/edit"
               component={SnippetsEditPage}
+              auth={auth}
             />
-            <Route path="/snippets/:id" component={SnippetsDetailPage} />
+            <Route path="/snippets/:id" component={SnippetsShowPage} />
           </Switch>
         </Router>
       </React.Fragment>
@@ -67,14 +62,23 @@ class App extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  user: state.auth.user,
+  auth: state.auth
 });
 
 const mapDispatchToProps = dispatch => ({
-  dispatch,
+  setupAuthObserver: () => dispatch(observeAuthAction())
 });
+
+App.propTypes = {
+  auth: AuthShape,
+  setupAuthObserver: PropTypes.func.isRequired
+};
+
+App.defaultProps = {
+  auth: null
+};
 
 export default connect(
   mapStateToProps,
-  mapDispatchToProps,
+  mapDispatchToProps
 )(App);

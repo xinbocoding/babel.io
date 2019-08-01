@@ -1,22 +1,18 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-// Redux
+
 import { Provider } from 'react-redux';
-import { applyMiddleware, createStore } from 'redux';
-import thunk from 'redux-thunk';
+import store from './store';
+
 import * as serviceWorker from './serviceWorker';
 import App from './App';
-import combinedReducers from './reducers';
-
-const auth = JSON.parse(localStorage.getItem('APP_AUTH'));
-const store = createStore(combinedReducers, { auth }, applyMiddleware(thunk));
 
 ReactDOM.render(
   <Provider store={store}>
     <App />
   </Provider>,
-  document.getElementById('root'),
+  document.getElementById('root')
 );
 
 // If you want your app to work offline and load faster, you can change

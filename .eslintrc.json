@@ -1,16 +1,20 @@
 {
+  "root": true,
+  "env": {
+    "browser": true,
+    "node": true
+  },
   "extends": [
-    "eslint:recommended",
-    "plugin:prettier/recommended",
-    "airbnb"
+    "airbnb",
+    "prettier"
   ],
   "plugins": [
-    "prettier"
+    "prettier",
+    "react"
   ],
   "rules": {
     "prettier/prettier": "warn",
-    "react/prop-types": "warn",
-    "react/destructuring-assignment": "warn",
+    "no-console": "off",
     "react/jsx-filename-extension": [
       1,
       {
@@ -19,6 +23,6 @@
           ".jsx"
         ]
       }
-    ],
+    ]
   }
 }

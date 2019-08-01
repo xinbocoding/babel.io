@@ -1,10 +1,17 @@
 import React from 'react';
 import { Redirect, Route } from 'react-router-dom';
+// import PropTypes from 'prop-types';
+// import { AuthShape } from '../../utils/shapes';
 
-const PrivateRoute = ({ component: Component, user, ...rest }) => (
+const PrivateRoute = ({ component: Component, auth, ...rest }) => (
   <Route
     {...rest}
-    render={props => (user ? <Component {...props} /> : <Redirect to={{ pathname: '/' }} />)
+    render={props =>
+      auth.user === null ? (
+        <Redirect to={{ pathname: '/' }} />
+      ) : (
+          <Component {...props} />
+        )
     }
   />
 );
