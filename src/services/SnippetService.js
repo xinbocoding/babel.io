@@ -55,7 +55,7 @@ class SnippetService {
     return new Promise((resolve, reject) => {
       this.collection()
         .doc(id)
-        .set(data)
+        .set(data, { merge: true })
         .then(resolve)
         .catch(reject);
     });
