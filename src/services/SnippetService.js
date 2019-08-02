@@ -1,5 +1,7 @@
 import firebase from 'firebase/app';
 
+console.log(firebase.firestore.FieldValue.serverTimestamp());
+
 class SnippetService {
   constructor(firebaseService) {
     this.firebaseService = firebaseService;
@@ -46,8 +48,14 @@ class SnippetService {
 
   create(data) {
     return new Promise((resolve, reject) => {
+      const { title, note, code } = data;
       this.collection()
-        .add({ ...data })
+        .add({
+          title,
+          note,
+          code,
+          createdAt: firebase.firestore.FieldValue.serverTimestamp()
+        })
         .then(docRef => resolve(docRef.id))
         .catch(reject);
     });
@@ -55,9 +63,18 @@ class SnippetService {
 
   update(id, data) {
     return new Promise((resolve, reject) => {
+      const { title, note, code } = data;
       this.collection()
         .doc(id)
-        .set({ ...data }, { merge: true })
+        .set(
+          {
+            title,
+            note,
+            code,
+            updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+          },
+          { merge: true }
+        )
         .then(resolve)
         .catch(reject);
     });
