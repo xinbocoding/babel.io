@@ -15,7 +15,6 @@ import { SnippetShape } from '../../utils/shapes';
 class SnippetsEditPage extends Component {
   constructor(props) {
     super(props);
-
     const { match } = props;
     this.state = { id: match.params.id };
   }
