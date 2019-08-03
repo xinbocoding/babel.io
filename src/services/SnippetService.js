@@ -1,4 +1,3 @@
-import firebase from 'firebase/app';
 
 class SnippetService {
   constructor(firebaseService) {

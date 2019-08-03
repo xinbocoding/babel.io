@@ -21,7 +21,6 @@ const SignInButton = ({ auth, signOut, signIn }) => {
       </React.Fragment>
     );
   }
-
   return (
     <Button color="inherit" onClick={signIn}>
       Sign In
@@ -43,6 +42,7 @@ const mapStateToProps = state => ({
   auth: state.auth
 });
 
+// need to change actions here
 const mapDispatchToProps = dispatch => ({
   signIn: () => dispatch(userSignInAction()),
   signOut: () => dispatch(userSignOutAction())

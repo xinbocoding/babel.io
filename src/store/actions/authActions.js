@@ -13,9 +13,9 @@ export const observeAuthAction = () => {
     firebaseService.auth().onAuthStateChanged(result => {
       const user = result
         ? {
-            id: result.uid,
-            name: result.displayName
-          }
+          id: result.uid,
+          name: result.displayName
+        }
         : null;
       dispatch(
         user === null
@@ -30,14 +30,6 @@ const authProvider = new firebase.auth.GithubAuthProvider();
 
 export const userSignInAction = () => {
   return dispatch => {
-    const onError = () => {
-      dispatch({
-        type: Actions.CHANGE_STATE,
-        payload: {
-          user: null
-        }
-      });
-    };
     // initliaze provider
     firebaseService
       .auth()
@@ -46,20 +38,10 @@ export const userSignInAction = () => {
         firebaseService
           .auth()
           .signInWithPopup(authProvider)
-          .then(result => {
-            dispatch({
-              type: Actions.CHANGE_STATE,
-              payload: {
-                user: {
-                  id: result.user.uid,
-                  name: result.user.displayName
-                }
-              }
-            });
-          })
+          .then()
           .catch(console.log); // TODO
       })
-      .catch(onError); // TODO
+      .catch(console.log); // TODO
   };
 };
 
@@ -68,11 +50,7 @@ export const userSignOutAction = () => {
     firebaseService
       .auth()
       .signOut()
-      .then(() => {
-        dispatch({
-          type: 'SIGN_OUT_SUCCESS'
-        });
-      })
+      .then()
       .catch(console.log); // TODO
   };
 };
