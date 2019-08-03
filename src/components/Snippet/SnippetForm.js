@@ -11,10 +11,6 @@ import ModeSelect from './ModeSelect';
 class SnippetForm extends React.Component {
   constructor(props) {
     super(props);
-<<<<<<< HEAD
-    this.state = { snippet: props.snippet };
-    this.onSubmit = this.onSubmit.bind(this);
-=======
 
     this.state = {
       snippet: props.snippet,
@@ -23,7 +19,6 @@ class SnippetForm extends React.Component {
     };
 
     this.handleSubmit = this.handleSubmit.bind(this);
->>>>>>> 83289ccd082cf226e02e886e2b634f346d8c16dd
   }
 
   handleSubmit() {
