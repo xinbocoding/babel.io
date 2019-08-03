@@ -1,33 +1,37 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import Button from '@material-ui/core/Button';
+import Grid from '@material-ui/core/Grid';
+import Paper from '@material-ui/core/Paper';
+import { SnippetListShape } from '../../utils/shapes';
 
-class SnippetList extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      snippets: props.snippets
-    };
-  }
+const SnippetList = ({ snippets }) => {
+  return (
+    <Grid container>
+      {snippets.map(m => {
+        return (
+          <Grid item xs={12} spacing={3}>
+            <Paper>
+              <div>{`${m.title} (${m.mode})`}</div>
+              <pre>
+                <code>{m.code}</code>
+              </pre>
+              <div>
+                <Link to={`/snippets/${m.id}`}>Edit</Link>
+              </div>
+            </Paper>
+          </Grid>
+        );
+      })}
+    </Grid>
+  );
+};
 
-  renderItems(items) {
-    if (items) {
-      return items.map(item => (
-        <li key={item.id}>
-          <p>
-            ID: <Link to={`/snippets/${item.id}`}>{item.id}</Link>
-          </p>
-          <p>
-            <Link to={`/snippets/${item.id}/edit`}>edit</Link>
-          </p>
-        </li>
-      ));
-    }
-  }
+SnippetList.propTypes = {
+  snippets: SnippetListShape
+};
 
-  render() {
-    return <ul>{this.renderItems(this.props.snippets)}</ul>;
-  }
-}
+SnippetList.defaultProps = {
+  snippets: []
+};
 
 export default SnippetList;

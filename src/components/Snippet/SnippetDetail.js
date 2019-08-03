@@ -1,26 +1,16 @@
 import React from 'react';
+import Paper from '@material-ui/core/Paper';
 import { SnippetShape, MarkListShap } from '../../utils/shapes';
 
 const SnippetDetail = ({ snippet, marks }) => {
   return (
-    <div>
-      <div>
-        id:
-        {snippet.id}
-      </div>
-      <div>
-        mode:
-        {snippet.mode}
-      </div>
-      <div>
-        code:
-        {snippet.code}
-      </div>
-      <div>
-        marks:
-        {JSON.stringify(marks)}
-      </div>
-    </div>
+    <Paper>
+      <div>{`${snippet.title} (${snippet.mode})`}</div>
+      <pre>
+        <code>{snippet.code}</code>
+      </pre>
+      <div>{JSON.stringify(marks)}</div>
+    </Paper>
   );
 };
 
