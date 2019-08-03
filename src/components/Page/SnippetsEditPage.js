@@ -13,17 +13,11 @@ import {
 import { SnippetShape, MarkListShap } from '../../utils/shapes';
 
 class SnippetsEditPage extends Component {
+
   constructor(props) {
     super(props);
-<<<<<<< HEAD
     const { match } = props;
     this.state = { id: match.params.id };
-=======
-
-    this.state = {
-      id: props.match.params.id
-    };
->>>>>>> 83289ccd082cf226e02e886e2b634f346d8c16dd
   }
 
   componentDidMount() {
