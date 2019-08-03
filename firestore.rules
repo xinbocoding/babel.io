@@ -15,7 +15,6 @@ service cloud.firestore {
     // - - - - - - - - - - - - - - -
     
     match /snippets/{snippetId} {
-      
       // = = = = = = = = = = = = = = =
       // FIELD VALIDATION RULES
 
@@ -24,17 +23,21 @@ service cloud.firestore {
       //        - the count of fields must be 5
       //        - the content fields must appeared
       //        - one of the timestamp must be appeared
-      function rule_snippbet_keys() {
-        return request.resource.data.keys().size() == 4 &&
-                request.resource.data.keys().hasAll(['title', 'code', 'note']) &&
-                request.resource.data.keys().hasAny(['createdAt', 'updatedAt']);
+      function rules_snippet_keys_for_create() {
+        return request.resource.data.keys().size() == 6 &&
+                request.resource.data.keys().hasAll(['userId', 'title', 'mode', 'code', 'note', 'createdAt']);
+      }
+
+      function rules_snippet_keys_for_update() {
+        return request.resource.data.keys().size() == 5 &&
+                request.resource.data.keys().hasAll(['title', 'mode', 'code', 'note', 'updatedAt']);
       }
       
       // Field: mode
       // Rules:
       //        - must be a known mode id
       function rule_snippet_field_mode() {
-        return exists(/databases/$(database)/documents/modes/${request.resource.data.mode});
+        return request.resource.data.mode.matches('javascript|scala|ruby');
       }
 
       // Field: title
@@ -42,7 +45,8 @@ service cloud.firestore {
       //       - not empty
       //       - less than 1500 bytes (Maximum size of an indexed field value)
       function rule_snippet_field_title() {
-        return request.resource.data.title.size() > 0 &&
+        return request.resource.data.title != null &&
+                request.resource.data.title.size() > 0 &&
                 request.resource.data.title.size() < 1500;
       }
 
@@ -59,7 +63,7 @@ service cloud.firestore {
       // Field: note
       // Rules:
       //        - less than 10000 bytes (Good for most of cases, adjust it if needed)
-      function rule_snippet_field_note()) {
+      function rule_snippet_field_note() {
         return request.resource.data.note != null &&
                 request.resource.data.note.size() < 10000;
       }
@@ -68,10 +72,9 @@ service cloud.firestore {
       // Rules:
       //        - signed in user
       //        - is current userId
-      function rule_snippet_field_userId() {
-        return request.auth.uid != null && 
-                resource.data.userId != null &&
-                request.auth.uid == resource.data.userId;
+      function rule_snippet_is_owner() {
+        return request.auth.uid != null &&
+                request.auth.uid == request.resource.data.userId;
       }
 
       // Field: createdAt
@@ -92,10 +95,9 @@ service cloud.firestore {
       // Rules:
       //
       function rule_snippet_write_data() {
-        return rule_snippbet_keys() &&
-                rule_snippet_field_userId() &&
-                rule_snippet_field_mode() &&
+        return rule_snippet_field_mode() &&
                 rule_snippet_field_title() &&
+                rule_snippet_field_note() &&
                 rule_snippet_field_code();
       }
 
@@ -104,11 +106,16 @@ service cloud.firestore {
       }
       
       function rule_snippet_create() {
-        return rule_snippet_write_data() && rule_snippet_field_createdAt();
+        return rules_snippet_keys_for_create() &&
+                rule_snippet_is_owner() &&
+                rule_snippet_write_data() &&
+                rule_snippet_field_createdAt();
       }
 
       function rule_snippet_update() {
-        return rule_snippet_write_data() && rule_snippet_field_updatedAt();
+        return rules_snippet_keys_for_update() &&
+                rule_snippet_write_data() && 
+                rule_snippet_field_updatedAt();
       }
       // - - - - - - - - - - - - - - -
 
@@ -149,16 +156,14 @@ service cloud.firestore {
       allow get: if allow_snippet_get();
       allow list: if allow_snippet_list();
       // write
-      allow delete: if allow_snippet_delete();
       allow create: if allow_snippet_create();
+      allow delete: if allow_snippet_delete();
       allow update: if allow_snippet_update();
       // - - - - - - - - - - - - - - -
-
-       match /marks/{markId} {
-
-        allow read, write: if rule_system_on();
-
-       }
+       
+      match /marks/{markId} {
+        allow read, write;
+      }
 
     }
   }

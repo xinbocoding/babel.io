@@ -12,7 +12,7 @@ const SnippetsNewPage = ({ createSnippet, history }) => {
     <Container>
       <NavBar />
       <SnippetForm
-        onSubmit={(snippet, marks) => {
+        onSubmit={({ snippet, marks }) => {
           createSnippet(snippet, marks, history);
         }}
       />

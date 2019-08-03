@@ -19,7 +19,9 @@ export const ModeList = [
   }
 ];
 
-export const ModeDict = Object.fromEntries(
+const fromEntries = l => l.reduce((a, [k, v]) => ({ ...a, [k]: v }), {});
+
+export const ModeDict = fromEntries(
   ModeList.map(item => {
     return [item.key, item];
   })

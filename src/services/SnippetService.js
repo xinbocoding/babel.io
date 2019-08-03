@@ -62,11 +62,11 @@ class SnippetService {
   create(snippet, marks) {
     return new Promise((resolve, reject) => {
       const { title, code, note, mode } = snippet;
-
       const db = this.firebaseService.firestore();
       const batch = db.batch();
       const snippetRef = this.snippets().doc();
       batch.set(snippetRef, {
+        userId: this.firebaseService.currentUser().uid,
         title,
         code,
         note,
