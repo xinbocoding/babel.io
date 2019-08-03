@@ -1,19 +1,17 @@
 import firebase from 'firebase/app';
 
-console.log(firebase.firestore.FieldValue.serverTimestamp());
-
 class SnippetService {
   constructor(firebaseService) {
     this.firebaseService = firebaseService;
   }
 
-  collection() {
+  snippets() {
     return this.firebaseService.firestore().collection('snippets');
   }
 
   findAllByUserId(userId) {
     return new Promise((resolve, reject) => {
-      this.collection()
+      this.snippets()
         .where('userId', '==', userId)
         .get()
         .then(snapshot => {
@@ -27,17 +25,32 @@ class SnippetService {
     });
   }
 
-  findById(id) {
+  findById(snippetId, withMarks = false) {
     return new Promise((resolve, reject) => {
-      this.collection()
-        .doc(id)
+      this.snippets()
+        .doc(snippetId)
         .get()
         .then(docRef => {
+          const snippet = {
+            id: docRef.id,
+            ...docRef.data()
+          };
           if (docRef.exists) {
-            resolve({
-              id: docRef.id,
-              ...docRef.data()
-            });
+            if (withMarks) {
+              this.snippets()
+                .doc(docRef.id)
+                .collection('marks')
+                .get()
+                .then(markSnap => {
+                  const marks = markSnap.docs.map(doc => ({
+                    ...doc.data(),
+                    id: doc.id
+                  }));
+                  resolve({ snippet, marks });
+                });
+            } else {
+              resolve({ snippet, marks: [] });
+            }
           } else {
             reject(new Error('No such document'));
           }
@@ -46,35 +59,66 @@ class SnippetService {
     });
   }
 
-  create(data) {
+  create(snippet, marks) {
     return new Promise((resolve, reject) => {
-      const { title, note, code } = data;
-      this.collection()
-        .add({
-          title,
-          note,
-          code,
-          createdAt: firebase.firestore.FieldValue.serverTimestamp()
-        })
-        .then(docRef => resolve(docRef.id))
+      const { title, code, note, mode } = snippet;
+
+      const db = this.firebaseService.firestore();
+      const batch = db.batch();
+      const snippetRef = this.snippets().doc();
+      batch.set(snippetRef, {
+        title,
+        code,
+        note,
+        mode,
+        createdAt: firebase.firestore.FieldValue.serverTimestamp()
+      });
+      marks.forEach(m => batch.set(snippetRef.collection('marks').doc(), m));
+      batch
+        .commit()
+        .then(() => resolve(snippetRef.id))
         .catch(reject);
     });
   }
 
-  update(id, data) {
+  update(snippetId, snippet, marks, removedMarks) {
     return new Promise((resolve, reject) => {
-      const { title, note, code } = data;
-      this.collection()
-        .doc(id)
-        .set(
-          {
-            title,
-            note,
-            code,
-            updatedAt: firebase.firestore.FieldValue.serverTimestamp()
-          },
-          { merge: true }
-        )
+      console.log({ snippet, marks, removedMarks });
+
+      const { title, note, code, mode } = snippet;
+      const db = this.firebaseService.firestore();
+      const batch = db.batch();
+      const snippetRef = this.snippets().doc(snippetId);
+      batch.update(snippetRef, {
+        title,
+        note,
+        code,
+        mode,
+        updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+      });
+
+      removedMarks.forEach(removeId => {
+        batch.delete(snippetRef.collection('marks').doc(removeId));
+      });
+
+      marks
+        .filter(m => !m.id)
+        .forEach(m => {
+          batch.set(snippetRef.collection('marks').doc(), m);
+        });
+
+      batch
+        .commit()
+        .then(() => resolve(snippetRef.id))
+        .catch(reject);
+    });
+  }
+
+  delete(snippetId) {
+    return new Promise((resolve, reject) => {
+      this.snippets()
+        .doc(snippetId)
+        .delete()
         .then(resolve)
         .catch(reject);
     });

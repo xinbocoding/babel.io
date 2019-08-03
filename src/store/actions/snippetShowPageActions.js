@@ -10,12 +10,13 @@ export const Actions = {
 export function loadSnippetByIdAction(id) {
   return dispatch => {
     snippetService
-      .findById(id)
-      .then(snippet => {
+      .findById(id, true)
+      .then(({ snippet, marks }) => {
         dispatch({
           type: Actions.LOAD_SNIPPET_COMPLETE,
           payload: {
-            snippet
+            snippet,
+            marks
           }
         });
       })

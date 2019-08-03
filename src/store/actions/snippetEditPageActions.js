@@ -12,12 +12,13 @@ export const Actions = {
 export function loadSnippetForEditAction(id) {
   return dispatch => {
     snippetService
-      .findById(id)
-      .then(snippet => {
+      .findById(id, true)
+      .then(({ snippet, marks }) => {
         dispatch({
           type: Actions.LOAD_SNIPPET_COMPLETE,
           payload: {
-            snippet
+            snippet,
+            marks
           }
         });
       })
@@ -32,11 +33,16 @@ export function loadSnippetForEditAction(id) {
   };
 }
 
-export function updateSnippetAction(id, data, history) {
+export function updateSnippetAction(id, snippet, marks, removedMarks, history) {
   return dispatch => {
     snippetService
-      .update(id, data)
-      .then(() => history.push(`/snippets/${id}`))
+      .update(id, snippet, marks, removedMarks)
+      .then(() => {
+        dispatch({
+          type: Actions.UPDATE_SNIPPET_COMPLETE
+        });
+        history.push(`/snippets/${id}`);
+      })
       .catch(error => {
         dispatch({
           type: Actions.UPDATE_SNIPPET_ERROR,

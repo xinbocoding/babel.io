@@ -14,6 +14,14 @@ class FirebaseService {
   auth() {
     return this.app.auth();
   }
+
+  currentUser() {
+    return this.app.auth().currentUser;
+  }
+
+  currentUserId() {
+    return this.currentUser().uid;
+  }
 }
 
 export default FirebaseService;
