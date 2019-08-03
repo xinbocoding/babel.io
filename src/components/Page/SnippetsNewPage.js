@@ -6,21 +6,14 @@ import PropTypes from 'prop-types';
 import SnippetForm from '../Snippet/SnippetForm';
 import NavBar from '../NavBar';
 import { createSnippetAction } from '../../store/actions/snippetNewPageActions';
-import { AuthShape } from '../../utils/shapes';
 
-const SnippetsNewPage = ({ auth, createSnippet, history }) => {
+const SnippetsNewPage = ({ createSnippet, history }) => {
   return (
     <Container>
       <NavBar />
       <SnippetForm
-        onSubmit={data => {
-          createSnippet(
-            {
-              userId: auth.user.id,
-              ...data
-            },
-            history
-          );
+        onSubmit={(snippet, marks) => {
+          createSnippet(snippet, marks, history);
         }}
       />
     </Container>
@@ -28,20 +21,19 @@ const SnippetsNewPage = ({ auth, createSnippet, history }) => {
 };
 
 SnippetsNewPage.propTypes = {
-  auth: AuthShape.isRequired,
   history: ReactRouterPropTypes.history.isRequired,
   createSnippet: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => {
   return {
-    auth: state.auth,
     error: state.snippetNewPage.error
   };
 };
 
 const mapDispatchToProps = dispatch => ({
-  createSnippet: (data, history) => dispatch(createSnippetAction(data, history))
+  createSnippet: (snippet, marks, history) =>
+    dispatch(createSnippetAction(snippet, marks, history))
 });
 
 export default connect(

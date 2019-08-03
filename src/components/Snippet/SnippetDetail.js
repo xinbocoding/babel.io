@@ -1,7 +1,7 @@
 import React from 'react';
-import { SnippetShape } from '../../utils/shapes';
+import { SnippetShape, MarkListShap } from '../../utils/shapes';
 
-const SnippetDetail = ({ snippet }) => {
+const SnippetDetail = ({ snippet, marks }) => {
   return (
     <div>
       <div>
@@ -18,14 +18,15 @@ const SnippetDetail = ({ snippet }) => {
       </div>
       <div>
         marks:
-        {JSON.stringify(snippet.marks)}
+        {JSON.stringify(marks)}
       </div>
     </div>
   );
 };
 
 SnippetDetail.propTypes = {
-  snippet: SnippetShape.isRequired
+  snippet: SnippetShape.isRequired,
+  marks: MarkListShap.isRequired
 };
 
 export default SnippetDetail;

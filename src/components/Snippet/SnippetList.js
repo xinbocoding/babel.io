@@ -14,9 +14,8 @@ class SnippetList extends React.Component {
     if (items) {
       return items.map(item => (
         <li key={item.id}>
-          <p>{item.userId}</p>
           <p>
-            <Link to={`/snippets/${item.id}`}>{item.id}</Link>
+            ID: <Link to={`/snippets/${item.id}`}>{item.id}</Link>
           </p>
           <p>
             <Link to={`/snippets/${item.id}/edit`}>edit</Link>
