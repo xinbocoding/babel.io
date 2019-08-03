@@ -10,37 +10,39 @@ import * as utils from '../../utils/codeEditorUtils';
 class CodeEditor extends React.Component {
   constructor(props) {
     super(props);
-    const { code, mode, marks } = props;
+
     this.state = {
       selection: null,
-      mode,
-      code,
-      marks
+      code: props.code
     };
 
-    this.editor = null;
-
-    this.onCodeChange = this.onCodeChange.bind(this);
-    this.onSelection = this.onSelection.bind(this);
-
     this.codeMirrorDidMount = this.codeMirrorDidMount.bind(this);
+    this.onCodeChange = this.onCodeChange.bind(this);
+    this.onMarksChange = this.onMarksChange.bind(this);
+    this.onMarkRemoved = this.onMarkRemoved.bind(this);
+
+    this.onSelection = this.onSelection.bind(this);
   }
 
   codeMirrorDidMount(editor) {
     this.editor = editor;
-    this.applyMarks(editor, this.state.marks);
+    this.setIntialMarks(editor, this.props.marks);
   }
 
-  applyMarks(editor, marks) {
-    marks.forEach(ann => {
-      if (ann.type === 'highlight') {
-        const { from, to } = ann.range;
-        this.addHighlightRange(from, to);
-      }
-    });
+  onCodeChange(_e, _d, code) {
+    this.setState({ code });
+    this.props.onCodeChange(code);
   }
 
-  onSelection(editor, data) {
+  onMarksChange() {
+    this.props.onMarksChange(this.getAllMarks());
+  }
+
+  onMarkRemoved(markId) {
+    this.props.onMarkRemoved(markId);
+  }
+
+  onSelection(_editor, data) {
     const { from, to } = utils.orderRange(data.ranges[0]);
     this.setState({
       selection: {
@@ -50,26 +52,21 @@ class CodeEditor extends React.Component {
     });
   }
 
-  onCodeChange(editor, data, value) {
-    this.setState({ code: value });
-    this.props.onCodeChange(value);
-  }
-
-  findHighlights(from, to) {
+  _findHighlights(from, to) {
     return this.editor
       .findMarks(from, to)
       .filter(m => m.attributes.type === 'highlight')
       .filter(m => m !== undefined);
   }
 
-  addHighlight() {
+  _addHighlight() {
     const { from, to } = this.state.selection;
-    this.addHighlightRange(from, to);
+    this._addHighlightRange(null, from, to);
   }
 
-  addHighlightRange(from, to) {
+  _addHighlightRange(markId, from, to) {
     // find all marks that overlap with current selection
-    const marks = this.findHighlights(from, to);
+    const marks = this._findHighlights(from, to);
 
     // a helper for expand the boundary
     const findBoundary = (compareFunc, valueFunc, initial) => {
@@ -91,15 +88,26 @@ class CodeEditor extends React.Component {
     this.editor.markText(expandFrom, expandTo, {
       css: 'background-color: rgb(255, 255, 0, 0.4);',
       attributes: {
+        id: markId,
         type: 'highlight'
       }
     });
 
     // remove all overlap marks
-    marks.forEach(m => m.clear());
+    marks.forEach(m => this.clearMark(m));
 
-    // callback
-    this.props.onMarksChange(this.getAllMarks());
+    // save updated marks
+    this.onMarksChange();
+  }
+
+  clearMark(mark) {
+    const {
+      attributes: { id }
+    } = mark;
+    if (id) {
+      this.onMarkRemoved(id);
+    }
+    mark.clear();
   }
 
   getAllMarks() {
@@ -108,33 +116,44 @@ class CodeEditor extends React.Component {
       .filter(m => m.attributes.type !== undefined)
       .map(m => {
         const range = m.find();
-        const cleanPos = obj => ({ line: obj.line, ch: obj.ch });
         return {
+          id: m.attributes.id,
           type: m.attributes.type,
-          range: {
-            from: cleanPos(range.from),
-            to: cleanPos(range.to)
-          }
+          from: this.editor.indexFromPos(range.from),
+          to: this.editor.indexFromPos(range.to)
         };
       });
   }
 
-  removeHighlight() {
+  setIntialMarks(editor, marks) {
+    marks.forEach(m => {
+      switch (m.type) {
+        case 'highlight':
+          this._addHighlightRange(
+            m.id,
+            editor.posFromIndex(m.from),
+            editor.posFromIndex(m.to)
+          );
+          break;
+        default:
+          console.error('Unkown mark type', m.type);
+      }
+    });
+  }
+
+  _removeHighlight() {
     const { selection } = this.state;
+
     if (selection) {
       const { from, to } = selection;
-      this.findHighlights(from, to).forEach(m => m.clear());
+      this._findHighlights(from, to).forEach(m => this.clearMark(m));
+      // save updated marks
+      this.onMarksChange();
     }
-
-    this.props.onMarksChange(this.getAllAnnotations());
   }
 
   renderToolbar() {
     return <Box mb={1}>{this.renderHighlightButton()}</Box>;
-  }
-
-  onBlur(editor, event) {
-    // this.setState({ selection: null });
   }
 
   renderHighlightButton() {
@@ -149,7 +168,7 @@ class CodeEditor extends React.Component {
       const { from, to } = selection;
       const textLength = this.editor.getRange(from, to).length;
       const indexOf = this.editor.indexFromPos.bind(this.editor);
-      const otherMarks = this.findHighlights(from, to);
+      const otherMarks = this._findHighlights(from, to);
       const isInsideOtherMark = otherMarks.some(m => {
         const other = m.find();
         return (
@@ -173,13 +192,13 @@ class CodeEditor extends React.Component {
       >
         <Button
           disabled={disableRemoveHighlight}
-          onClick={() => this.removeHighlight()}
+          onClick={() => this._removeHighlight()}
         >
           <i className="fal fa-eraser" />
         </Button>
         <Button
           disabled={disableAddHighlight}
-          onClick={() => this.addHighlight()}
+          onClick={() => this._addHighlight()}
         >
           <i className="fal fa-highlighter" />
         </Button>
@@ -198,12 +217,8 @@ class CodeEditor extends React.Component {
             mode,
             lineNumbers: true
           }}
-          onBlur={(editor, event) => this.onBlur(editor, event)}
-          onBeforeChange={(_editor, _data, value) =>
-            this.setState({ code: value })
-          }
+          onBeforeChange={this.onCodeChange}
           onSelection={this.onSelection}
-          onChange={this.onCodeChange}
         />
       </Box>
     );

@@ -5,7 +5,8 @@ export default function snippetShowPageReducer(state = {}, action) {
     case Actions.LOAD_SNIPPET_COMPLETE:
       return {
         ...state,
-        snippet: action.payload.snippet
+        snippet: action.payload.snippet,
+        marks: action.payload.marks
       };
     default:
       return { ...state };
