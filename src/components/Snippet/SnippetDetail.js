@@ -1,27 +1,22 @@
 import React from 'react';
-import { SnippetShape } from '../../utils/shapes';
+import Paper from '@material-ui/core/Paper';
+import { SnippetShape, MarkListShap } from '../../utils/shapes';
 
-const SnippetDetail = ({ snippet }) => {
+const SnippetDetail = ({ snippet, marks }) => {
   return (
-    <div>
-      <div>
-        id:
-        {snippet.id}
-      </div>
-      <div>
-        lang:
-        {snippet.lang}
-      </div>
-      <div>
-        code:
-        {snippet.code}
-      </div>
-    </div>
+    <Paper>
+      <div>{`${snippet.title} (${snippet.mode})`}</div>
+      <pre>
+        <code>{snippet.code}</code>
+      </pre>
+      <div>{JSON.stringify(marks)}</div>
+    </Paper>
   );
 };
 
 SnippetDetail.propTypes = {
-  snippet: SnippetShape.isRequired
+  snippet: SnippetShape.isRequired,
+  marks: MarkListShap.isRequired
 };
 
 export default SnippetDetail;

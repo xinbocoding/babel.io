@@ -3,11 +3,11 @@ import { Container } from '@material-ui/core';
 import ReactRouterPropTypes from 'react-router-prop-types';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 import SnippetDetail from '../Snippet/SnippetDetail';
 import NavBar from '../NavBar';
 import { loadSnippetByIdAction } from '../../store/actions/snippetShowPageActions';
-import { SnippetShape } from '../../utils/shapes';
-import { Link } from 'react-router-dom';
+import { SnippetShape, MarkListShap } from '../../utils/shapes';
 
 class SnippetsShowPage extends React.Component {
   componentDidMount() {
@@ -16,12 +16,12 @@ class SnippetsShowPage extends React.Component {
   }
 
   render() {
-    const { snippet } = this.props;
+    const { snippet, marks } = this.props;
     if (snippet) {
       return (
         <Container>
           <NavBar />
-          <SnippetDetail snippet={snippet} />
+          <SnippetDetail snippet={snippet} marks={marks} />
           <Link to={`/snippets/${snippet.id}/edit`}>Edit</Link>
           <Link to="/snippets">Back</Link>
         </Container>
@@ -34,16 +34,19 @@ class SnippetsShowPage extends React.Component {
 SnippetsShowPage.propTypes = {
   match: ReactRouterPropTypes.match.isRequired,
   snippet: SnippetShape,
+  marks: MarkListShap,
   fetchSnippet: PropTypes.func.isRequired
 };
 
 SnippetsShowPage.defaultProps = {
-  snippet: null
+  snippet: null,
+  marks: []
 };
 
 const mapStateToProps = state => {
   return {
-    snippet: state.snippetShowPage.snippet
+    snippet: state.snippetShowPage.snippet,
+    marks: state.snippetShowPage.marks
   };
 };
 

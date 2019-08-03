@@ -1,9 +1,170 @@
 rules_version = '2';
+
+//
+// Rule Reference:
+// https://firebase.google.com/docs/reference/rules
+//
 service cloud.firestore {
   match /databases/{database}/documents {
+
+    // = = = = = = = = = = = = = = =
+    // GLOBAL RULES
+    function rule_system_on() {
+      return true;
+    }
+    // - - - - - - - - - - - - - - -
+    
     match /snippets/{snippetId} {
-    	allow read;
-      allow update, delete, create: if request.auth.uid == request.resource.data.userId;
+      // = = = = = = = = = = = = = = =
+      // FIELD VALIDATION RULES
+
+      // Field: *
+      // Rules:
+      //        - the count of fields must be 5
+      //        - the content fields must appeared
+      //        - one of the timestamp must be appeared
+      function rules_snippet_keys_for_create() {
+        return request.resource.data.keys().size() == 6 &&
+                request.resource.data.keys().hasAll(['userId', 'title', 'mode', 'code', 'note', 'createdAt']);
+      }
+
+      function rules_snippet_keys_for_update() {
+        return request.resource.data.keys().size() == 5 &&
+                request.resource.data.keys().hasAll(['title', 'mode', 'code', 'note', 'updatedAt']);
+      }
+      
+      // Field: mode
+      // Rules:
+      //        - must be a known mode id
+      function rule_snippet_field_mode() {
+        return request.resource.data.mode.matches('javascript|scala|ruby');
+      }
+
+      // Field: title
+      // Rules: 
+      //       - not empty
+      //       - less than 1500 bytes (Maximum size of an indexed field value)
+      function rule_snippet_field_title() {
+        return request.resource.data.title != null &&
+                request.resource.data.title.size() > 0 &&
+                request.resource.data.title.size() < 1500;
+      }
+
+      // Field: code
+      // Rules:
+      //        - not empty
+      //        - less than 10000 bytes (Good for most of cases, adjust it if needed)
+      function rule_snippet_field_code() {
+        return request.resource.data.code != null &&
+                request.resource.data.code.size() > 0 && 
+                request.resource.data.code.size() < 10000;
+      }
+
+      // Field: note
+      // Rules:
+      //        - less than 10000 bytes (Good for most of cases, adjust it if needed)
+      function rule_snippet_field_note() {
+        return request.resource.data.note != null &&
+                request.resource.data.note.size() < 10000;
+      }
+
+      // Field: userId
+      // Rules:
+      //        - signed in user
+      //        - is current userId
+      function rule_snippet_is_owner() {
+        return request.auth.uid != null &&
+                request.auth.uid == request.resource.data.userId;
+      }
+
+      // Field: createdAt
+      // Rules:
+      //        - is server timestamp
+      function rule_snippet_field_createdAt() {
+        return request.time == request.resource.data.createdAt;
+      }
+
+      // Field: createdAt
+      // Rules:
+      //        - is server timestamp
+      function rule_snippet_field_updatedAt() {
+        return request.time == request.resource.data.updatedAt;
+      }
+
+      // Field: combined( title, code, note, (createdAt|updatedAt) )
+      // Rules:
+      //
+      function rule_snippet_write_data() {
+        return rule_snippet_field_mode() &&
+                rule_snippet_field_title() &&
+                rule_snippet_field_note() &&
+                rule_snippet_field_code();
+      }
+
+      function rule_snippet_delete() {
+        return rule_snippet_write_data();
+      }
+      
+      function rule_snippet_create() {
+        return rules_snippet_keys_for_create() &&
+                rule_snippet_is_owner() &&
+                rule_snippet_write_data() &&
+                rule_snippet_field_createdAt();
+      }
+
+      function rule_snippet_update() {
+        return rules_snippet_keys_for_update() &&
+                rule_snippet_write_data() && 
+                rule_snippet_field_updatedAt();
+      }
+      // - - - - - - - - - - - - - - -
+
+      // = = = = = = = = = = = = = = =
+      // REQUEST RULES
+
+      // Cond: get a list of documents
+      // Rules: 
+      //        - the query size is less than 100
+      function allow_snippet_list() {
+        return rule_system_on() && request.query.limit <= 100;
+      }
+
+      // Cond: get one document
+      function allow_snippet_get() {
+        return rule_system_on();
+      }
+
+      // Cond: create a new document
+      function allow_snippet_create() {
+        return rule_system_on() && rule_snippet_create();
+      }
+
+      // Cond: update one exists documents
+      function allow_snippet_update() {
+        return rule_system_on() && rule_snippet_update();
+      }
+
+      // Cond: delete one documents
+      function allow_snippet_delete() {
+        return rule_system_on() && rule_snippet_delete();
+      }
+      // - - - - - - - - - - - - - - -
+
+      // = = = = = = = = = = = = = = =
+      // COMBINED RULES
+      // read
+      allow get: if allow_snippet_get();
+      allow list: if allow_snippet_list();
+      // write
+      allow create: if allow_snippet_create();
+      allow delete: if allow_snippet_delete();
+      allow update: if allow_snippet_update();
+      // - - - - - - - - - - - - - - -
+       
+      match /marks/{markId} {
+        allow read, write;
+      }
+
     }
   }
 }

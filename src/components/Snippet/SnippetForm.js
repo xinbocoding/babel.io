@@ -5,49 +5,86 @@ import Container from '@material-ui/core/Container';
 import Button from '@material-ui/core/Button';
 import PropTypes from 'prop-types';
 import CodeEditor from './CodeEditor';
-import { SnippetShape } from '../../utils/shapes';
+import { SnippetShape, MarkListShap } from '../../utils/shapes';
+import ModeSelect from './ModeSelect';
 
 class SnippetForm extends React.Component {
   constructor(props) {
     super(props);
-    const { code, mode, marks } = props.snippet;
-    this.state = { code, mode, marks };
-
+<<<<<<< HEAD
+    this.state = { snippet: props.snippet };
     this.onSubmit = this.onSubmit.bind(this);
+=======
+
+    this.state = {
+      snippet: props.snippet,
+      marks: props.marks,
+      removedMarks: []
+    };
+
+    this.handleSubmit = this.handleSubmit.bind(this);
+>>>>>>> 83289ccd082cf226e02e886e2b634f346d8c16dd
   }
 
-  onSubmit() {
-    const { onSubmit } = this.props;
-    const { code, mode, marks } = this.state;
+  handleSubmit() {
+    this.props.onSubmit(this.state);
+  }
 
-    onSubmit({ code, mode, marks });
+  handleMarksChange(marks) {
+    this.setState({ marks });
+  }
+
+  handleMarkRemoved(markId) {
+    console.log(markId);
+    this.setState({ removedMarks: [...this.state.removedMarks, markId] });
+  }
+
+  handleSnippetChange(field, value) {
+    const { snippet } = this.state;
+    snippet[field] = value;
+    this.setState({ snippet });
   }
 
   render() {
-    const { code, mode, marks } = this.state;
+    const { snippet, marks } = this.state;
+
     return (
       <Container maxWidth="sm">
         <FormControl fullWidth>
           <TextField
-            id="lang"
-            label="Language"
+            label="Title"
+            value={snippet.title}
             margin="normal"
-            variant="outlined"
-            onChange={this.onLangChanged}
-            value={mode}
+            onChange={e => this.handleSnippetChange('title', e.target.value)}
+          />
+        </FormControl>
+        <FormControl fullWidth>
+          <TextField
+            multiline
+            label="Note"
+            value={snippet.note}
+            margin="normal"
+            onChange={e => this.handleSnippetChange('note', e.target.value)}
+          />
+        </FormControl>
+        <FormControl fullWidth>
+          <ModeSelect
+            value={snippet.mode}
+            onChange={v => this.handleSnippetChange('mode', v)}
           />
         </FormControl>
         <FormControl fullWidth>
           <CodeEditor
-            mode={mode}
-            code={code}
+            mode={snippet.mode}
+            code={snippet.code || ''}
             marks={marks}
-            codeDidChange={changed => this.setState({ code: changed })}
-            marksDidChange={changed => this.setState({ marks: changed })}
+            onCodeChange={v => this.handleSnippetChange('code', v)}
+            onMarksChange={v => this.handleMarksChange(v)}
+            onMarkRemoved={v => this.handleMarkRemoved(v)}
           />
         </FormControl>
         <FormControl fullWidth>
-          <Button variant="contained" onClick={this.onSubmit}>
+          <Button variant="contained" onClick={this.handleSubmit}>
             Save
           </Button>
         </FormControl>
@@ -58,15 +95,18 @@ class SnippetForm extends React.Component {
 
 SnippetForm.propTypes = {
   snippet: SnippetShape,
+  marks: MarkListShap,
   onSubmit: PropTypes.func.isRequired
 };
 
 SnippetForm.defaultProps = {
   snippet: {
+    title: '',
+    note: '',
     mode: 'javascript',
-    code: '',
-    marks: []
-  }
+    code: ''
+  },
+  marks: []
 };
 
 export default SnippetForm;

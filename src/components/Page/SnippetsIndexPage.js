@@ -8,7 +8,8 @@ import SnippetList from '../Snippet/SnippetList';
 import { AuthShape, SnippetShape } from '../../utils/shapes';
 
 class SnippetsIndexPage extends React.Component {
-  componentDidMount() {
+  constructor(props) {
+    super(props);
     const { auth, fetchSnippetsByUserId } = this.props;
     fetchSnippetsByUserId(auth.user.id);
   }
@@ -27,9 +28,12 @@ class SnippetsIndexPage extends React.Component {
           </div>
         </div>
       );
-    } else {
-      return <div><Link to="/snippets/new">New Snippet</Link></div>;
     }
+    return (
+      <div>
+        <Link to="/snippets/new">New Snippet</Link>
+      </div>
+    );
   }
 }
 

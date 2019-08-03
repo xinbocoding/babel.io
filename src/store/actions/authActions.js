@@ -4,7 +4,8 @@ import { firebaseService } from '../../services';
 const PREFIX = 'global:auth';
 
 export const Actions = {
-  CHANGE_STATE: `${PREFIX}:change-state`
+  SIGN_IN_USER: `${PREFIX}:sign-in-user`,
+  SIGN_OUT_USER: `${PREFIX}:sign-out-user`
 };
 
 export const observeAuthAction = () => {
@@ -16,7 +17,11 @@ export const observeAuthAction = () => {
           name: result.displayName
         }
         : null;
-      dispatch({ type: Actions.CHANGE_STATE, payload: { user } });
+      dispatch(
+        user === null
+          ? { type: Actions.SIGN_OUT_USER }
+          : { type: Actions.SIGN_IN_USER, payload: { user } }
+      );
     });
   };
 };
@@ -24,16 +29,7 @@ export const observeAuthAction = () => {
 const authProvider = new firebase.auth.GithubAuthProvider();
 
 export const userSignInAction = () => {
-
   return dispatch => {
-    const onError = () => {
-      dispatch({
-        type: Actions.CHANGE_STATE,
-        payload: {
-          user: null
-        }
-      });
-    };
     // initliaze provider
     firebaseService
       .auth()
@@ -42,20 +38,10 @@ export const userSignInAction = () => {
         firebaseService
           .auth()
           .signInWithPopup(authProvider)
-          .then(result => {
-            dispatch({
-              type: Actions.CHANGE_STATE,
-              payload: {
-                user: {
-                  id: result.user.uid,
-                  name: result.user.displayName
-                }
-              }
-            });
-          })
+          .then()
           .catch(console.log); // TODO
       })
-      .catch(onError); // TODO
+      .catch(console.log); // TODO
   };
 };
 
@@ -64,11 +50,7 @@ export const userSignOutAction = () => {
     firebaseService
       .auth()
       .signOut()
-      .then(() => {
-        dispatch({
-          type: 'SIGN_OUT_SUCCESS'
-        });
-      })
-      .catch(error => console.log(error)); // TODO
+      .then()
+      .catch(console.log); // TODO
   };
 };
