@@ -1,5 +1,4 @@
 import React from 'react';
-import { Container } from '@material-ui/core';
 import ReactRouterPropTypes from 'react-router-prop-types';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
@@ -19,12 +18,12 @@ class SnippetsShowPage extends React.Component {
     const { snippet, marks } = this.props;
     if (snippet) {
       return (
-        <Container>
+        <div class="container">
           <NavBar />
           <SnippetDetail snippet={snippet} marks={marks} />
           <Link to={`/snippets/${snippet.id}/edit`}>Edit</Link>
           <Link to="/snippets">Back</Link>
-        </Container>
+        </div>
       );
     }
     return <b>loading</b>;

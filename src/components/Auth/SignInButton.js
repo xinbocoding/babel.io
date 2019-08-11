@@ -1,6 +1,5 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import Button from '@material-ui/core/Button';
 import PropTypes from 'prop-types';
 import {
   userSignInAction,
@@ -12,19 +11,19 @@ const SignInButton = ({ auth, signOut, signIn }) => {
   if (auth.user) {
     return (
       <React.Fragment>
-        <Button edge="end" color="inherit">
+        <button class="btn">
           <b>{auth.user.name}</b>
-        </Button>
-        <Button color="inherit" onClick={signOut}>
+        </button>
+        <button class="btn" onClick={signOut}>
           Sign Out
-        </Button>
+        </button>
       </React.Fragment>
     );
   }
   return (
-    <Button color="inherit" onClick={signIn}>
+    <button class="btn" onClick={signIn}>
       Sign In
-    </Button>
+    </button>
   );
 };
 

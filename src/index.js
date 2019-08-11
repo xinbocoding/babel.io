@@ -8,6 +8,7 @@ import App from './App';
 import configureStore, { history } from './store';
 
 import './index.css';
+import 'bootstrap/dist/css/bootstrap.css';
 
 const store = configureStore();
 

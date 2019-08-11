@@ -1,5 +1,4 @@
 import React from 'react';
-import { Container } from '@material-ui/core';
 import { connect } from 'react-redux';
 import ReactRouterPropTypes from 'react-router-prop-types';
 import PropTypes from 'prop-types';
@@ -9,14 +8,14 @@ import { createSnippetAction } from '../../store/actions/snippetNewPageActions';
 
 const SnippetsNewPage = ({ createSnippet, history }) => {
   return (
-    <Container>
+    <div class="container">
       <NavBar />
       <SnippetForm
         onSubmit={({ snippet, marks }) => {
           createSnippet(snippet, marks, history);
         }}
       />
-    </Container>
+    </div>
   );
 };
 

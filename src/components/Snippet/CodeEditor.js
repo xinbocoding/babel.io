@@ -1,9 +1,7 @@
 import React from 'react';
 import { Controlled as CodeMirror } from 'react-codemirror2';
-import Box from '@material-ui/core/Box';
 import 'codemirror/lib/codemirror.css';
 import 'codemirror/mode/javascript/javascript';
-import { Button, ButtonGroup } from '@material-ui/core';
 import PropTypes from 'prop-types';
 import * as utils from '../../utils/codeEditorUtils';
 
@@ -153,7 +151,7 @@ class CodeEditor extends React.Component {
   }
 
   renderToolbar() {
-    return <Box mb={1}>{this.renderHighlightButton()}</Box>;
+    return <div mb={1}>{this.renderHighlightButton()}</div>;
   }
 
   renderHighlightButton() {
@@ -185,31 +183,31 @@ class CodeEditor extends React.Component {
     }
 
     return (
-      <ButtonGroup
+      <div class="btn-group" role="group"
         variant="contained"
         size="large"
         aria-label="Full-width contained primary button group"
       >
-        <Button
+        <button type="button" class="btn btn-secondary"
           disabled={disableRemoveHighlight}
           onClick={() => this._removeHighlight()}
         >
           <i className="fal fa-eraser" />
-        </Button>
-        <Button
+        </button>
+        <button type="button" class="btn btn-secondary"
           disabled={disableAddHighlight}
           onClick={() => this._addHighlight()}
         >
           <i className="fal fa-highlighter" />
-        </Button>
-      </ButtonGroup>
+        </button>
+      </div>
     );
   }
 
   renderCodeMirror() {
     const { code, mode } = this.state;
     return (
-      <Box mb={1}>
+      <div mb={1}>
         <CodeMirror
           editorDidMount={this.codeMirrorDidMount}
           value={code}
@@ -220,7 +218,7 @@ class CodeEditor extends React.Component {
           onBeforeChange={this.onCodeChange}
           onSelection={this.onSelection}
         />
-      </Box>
+      </div>
     );
   }
 
