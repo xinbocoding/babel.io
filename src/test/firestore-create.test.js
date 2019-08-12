@@ -1,5 +1,5 @@
 import { firestore } from '@firebase/testing';
-import { createApps, deleteApps } from './utils.test';
+import { createApps, deleteApps, createWithApp } from './utils.test';
 
 const baseDataForAllTest = {
   title: 'Example Snippet',
@@ -8,12 +8,6 @@ const baseDataForAllTest = {
   note: 'example note',
   createdAt: firestore.FieldValue.serverTimestamp()
 };
-
-const createWithApp = app => data =>
-  app
-    .collection('snippets')
-    .doc()
-    .set(data);
 
 describe('guest', () => {
   let app;

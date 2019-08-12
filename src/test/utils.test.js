@@ -1,6 +1,18 @@
 import * as firebase from '@firebase/testing';
 import fs from 'fs';
 
+export const createWithApp = app => data =>
+  app
+    .collection('snippets')
+    .doc()
+    .set(data);
+
+export const updateWithApp = app => (id, data) =>
+  app
+    .collection('snippets')
+    .doc(id)
+    .update(data);
+
 expect.extend({
   async toDeny(x) {
     let pass = false;

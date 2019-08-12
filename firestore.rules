@@ -21,6 +21,10 @@ service cloud.firestore {
       return true;
     }
 
+    function user_signed_in() {
+      return request.auth.uid != null;
+    }
+
     // - - - - - - - - - - - - - - -
     
     match /snippets/{snippetId} {
@@ -38,8 +42,8 @@ service cloud.firestore {
       }
 
       function validate_snippet_keys_for_update() {
-        return request.resource.data.keys().size() == 5 &&
-                request.resource.data.keys().hasAll(['title', 'mode', 'code', 'note', 'updatedAt']);
+        return request.resource.data.keys().size() == 7 &&
+                request.resource.data.keys().hasAll(['userId', 'title', 'mode', 'code', 'note', 'createdAt', 'updatedAt']);
       }
       
       // Field: mode
@@ -58,7 +62,7 @@ service cloud.firestore {
                 request.resource.data.title.size() > 0 && 
                 request.resource.data.title.size() < 1500;
       }
-
+      
       // Field: code
       // Rules:
       //        - not empty
@@ -67,6 +71,7 @@ service cloud.firestore {
         return request.resource.data.code == null ||
                 request.resource.data.code.size() < 10000;
       }
+      
 
       // Field: note
       // Rules:
@@ -80,27 +85,35 @@ service cloud.firestore {
       // Rules:
       //        - signed in user
       //        - is current userId
-      function validate_snippet_field_userId() {
-        return request.auth.uid != null &&
+      function validate_snippet_field_user_id() {
+        return request.resource.data.userId != null &&
                 request.auth.uid == request.resource.data.userId;
       }
 
       // Field: createdAt
       // Rules:
       //        - is server timestamp
-      function validate_snippet_field_createdAt() {
+      function validate_snippet_field_create_time() {
         return request.time == request.resource.data.createdAt;
+      }
+
+      function created_time_not_changed() {
+        return request.resource.data.createdAt == resource.data.createdAt;
       }
 
       // Field: createdAt
       // Rules:
       //        - is server timestamp
-      function validate_snippet_field_updatedAt() {
+      function validate_snippet_field_update_time() {
         return request.time == request.resource.data.updatedAt;
       }
 
-      function validate_ownership() {
-        return true;
+      function is_owner() {
+        return request.auth.uid == resource.data.userId
+      }
+
+      function user_id_not_changed() {
+        return request.resource.data.userId == resource.data.userId;
       }
 
       function limit_query_size() {
@@ -128,15 +141,15 @@ service cloud.firestore {
         return global_system_on() && 
                 global_write_on() &&
                 // permission
-                validate_ownership() &&
+                user_signed_in() &&
                 // fields
                 validate_snippet_keys_for_create() &&
-                validate_snippet_field_userId() &&
+                validate_snippet_field_user_id() &&
                 validate_snippet_field_mode() &&
                 validate_snippet_field_title() &&
                 validate_snippet_field_note() &&
                 validate_snippet_field_code() &&
-                validate_snippet_field_createdAt();
+                validate_snippet_field_create_time();
       }
 
       // Cond: update one exists documents
@@ -144,15 +157,17 @@ service cloud.firestore {
         return global_system_on() &&
                 global_write_on() &&
                 // permission
-                validate_ownership() &&
+                user_signed_in() &&
+                is_owner() &&
+                created_time_not_changed() &&
+                user_id_not_changed() &&
                 // fields
                 validate_snippet_keys_for_update() &&
-                validate_snippet_field_userId() &&
                 validate_snippet_field_mode() &&
                 validate_snippet_field_title() &&
                 validate_snippet_field_note() &&
                 validate_snippet_field_code() &&
-                validate_snippet_field_updatedAt();
+                validate_snippet_field_update_time();
       }
 
       // Cond: delete one documents
@@ -160,7 +175,7 @@ service cloud.firestore {
         return global_system_on() && 
                 global_write_on() &&
                 // permission
-                validate_ownership();
+                user_signed_in();
       }
       // - - - - - - - - - - - - - - -
 
