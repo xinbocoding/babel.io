@@ -10,18 +10,18 @@ import { AuthShape } from '../../utils/shapes';
 const SignInButton = ({ auth, signOut, signIn }) => {
   if (auth.user) {
     return (
-      <React.Fragment>
-        <button class="btn">
+      <div className="btn-group" role="group">
+        <button className="btn btn-primary">
           <b>{auth.user.name}</b>
         </button>
-        <button class="btn" onClick={signOut}>
+        <button className="btn btn-primary" onClick={signOut}>
           Sign Out
         </button>
-      </React.Fragment>
+      </div>
     );
   }
   return (
-    <button class="btn" onClick={signIn}>
+    <button className="btn btn-primary" onClick={signIn}>
       Sign In
     </button>
   );

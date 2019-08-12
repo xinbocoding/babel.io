@@ -3,8 +3,8 @@ import SignInButton from './Auth/SignInButton';
 
 const NavBar = () => {
   return (
-    <ul class="nav nav-pills">
-      <li class="nav-item">
+    <ul className="nav navbar-expand-md navbar-dark bg-primary">
+      <li className="nav-item">
         <SignInButton />
       </li>
     </ul>

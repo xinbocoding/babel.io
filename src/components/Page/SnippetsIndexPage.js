@@ -23,7 +23,7 @@ class SnippetsIndexPage extends React.Component {
             <NavBar />
           </div>
           <div>
-            <Link to="/snippets/new">New Snippet</Link>
+            <Link class="badge badge-primary" to="/snippets/new">New Snippet</Link>
             <SnippetList snippets={snippets} />
           </div>
         </div>
