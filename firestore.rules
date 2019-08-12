@@ -175,7 +175,8 @@ service cloud.firestore {
         return global_system_on() && 
                 global_write_on() &&
                 // permission
-                user_signed_in();
+                user_signed_in() &&
+                is_owner();
       }
       // - - - - - - - - - - - - - - -
 
@@ -186,8 +187,8 @@ service cloud.firestore {
       allow list: if allow_snippet_list();
       // write
       allow create: if allow_snippet_create();
-      allow delete: if allow_snippet_delete();
       allow update: if allow_snippet_update();
+      allow delete: if allow_snippet_delete();
       // - - - - - - - - - - - - - - -
        
       match /marks/{markId} {

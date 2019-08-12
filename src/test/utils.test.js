@@ -1,17 +1,40 @@
 import * as firebase from '@firebase/testing';
 import fs from 'fs';
 
-export const createWithApp = app => data =>
-  app
-    .collection('snippets')
-    .doc()
-    .set(data);
+class Client {
+  constructor(user, app) {
+    this.user = user;
+    this.app = app;
+  }
 
-export const updateWithApp = app => (id, data) =>
-  app
-    .collection('snippets')
-    .doc(id)
-    .update(data);
+  snippets() {
+    return this.app.firestore().collection('snippets');
+  }
+
+  createWithId(id, data) {
+    return this.snippets()
+      .doc(id)
+      .set(data);
+  }
+
+  create(data) {
+    return this.snippets()
+      .doc()
+      .set(data);
+  }
+
+  update(id, data) {
+    return this.snippets()
+      .doc(id)
+      .update(data);
+  }
+
+  delete(id) {
+    return this.snippets()
+      .doc(id)
+      .delete();
+  }
+}
 
 expect.extend({
   async toDeny(x) {
@@ -47,7 +70,7 @@ expect.extend({
   }
 });
 
-export const createApps = async (auth = null) => {
+export const createClients = async (auth = null) => {
   const projectId = `rule-spec-${Date.now()}`;
   const users = Array.isArray(auth) ? auth : [auth];
 
@@ -57,7 +80,7 @@ export const createApps = async (auth = null) => {
         projectId,
         auth: user
       });
-      return app.firestore();
+      return new Client(user, app);
     })
   );
 
@@ -75,12 +98,15 @@ export const deleteApps = async () => {
 
 describe('utils', () => {
   test('create multiple apps', async () => {
-    const created = await createApps([{ uid: 'USERID1' }, { uid: 'USERID2' }]); //
+    const created = await createClients([
+      { uid: 'USERID1' },
+      { uid: 'USERID2' }
+    ]);
     expect(created).toHaveLength(2);
   });
 
   test('create one apps', async () => {
-    const created = await createApps([{ uid: 'USERID1' }]);
-    expect(created.collection).toBeDefined();
+    const created = await createClients([{ uid: 'USERID1' }]);
+    expect(created.snippets).toBeDefined();
   });
 });
