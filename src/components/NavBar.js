@@ -5,8 +5,9 @@ import './Navbar.css';
 const NavBar = () => {
   return (
     <div className="container">
-      <nav className="navbar header justify-content-end">
-        <ul className="nav justify-content-end">
+      <nav className="navbar header">
+        <a className="navbar-brand">Logo</a>
+        <ul className="nav">
           <li className="nav-item">
             <SignInButton />
           </li>

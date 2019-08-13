@@ -1,4 +1,18 @@
+.container {
+  align-items: center;
+}
+
 .header {
   background-color: #ffffff;
   height: 64px;
+}
+
+.nav li {
+  padding-right: 20px;
+}
+
+.logo {
+  font-size: 16px;
+  font-weight: 600;
+  margin: 0 auto;
 }

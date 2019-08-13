@@ -6,6 +6,7 @@ import NavBar from '../NavBar';
 import { fetchSnippetsAction } from '../../store/actions/snippetIndexPageActions';
 import SnippetList from '../Snippet/SnippetList';
 import { AuthShape, SnippetShape } from '../../utils/shapes';
+import './SnippetsIndexPage.css';
 
 class SnippetsIndexPage extends React.Component {
   constructor(props) {
@@ -22,8 +23,10 @@ class SnippetsIndexPage extends React.Component {
           <div>
             <NavBar />
           </div>
-          <div>
-            <Link className="badge badge-primary" to="/snippets/new">New Snippet</Link>
+          <div className="container">
+            <button type="button" className="nav-btn btn-default">
+              <Link className="badge-mystyle newSnippet" to="/snippets/new">New Snippet</Link>
+            </button>
             <SnippetList snippets={snippets} />
           </div>
         </div>

@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 
 const SnippetList = ({ snippets }) => {
   return (
-    <div className="container">
+    <div>
       <div>Fix snippet list show</div>
       {snippets.map(m => (
         <div key={m.id}>
