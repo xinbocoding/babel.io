@@ -1,11 +1,10 @@
 import React from 'react';
 import { Provider } from 'react-redux';
 import ReactDOM from 'react-dom';
-import { ConnectedRouter } from 'connected-react-router';
 
 import * as serviceWorker from './serviceWorker';
 import App from './App';
-import configureStore, { history } from './store';
+import configureStore from './store';
 
 import './index.css';
 import 'bootstrap/dist/css/bootstrap.css';
@@ -14,9 +13,7 @@ const store = configureStore();
 
 ReactDOM.render(
   <Provider store={store}>
-    <ConnectedRouter history={history}>
-      <App />
-    </ConnectedRouter>
+    <App />
   </Provider>,
   document.getElementById('root')
 );

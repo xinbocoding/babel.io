@@ -29,7 +29,7 @@ class SnippetsEditPage extends Component {
 
     if (snippet) {
       return (
-        <div class="container">
+        <div className="container">
           <NavBar />
           <SnippetForm
             snippet={snippet}

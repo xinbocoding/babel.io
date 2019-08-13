@@ -183,18 +183,18 @@ class CodeEditor extends React.Component {
     }
 
     return (
-      <div class="btn-group" role="group"
+      <div className="btn-group" role="group"
         variant="contained"
         size="large"
         aria-label="Full-width contained primary button group"
       >
-        <button type="button" class="btn btn-secondary"
+        <button type="button" className="btn btn-secondary"
           disabled={disableRemoveHighlight}
           onClick={() => this._removeHighlight()}
         >
           <i className="fal fa-eraser" />
         </button>
-        <button type="button" class="btn btn-secondary"
+        <button type="button" className="btn btn-secondary"
           disabled={disableAddHighlight}
           onClick={() => this._addHighlight()}
         >

@@ -13,29 +13,28 @@ import SnippetsNewPage from './components/Page/SnippetsNewPage';
 import SnippetsEditPage from './components/Page/SnippetsEditPage';
 import SnippetsShowPage from './components/Page/SnippetsShowPage';
 import { AuthShape } from './utils/shapes';
+import { history } from './store';
 
 const App = ({ auth }) => (
-  <React.Fragment>
-    <Router>
-      <Switch>
-        <Route
-          exact
-          path="/"
-          render={() =>
-            auth.user ? <Redirect to="/snippets" /> : <HomePage />
-          }
-        />
-        <PrivateRoute exact path="/snippets" component={SnippetsIndexPage} />
-        <PrivateRoute exact path="/snippets/new" component={SnippetsNewPage} />
-        <PrivateRoute
-          exact
-          path="/snippets/:id/edit"
-          component={SnippetsEditPage}
-        />
-        <Route path="/snippets/:id" component={SnippetsShowPage} />
-      </Switch>
-    </Router>
-  </React.Fragment>
+  <Router>
+    <Switch>
+      <Route
+        exact
+        path="/"
+        render={() =>
+          auth.user ? <Redirect to="/snippets" /> : <HomePage />
+        }
+      />
+      <PrivateRoute exact path="/snippets" component={SnippetsIndexPage} />
+      <PrivateRoute exact path="/snippets/new" component={SnippetsNewPage} />
+      <PrivateRoute
+        exact
+        path="/snippets/:id/edit"
+        component={SnippetsEditPage}
+      />
+      <Route path="/snippets/:id" component={SnippetsShowPage} />
+    </Switch>
+  </Router>
 );
 
 App.propTypes = {

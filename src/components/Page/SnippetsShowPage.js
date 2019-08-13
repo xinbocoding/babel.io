@@ -18,7 +18,7 @@ class SnippetsShowPage extends React.Component {
     const { snippet, marks } = this.props;
     if (snippet) {
       return (
-        <div class="container">
+        <div className="container">
           <NavBar />
           <SnippetDetail snippet={snippet} marks={marks} />
           <Link to={`/snippets/${snippet.id}/edit`}>Edit</Link>

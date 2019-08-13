@@ -11,17 +11,17 @@ const SignInButton = ({ auth, signOut, signIn }) => {
   if (auth.user) {
     return (
       <div className="btn-group" role="group">
-        <button className="btn btn-primary">
+        <button type="button" className="nav-btn btn-primary">
           <b>{auth.user.name}</b>
         </button>
-        <button className="btn btn-primary" onClick={signOut}>
+        <button type="button" className="nav-btn btn-primary" onClick={signOut}>
           Sign Out
         </button>
       </div>
     );
   }
   return (
-    <button className="btn btn-primary" onClick={signIn}>
+    <button type="button" className="nav-btn btn-primary" onClick={signIn}>
       Sign In
     </button>
   );

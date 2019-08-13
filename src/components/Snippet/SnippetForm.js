@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import CodeEditor from './CodeEditor';
 import { SnippetShape, MarkListShap } from '../../utils/shapes';
-import ModeSelect from './ModeSelect';
 
 class SnippetForm extends React.Component {
   constructor(props) {
@@ -17,7 +16,8 @@ class SnippetForm extends React.Component {
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
-  handleSubmit() {
+  handleSubmit(event) {
+    event.preventDefault();
     this.props.onSubmit(this.state);
   }
 
@@ -26,7 +26,6 @@ class SnippetForm extends React.Component {
   }
 
   handleMarkRemoved(markId) {
-    console.log(markId);
     this.setState({ removedMarks: [...this.state.removedMarks, markId] });
   }
 
@@ -40,9 +39,9 @@ class SnippetForm extends React.Component {
     const { snippet, marks } = this.state;
 
     return (
-      <div class="container">
+      <div className="container">
         <form>
-          <div class="form-group">
+          <div className="form-group">
             <label>Title</label>
             <input
               type="text"
@@ -50,20 +49,21 @@ class SnippetForm extends React.Component {
               onChange={e => this.handleSnippetChange('title', e.target.value)}
             />
           </div>
-          <div class="form-group">
+          <div className="form-group">
             <label>Note</label>
             <textarea row="5"
               value={snippet.note}
               onChange={e => this.handleSnippetChange('note', e.target.value)}
             />
           </div>
-          <div class="form-group">
-            <ModeSelect
+          <div className="form-group">
+            <input
+              type="text"
               value={snippet.mode}
               onChange={v => this.handleSnippetChange('mode', v)}
             />
           </div>
-          <div class="form-group">
+          <div className="form-group">
             <CodeEditor
               mode={snippet.mode}
               code={snippet.code || ''}
@@ -73,7 +73,7 @@ class SnippetForm extends React.Component {
               onMarkRemoved={v => this.handleMarkRemoved(v)}
             />
           </div>
-          <button class="btn btn-primary" onClick={this.handleSubmit}>
+          <button className="btn btn-primary" onClick={this.handleSubmit}>
             Save
           </button>
         </form>
