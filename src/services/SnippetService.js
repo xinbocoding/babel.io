@@ -1,3 +1,4 @@
+import firebase from 'firebase/app';
 
 class SnippetService {
   constructor(firebaseService) {
@@ -82,7 +83,6 @@ class SnippetService {
 
   update(snippetId, snippet, marks, removedMarks) {
     return new Promise((resolve, reject) => {
-      console.log({ snippet, marks, removedMarks });
 
       const { title, note, code, mode } = snippet;
       const db = this.firebaseService.firestore();

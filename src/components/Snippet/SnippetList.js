@@ -1,28 +1,25 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
-import Grid from '@material-ui/core/Grid';
-import Paper from '@material-ui/core/Paper';
 import { SnippetListShape } from '../../utils/shapes';
+import { Link } from 'react-router-dom';
 
 const SnippetList = ({ snippets }) => {
   return (
-    <Grid container>
-      {snippets.map(m => {
-        return (
-          <Grid item xs={12} spacing={3}>
-            <Paper>
-              <div>{`${m.title} (${m.mode})`}</div>
-              <pre>
-                <code>{m.code}</code>
-              </pre>
-              <div>
-                <Link to={`/snippets/${m.id}`}>Edit</Link>
-              </div>
-            </Paper>
-          </Grid>
-        );
-      })}
-    </Grid>
+    <div className="container">
+      <div>Fix snippet list show</div>
+      {snippets.map(m => (
+        <div key={m.id}>
+          <div>
+            <div>{`${m.title} (${m.mode})`}</div>
+            <pre>
+              <code>{m.code}</code>
+            </pre>
+            <div>
+              <Link to={`/snippets/${m.id}`}>Edit</Link>
+            </div>
+          </div>
+        </div>
+      ))}
+    </div>
   );
 };
 

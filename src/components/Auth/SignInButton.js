@@ -1,6 +1,5 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import Button from '@material-ui/core/Button';
 import PropTypes from 'prop-types';
 import {
   userSignInAction,
@@ -11,20 +10,20 @@ import { AuthShape } from '../../utils/shapes';
 const SignInButton = ({ auth, signOut, signIn }) => {
   if (auth.user) {
     return (
-      <React.Fragment>
-        <Button edge="end" color="inherit">
+      <div className="btn-group" role="group">
+        <button type="button" className="nav-btn btn-primary">
           <b>{auth.user.name}</b>
-        </Button>
-        <Button color="inherit" onClick={signOut}>
+        </button>
+        <button type="button" className="nav-btn btn-primary" onClick={signOut}>
           Sign Out
-        </Button>
-      </React.Fragment>
+        </button>
+      </div>
     );
   }
   return (
-    <Button color="inherit" onClick={signIn}>
+    <button type="button" className="nav-btn btn-primary" onClick={signIn}>
       Sign In
-    </Button>
+    </button>
   );
 };
 

@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { Container } from '@material-ui/core';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import ReactRouterPropTypes from 'react-router-prop-types';
@@ -13,17 +12,11 @@ import {
 import { SnippetShape, MarkListShap } from '../../utils/shapes';
 
 class SnippetsEditPage extends Component {
+
   constructor(props) {
     super(props);
-<<<<<<< HEAD
     const { match } = props;
     this.state = { id: match.params.id };
-=======
-
-    this.state = {
-      id: props.match.params.id
-    };
->>>>>>> 83289ccd082cf226e02e886e2b634f346d8c16dd
   }
 
   componentDidMount() {
@@ -36,7 +29,7 @@ class SnippetsEditPage extends Component {
 
     if (snippet) {
       return (
-        <Container>
+        <div className="container">
           <NavBar />
           <SnippetForm
             snippet={snippet}
@@ -46,7 +39,7 @@ class SnippetsEditPage extends Component {
             }
           />
           <Link to={`/snippets/${snippet.id}`}>Back</Link>
-        </Container>
+        </div>
       );
     }
     return <div>loading</div>;

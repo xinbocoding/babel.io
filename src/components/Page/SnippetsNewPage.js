@@ -1,39 +1,48 @@
 import React from 'react';
-import { Container } from '@material-ui/core';
 import { connect } from 'react-redux';
 import ReactRouterPropTypes from 'react-router-prop-types';
 import PropTypes from 'prop-types';
 import SnippetForm from '../Snippet/SnippetForm';
 import NavBar from '../NavBar';
 import { createSnippetAction } from '../../store/actions/snippetNewPageActions';
+import { Redirect } from 'react-router-dom';
 
-const SnippetsNewPage = ({ createSnippet, history }) => {
+const SnippetsNewPage = ({ createSnippet, redirectTo }) => {
+  if (redirectTo !== null) {
+    return <Redirect to={`/snippets/${redirectTo}`} />;
+  }
+
   return (
-    <Container>
+    <div className="container-fluid">
       <NavBar />
       <SnippetForm
         onSubmit={({ snippet, marks }) => {
-          createSnippet(snippet, marks, history);
+          createSnippet(snippet, marks);
         }}
       />
-    </Container>
+    </div>
   );
 };
 
 SnippetsNewPage.propTypes = {
-  history: ReactRouterPropTypes.history.isRequired,
+  redirectTo: PropTypes.string,
   createSnippet: PropTypes.func.isRequired
 };
 
+SnippetsNewPage.defaultProps = {
+  redirectTo: null
+}
+
 const mapStateToProps = state => {
   return {
+    redirectTo: state.snippetNewPage.redirectTo,
     error: state.snippetNewPage.error
   };
 };
 
 const mapDispatchToProps = dispatch => ({
-  createSnippet: (snippet, marks, history) =>
-    dispatch(createSnippetAction(snippet, marks, history))
+  createSnippet: (snippet, marks) =>
+    dispatch(createSnippetAction(snippet, marks))
 });
 
 export default connect(

@@ -1,20 +1,11 @@
 import React from 'react';
-import TextField from '@material-ui/core/TextField';
-import FormControl from '@material-ui/core/FormControl';
-import Container from '@material-ui/core/Container';
-import Button from '@material-ui/core/Button';
 import PropTypes from 'prop-types';
 import CodeEditor from './CodeEditor';
 import { SnippetShape, MarkListShap } from '../../utils/shapes';
-import ModeSelect from './ModeSelect';
 
 class SnippetForm extends React.Component {
   constructor(props) {
     super(props);
-<<<<<<< HEAD
-    this.state = { snippet: props.snippet };
-    this.onSubmit = this.onSubmit.bind(this);
-=======
 
     this.state = {
       snippet: props.snippet,
@@ -23,10 +14,10 @@ class SnippetForm extends React.Component {
     };
 
     this.handleSubmit = this.handleSubmit.bind(this);
->>>>>>> 83289ccd082cf226e02e886e2b634f346d8c16dd
   }
 
-  handleSubmit() {
+  handleSubmit(event) {
+    event.preventDefault();
     this.props.onSubmit(this.state);
   }
 
@@ -35,7 +26,6 @@ class SnippetForm extends React.Component {
   }
 
   handleMarkRemoved(markId) {
-    console.log(markId);
     this.setState({ removedMarks: [...this.state.removedMarks, markId] });
   }
 
@@ -49,46 +39,45 @@ class SnippetForm extends React.Component {
     const { snippet, marks } = this.state;
 
     return (
-      <Container maxWidth="sm">
-        <FormControl fullWidth>
-          <TextField
-            label="Title"
-            value={snippet.title}
-            margin="normal"
-            onChange={e => this.handleSnippetChange('title', e.target.value)}
-          />
-        </FormControl>
-        <FormControl fullWidth>
-          <TextField
-            multiline
-            label="Note"
-            value={snippet.note}
-            margin="normal"
-            onChange={e => this.handleSnippetChange('note', e.target.value)}
-          />
-        </FormControl>
-        <FormControl fullWidth>
-          <ModeSelect
-            value={snippet.mode}
-            onChange={v => this.handleSnippetChange('mode', v)}
-          />
-        </FormControl>
-        <FormControl fullWidth>
-          <CodeEditor
-            mode={snippet.mode}
-            code={snippet.code || ''}
-            marks={marks}
-            onCodeChange={v => this.handleSnippetChange('code', v)}
-            onMarksChange={v => this.handleMarksChange(v)}
-            onMarkRemoved={v => this.handleMarkRemoved(v)}
-          />
-        </FormControl>
-        <FormControl fullWidth>
-          <Button variant="contained" onClick={this.handleSubmit}>
+      <div className="container">
+        <form>
+          <div className="form-group">
+            <label>Title</label>
+            <input
+              type="text"
+              value={snippet.title}
+              onChange={e => this.handleSnippetChange('title', e.target.value)}
+            />
+          </div>
+          <div className="form-group">
+            <label>Note</label>
+            <textarea row="5"
+              value={snippet.note}
+              onChange={e => this.handleSnippetChange('note', e.target.value)}
+            />
+          </div>
+          <div className="form-group">
+            <input
+              type="text"
+              value={snippet.mode}
+              onChange={v => this.handleSnippetChange('mode', v)}
+            />
+          </div>
+          <div className="form-group">
+            <CodeEditor
+              mode={snippet.mode}
+              code={snippet.code || ''}
+              marks={marks}
+              onCodeChange={v => this.handleSnippetChange('code', v)}
+              onMarksChange={v => this.handleMarksChange(v)}
+              onMarkRemoved={v => this.handleMarkRemoved(v)}
+            />
+          </div>
+          <button className="btn btn-primary" onClick={this.handleSubmit}>
             Save
-          </Button>
-        </FormControl>
-      </Container>
+          </button>
+        </form>
+      </div>
     );
   }
 }
