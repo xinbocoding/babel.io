@@ -1,13 +1,18 @@
 import React from 'react';
 import SignInButton from './Auth/SignInButton';
+import './Navbar.css';
 
 const NavBar = () => {
   return (
-    <ul className="nav navbar-expand-md navbar-dark bg-primary">
-      <li className="nav-item">
-        <SignInButton />
-      </li>
-    </ul>
+    <div className="container">
+      <nav className="navbar header justify-content-end">
+        <ul className="nav justify-content-end">
+          <li className="nav-item">
+            <SignInButton />
+          </li>
+        </ul>
+      </nav>
+    </div>
   );
 };
 

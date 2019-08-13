@@ -13,7 +13,6 @@ import SnippetsNewPage from './components/Page/SnippetsNewPage';
 import SnippetsEditPage from './components/Page/SnippetsEditPage';
 import SnippetsShowPage from './components/Page/SnippetsShowPage';
 import { AuthShape } from './utils/shapes';
-import { history } from './store';
 
 const App = ({ auth }) => (
   <Router>

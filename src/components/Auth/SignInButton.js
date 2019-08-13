@@ -6,22 +6,23 @@ import {
   userSignOutAction
 } from '../../store/actions/authActions';
 import { AuthShape } from '../../utils/shapes';
+import './SignInButton.css';
 
 const SignInButton = ({ auth, signOut, signIn }) => {
   if (auth.user) {
     return (
       <div className="btn-group" role="group">
-        <button type="button" className="nav-btn btn-primary">
-          <b>{auth.user.name}</b>
+        <button type="button" className="nav-btn btn-default username">
+          {auth.user.name}
         </button>
-        <button type="button" className="nav-btn btn-primary" onClick={signOut}>
+        <button type="button" className="nav-btn btn-default logout" onClick={signOut}>
           Sign Out
         </button>
       </div>
     );
   }
   return (
-    <button type="button" className="nav-btn btn-primary" onClick={signIn}>
+    <button type="button" className="nav-btn btn-default login" onClick={signIn}>
       Sign In
     </button>
   );

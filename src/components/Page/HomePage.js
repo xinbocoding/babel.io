@@ -2,10 +2,15 @@ import React from 'react';
 import SignInButton from '../Auth/SignInButton';
 
 const HomePage = () => (
-  <div className="nav navbar-expand-md navbar-dark bg-primary sticky-top">
-    <div className="nav-item ">
-      <SignInButton />
-    </div>
+  <div className="container">
+    <nav className="navbar header justify-content-end">
+      <ul className="nav justify-content-end">
+        <div className="nav-item ">
+          <SignInButton />
+        </div>
+        <hr />
+      </ul>
+    </nav>
   </div>
 );
 

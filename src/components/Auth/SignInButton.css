@@ -1,0 +1,22 @@
+.btn-default {
+  color: #ffffff;
+  background-color: #51b371;
+  display: inline-block;
+  margin-bottom: 0;
+  text-align: center;
+  text-transform: uppercase;
+  vertical-align: middle;
+  cursor: pointer;
+  background-image: none;
+  padding: 6px 12px;
+  border-radius: 3px;
+  border: 1px solid transparent;
+  text-decoration: none;
+}
+
+.username, .logout, .login {
+  font-size: 16px;
+  font-weight: 600;
+  padding-right: 10px;
+  margin-right: 10px;
+}

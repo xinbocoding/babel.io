@@ -1,6 +1,5 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import ReactRouterPropTypes from 'react-router-prop-types';
 import PropTypes from 'prop-types';
 import SnippetForm from '../Snippet/SnippetForm';
 import NavBar from '../NavBar';
