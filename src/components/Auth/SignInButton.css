@@ -15,7 +15,7 @@
 } */
 
 .username, .logout, .login {
-  color: black;
+  color: #24292e;
   font-size: 14px;
   font-weight: 600;
   line-height: 1.5;

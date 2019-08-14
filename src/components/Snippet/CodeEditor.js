@@ -4,6 +4,7 @@ import 'codemirror/lib/codemirror.css';
 import 'codemirror/mode/javascript/javascript';
 import PropTypes from 'prop-types';
 import * as utils from '../../utils/codeEditorUtils';
+import './CodeEditor.css'
 
 class CodeEditor extends React.Component {
   constructor(props) {
@@ -183,18 +184,14 @@ class CodeEditor extends React.Component {
     }
 
     return (
-      <div className="btn-group" role="group"
-        variant="contained"
-        size="large"
-        aria-label="Full-width contained primary button group"
-      >
-        <button type="button" className="btn btn-secondary"
+      <div className="Btngroup" role="group">
+        <button type="button" className="Btn btn-sm BtnGroup-item"
           disabled={disableRemoveHighlight}
           onClick={() => this._removeHighlight()}
         >
           <i className="fal fa-eraser" />
         </button>
-        <button type="button" className="btn btn-secondary"
+        <button type="button" className="Btn btn-sm BtnGroup-item"
           disabled={disableAddHighlight}
           onClick={() => this._addHighlight()}
         >
@@ -207,7 +204,7 @@ class CodeEditor extends React.Component {
   renderCodeMirror() {
     const { code, mode } = this.state;
     return (
-      <div mb={1}>
+      <div className="write-content" mb={1}>
         <CodeMirror
           editorDidMount={this.codeMirrorDidMount}
           value={code}

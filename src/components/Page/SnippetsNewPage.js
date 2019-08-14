@@ -12,7 +12,7 @@ const SnippetsNewPage = ({ createSnippet, redirectTo }) => {
   }
 
   return (
-    <div className="container-fluid">
+    <div className="container">
       <NavBar />
       <SnippetForm
         onSubmit={({ snippet, marks }) => {
