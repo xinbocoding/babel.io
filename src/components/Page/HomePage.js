@@ -4,8 +4,8 @@ import SignInButton from '../Auth/SignInButton';
 const HomePage = () => (
   <div className="container">
     <nav className="navbar header justify-content-end">
-      <ul className="nav justify-content-end">
-        <div className="nav-item ">
+      <ul className="nav">
+        <div className="nav-item">
           <SignInButton />
         </div>
         <hr />

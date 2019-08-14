@@ -1,0 +1,61 @@
+.card {
+  width: 95%;
+  margin: 30px auto 10px 0;
+  background-color: #f7f8f9;
+  border: 1px solid rgba(0, 34, 51, 0.1);
+  border-radius: 0.15rem;
+}
+
+.tab-card {
+  border: 1px solid #eee;
+  width: 100%;
+  background-color: #f6f8fa;
+}
+
+.card-body {
+  padding: 0;
+}
+
+.title, .mode {
+  text-align: center;
+  margin: 0 auto;
+}
+
+.code {
+  margin-top: 1px;
+}
+
+.codePart {
+  border: 1px solid rgba(0, 34, 51, 0.1);
+  color: #24292e;
+  background-color: #ffffff;
+  padding: 0.5rem;
+  width: 100%;
+  height: 100px;
+  margin: 0 auto;
+  display: inline-block;
+}
+
+.editlink {
+  margin-top: 10px;
+  margin-bottom: 15px;
+  margin-right: 2%;
+}
+
+.btn-edit {
+  border: none;
+}
+
+.edit {
+  color: #24292e;
+  font-size: 12px;
+  line-height: 20px;
+  font-weight: 600;
+  text-transform: lowercase;
+  padding: 3px 10px;
+}
+
+.edit:hover {
+  text-decoration: none;
+  color: gray;
+}

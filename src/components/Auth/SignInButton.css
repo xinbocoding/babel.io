@@ -1,4 +1,4 @@
-.btn-default {
+/* .btn-default {
   color: #ffffff;
   background-color: #51b371;
   display: inline-block;
@@ -12,11 +12,19 @@
   border-radius: 3px;
   border: 1px solid transparent;
   text-decoration: none;
-}
+} */
 
 .username, .logout, .login {
-  font-size: 16px;
+  color: black;
+  font-size: 14px;
   font-weight: 600;
+  line-height: 1.5;
   padding-right: 10px;
   margin-right: 10px;
+  border: none;
+}
+
+.username:hover, .logout:hover, .login:hover {
+  text-decoration: none;
+  color: gray;
 }

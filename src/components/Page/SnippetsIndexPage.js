@@ -24,7 +24,7 @@ class SnippetsIndexPage extends React.Component {
             <NavBar />
           </div>
           <div className="container">
-            <button type="button" className="nav-btn btn-default">
+            <button type="button" className="nav-btn">
               <Link className="badge-mystyle newSnippet" to="/snippets/new">New Snippet</Link>
             </button>
             <SnippetList snippets={snippets} />
