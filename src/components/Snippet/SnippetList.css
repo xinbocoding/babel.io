@@ -59,3 +59,38 @@
   text-decoration: none;
   color: gray;
 }
+
+.showPageCol {
+  margin: 0!important;
+  padding-left: 0!important;
+  padding-right: 0!important;
+}
+
+/* .showPageColBack {
+  margin: 0!important;
+  padding-left: 0!important;
+  padding-right: 8px!important;
+} */
+
+.showPageEdit, .showPageBack {
+  font-size: 14px!important;
+  font-weight: 600!important;
+  line-height: 20px!important;
+  padding: 6px 12px!important;
+  position: relative!important;
+  user-select: none!important;
+  vertical-align: middle!important;
+  white-space: nowrap!important;
+  margin: 0!important;
+  border-radius: 0.25em;
+}
+
+.showPageEdit {
+  background-color: #28a745;
+  color: #ffffff;
+}
+
+.showPageBack {
+  background-color: #eff3f6!important;
+  color: #24292e!important;
+}

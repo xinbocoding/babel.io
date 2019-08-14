@@ -1,0 +1,72 @@
+.container, .row {
+  padding-right: 15px;
+  padding-left: 15px;
+  margin-bottom: 8px;
+}
+
+.modeChoice {
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 20px;
+  padding: 3px 10px;
+  background-color: #eff3f6;
+  background-image: linear-gradient(-180deg, #fafbfc, #eff3f6 90%);
+  color: #24292e;
+  border: 1px solid rgba(27, 31, 35, .2);
+  text-align: center;
+}
+
+.breadcrumb {
+  background-color: #ffff!important;
+  color: #24292e;
+  font-size: 16px;
+  padding: 3px!important;
+}
+
+.text-normal {
+  font-weight: 600!important;
+}
+
+.flex-auto {
+  flex: 1 1 auto!important;
+}
+
+.codeEdit {
+  border: 1px solid rgba(0, 34, 51, 0.1);
+  color: #24292e;
+  background-color: #ffffff;
+  padding: 0.5rem;
+  width: 100%;
+  margin: 0 auto;
+  display: inline-block;
+}
+
+.code {
+  margin: 15px!important;
+}
+
+.my-4 {
+  margin-top: 24px!important;
+  margin-bottom: 24px!important;
+}
+
+.mb-2 {
+  margin-bottom: 8px!important;
+}
+
+label {
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.marks {
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 20px;
+  padding: 3px 10px;
+  background-color: #eff3f6;
+  color: #24292e;
+  border: 1px solid rgba(27, 31, 35, .2);
+  text-align: left;
+}

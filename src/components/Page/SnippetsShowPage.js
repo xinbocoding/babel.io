@@ -7,6 +7,8 @@ import SnippetDetail from '../Snippet/SnippetDetail';
 import NavBar from '../NavBar';
 import { loadSnippetByIdAction } from '../../store/actions/snippetShowPageActions';
 import { SnippetShape, MarkListShap } from '../../utils/shapes';
+// import './SnippetsShowPage.css';
+import '../Snippet/SnippetList.css';
 
 class SnippetsShowPage extends React.Component {
   componentDidMount() {
@@ -21,8 +23,20 @@ class SnippetsShowPage extends React.Component {
         <div className="container">
           <NavBar />
           <SnippetDetail snippet={snippet} marks={marks} />
-          <Link to={`/snippets/${snippet.id}/edit`}>Edit</Link>
-          <Link to="/snippets">Back</Link>
+          <div className="container">
+            <div className="row justify-content-end">
+              <div className="col-auto editlink showPageCol">
+                <button type="button" className="btn-edit">
+                  <Link className="edit showPageEdit" to={`/snippets/${snippet.id}/edit`}>Edit</Link>
+                </button>
+              </div>
+              <div className="col-auto editlink showPageCol">
+                <button className="btn-edit">
+                  <Link className="edit showPageBack" to="/snippets">Back</Link>
+                </button>
+              </div>
+            </div>
+          </div>
         </div>
       );
     }
