@@ -46,6 +46,10 @@
   border: none;
 }
 
+.backButton {
+  margin-top: 2px;
+}
+
 .edit {
   color: #24292e;
   font-size: 12px;
@@ -76,21 +80,28 @@
   font-size: 14px!important;
   font-weight: 600!important;
   line-height: 20px!important;
-  padding: 6px 12px!important;
   position: relative!important;
   user-select: none!important;
   vertical-align: middle!important;
   white-space: nowrap!important;
-  margin: 0!important;
+  margin: 0 auto!important;
   border-radius: 0.25em;
 }
 
 .showPageEdit {
+  padding: 6px 12px!important;
   background-color: #28a745;
   color: #ffffff;
 }
 
 .showPageBack {
+  text-align: center;
+  padding: 8px 12px 8px 12px!important;
   background-color: #eff3f6!important;
   color: #24292e!important;
+}
+
+.showPageBack:hover {
+  text-decoration: none!important;
+  color: gray!important;
 }

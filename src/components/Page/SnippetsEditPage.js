@@ -40,9 +40,6 @@ class SnippetsEditPage extends Component {
               updateSnippet(id, snippet, marks, removedMarks, history)
             }
           />
-          <button className="flex-auto btn-submit btn-block backButton-style">
-            <Link className="backButton" to={`/snippets/${snippet.id}`}>Back</Link>
-          </button>
         </div>
       );
     }

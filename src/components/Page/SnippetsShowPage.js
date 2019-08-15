@@ -7,7 +7,6 @@ import SnippetDetail from '../Snippet/SnippetDetail';
 import NavBar from '../NavBar';
 import { loadSnippetByIdAction } from '../../store/actions/snippetShowPageActions';
 import { SnippetShape, MarkListShap } from '../../utils/shapes';
-// import './SnippetsShowPage.css';
 import '../Snippet/SnippetList.css';
 
 class SnippetsShowPage extends React.Component {

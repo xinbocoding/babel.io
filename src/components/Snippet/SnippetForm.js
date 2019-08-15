@@ -1,8 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import CodeEditor from './CodeEditor';
+import { Link } from 'react-router-dom';
 import { SnippetShape, MarkListShap } from '../../utils/shapes';
 import './SnippetForm.css';
+import './SnippetList.css';
 
 class SnippetForm extends React.Component {
   constructor(props) {
@@ -76,10 +78,21 @@ class SnippetForm extends React.Component {
             onMarkRemoved={v => this.handleMarkRemoved(v)}
           />
         </div>
-        <button type="submit" className="flex-auto btn-submit btn-block" onClick={this.handleSubmit}>
-          Save
-        </button>
-      </form>
+        <div className="container">
+          <div className="row justify-content-end">
+            <div className="col-auto editlink showPageCol">
+              <button type="button" className="btn-edit edit showPageEdit" onClick={this.handleSubmit}>
+                Save
+              </button>
+            </div>
+            <div className="col-auto editlink showPageCol">
+              <button type="button" className="btn-edit backButton">
+                <Link className="edit showPageBack" to={`/snippets/`}>Back</Link>
+              </button>
+            </div>
+          </div>
+        </div>
+      </form >
     );
   }
 }
