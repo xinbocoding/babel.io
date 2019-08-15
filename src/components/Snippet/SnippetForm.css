@@ -53,3 +53,12 @@
   font-weight: 600;
   line-height: 20px;
 }
+
+.backButton-style {
+  background-color: #eff3f6!important;
+  margin-top: 3px!important;
+}
+
+.backButton {
+  color: #24292e!important;
+}

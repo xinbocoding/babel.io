@@ -10,6 +10,8 @@ import {
   updateSnippetAction
 } from '../../store/actions/snippetEditPageActions';
 import { SnippetShape, MarkListShap } from '../../utils/shapes';
+import '../Snippet/SnippetForm.css';
+
 
 class SnippetsEditPage extends Component {
 
@@ -38,7 +40,9 @@ class SnippetsEditPage extends Component {
               updateSnippet(id, snippet, marks, removedMarks, history)
             }
           />
-          <Link to={`/snippets/${snippet.id}`}>Back</Link>
+          <button className="flex-auto btn-submit btn-block backButton-style">
+            <Link className="backButton" to={`/snippets/${snippet.id}`}>Back</Link>
+          </button>
         </div>
       );
     }
