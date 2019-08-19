@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import SnippetForm from '../Snippet/SnippetForm';
-import NavBar from '../NavBar';
+import Header from '../Elements/Header';
 import { createSnippetAction } from '../../store/actions/snippetNewPageActions';
 import { Redirect } from 'react-router-dom';
 
@@ -12,14 +12,19 @@ const SnippetsNewPage = ({ createSnippet, redirectTo }) => {
   }
 
   return (
-    <div className="container">
-      <NavBar />
-      <SnippetForm
-        onSubmit={({ snippet, marks }) => {
-          createSnippet(snippet, marks);
-        }}
-      />
-    </div>
+    <React.Fragment>
+      <Header />
+      <div className="container">
+        <div className="d-flex flex-column whitebox p-4">
+          <h1 class="pb-2">Create Snippet</h1>
+          <SnippetForm
+            onSubmit={({ snippet, marks }) => {
+              createSnippet(snippet, marks);
+            }}
+          />
+        </div>
+      </div>
+    </React.Fragment>
   );
 };
 

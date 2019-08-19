@@ -6,35 +6,40 @@ import {
   userSignOutAction
 } from '../../store/actions/authActions';
 import { AuthShape } from '../../utils/shapes';
-import './SignInButton.css';
 
-const SignInButton = ({ auth, signOut, signIn }) => {
+const UserSignInOut = ({ auth, signOut, signIn }) => {
   if (auth.user) {
     return (
-      <div className="btn-group" role="group">
-        <button type="button" className="nav-btn username">
-          {auth.user.name}
+      <ul className="navbar-nav ml-auto">
+        <li className="nav-item active">
+          <a className="nav-link" href="#">{auth.user.name}</a>
+        </li>
+        <li className="nav-item">
+          <button type="button" className="btn" onClick={signOut}>
+            Sign Out
         </button>
-        <button type="button" className="nav-btn logout" onClick={signOut}>
-          Sign Out
-        </button>
-      </div>
+        </li>
+      </ul>
     );
   }
   return (
-    <button type="button" className="nav-btn login" onClick={signIn}>
-      Sign In
-    </button>
+    <ul className="navbar-nav ml-auto">
+      <li className="nav-item">
+        <button type="button" className="btn btn-primary sign-in-button" onClick={signIn}>
+          Sign In with Github
+        </button>
+      </li>
+    </ul>
   );
 };
 
-SignInButton.propTypes = {
+UserSignInOut.propTypes = {
   auth: AuthShape,
   signOut: PropTypes.func.isRequired,
   signIn: PropTypes.func.isRequired
 };
 
-SignInButton.defaultProps = {
+UserSignInOut.defaultProps = {
   auth: null
 };
 
@@ -51,4 +56,4 @@ const mapDispatchToProps = dispatch => ({
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(SignInButton);
+)(UserSignInOut);

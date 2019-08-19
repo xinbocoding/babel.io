@@ -12,8 +12,8 @@ const SnippetDetail = ({ snippet, marks }) => {
       <pre className="codeEdit">
         <code>{snippet.code}</code>
       </pre>
-      <div class="my-4">
-        <label class="d-block mb-2 jaws">Marks</label>
+      <div className="my-4">
+        <label className="d-block mb-2 jaws">Marks</label>
         <div className="marks">{JSON.stringify(marks)}</div>
       </div>
     </div>

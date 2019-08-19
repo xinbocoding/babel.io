@@ -1,18 +1,3 @@
-.badge-mystyle {
-  color: #24292e;
-}
-
-.nav-btn {
-  border: none;
-}
-
-.newSnippet {
-  font-size: 16px;
-  font-weight: 600;
-  margin: 0 auto;
-}
-
-.newSnippet:hover {
-  text-decoration: none;
-  color: gray;
+.index-toolbar {
+  padding: 10px;
 }

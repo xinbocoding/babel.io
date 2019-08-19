@@ -5,32 +5,18 @@ import './SnippetList.css';
 
 const SnippetList = ({ snippets }) => {
   return (
-    <div>
+    <div className="container mt-5">
       {snippets.map(m => (
-        <div key={m.id}>
-          <div className="card">
-            <div className="tab-card">
-              <div className="row card-body">
-                <div className="col-auto mr-auto">
-                  <h5 className="title">{`${m.title}`}</h5>
-                </div>
-                <div className="col-auto">
-                  <h6 className="mode">{`${m.mode}`}</h6>
-                </div>
-              </div>
-            </div>
-
-            <pre className="codePart">
-              <code>{m.code}</code>
-            </pre>
-            <div className="row justify-content-end">
-              <div className="col-auto editlink">
-                <button type="button" className="btn-edit">
-                  <Link className="edit" to={`/snippets/${m.id}`}>Edit</Link>
-                </button>
-              </div>
-            </div>
+        <div className="d-flex flex-column snippet-preview whitebox" key={m.id}>
+          <div className="snippet-preview-title">
+            <Link className="edit" to={`/snippets/${m.id}`}>{m.title}</Link>
           </div>
+          <div className="snippet-preview-note text-muted">
+            {m.note}
+          </div>
+          <pre className="snippet-preview-code">
+            <code>{m.code}</code>
+          </pre>
         </div>
       ))}
     </div>

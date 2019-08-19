@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import SnippetDetail from '../Snippet/SnippetDetail';
-import NavBar from '../NavBar';
+import Header from '../Elements/Header';
 import { loadSnippetByIdAction } from '../../store/actions/snippetShowPageActions';
 import { SnippetShape, MarkListShap } from '../../utils/shapes';
 import '../Snippet/SnippetList.css';
@@ -20,7 +20,7 @@ class SnippetsShowPage extends React.Component {
     if (snippet) {
       return (
         <div className="container">
-          <NavBar />
+          <Header />
           <SnippetDetail snippet={snippet} marks={marks} />
           <div className="container">
             <div className="row justify-content-end">

@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import ReactRouterPropTypes from 'react-router-prop-types';
 import { Link } from 'react-router-dom';
 import SnippetForm from '../Snippet/SnippetForm';
-import NavBar from '../NavBar';
+import Header from '../Elements/Header';
 import {
   loadSnippetForEditAction,
   updateSnippetAction
@@ -32,7 +32,7 @@ class SnippetsEditPage extends Component {
     if (snippet) {
       return (
         <div className="container">
-          <NavBar />
+          <Header />
           <SnippetForm
             snippet={snippet}
             marks={marks}

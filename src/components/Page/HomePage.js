@@ -1,17 +1,22 @@
 import React from 'react';
-import SignInButton from '../Auth/SignInButton';
+import Header from '../Elements/Header';
+import LandingSlogan from '../Elements/LandingSlogan';
+import LandingDemo from '../Elements/LandingDemo';
 
 const HomePage = () => (
-  <div className="container">
-    <nav className="navbar header justify-content-end">
-      <ul className="nav">
-        <div className="nav-item">
-          <SignInButton />
+  <React.Fragment>
+    <Header />
+    <div className="container">
+      <div className="row">
+        <div className="col-md-4 col-sm-12">
+          <LandingSlogan />
         </div>
-        <hr />
-      </ul>
-    </nav>
-  </div>
+        <div className="col-md-8 col-sm-12">
+          <LandingDemo />
+        </div>
+      </div>
+    </div>
+  </React.Fragment>
 );
 
 export default HomePage;

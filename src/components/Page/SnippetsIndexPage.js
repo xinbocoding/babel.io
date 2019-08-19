@@ -2,10 +2,11 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import NavBar from '../NavBar';
+import Header from '../Elements/Header';
 import { fetchSnippetsAction } from '../../store/actions/snippetIndexPageActions';
 import SnippetList from '../Snippet/SnippetList';
 import { AuthShape, SnippetShape } from '../../utils/shapes';
+import SearchBar from '../Elements/SearchBar';
 import './SnippetsIndexPage.css';
 
 class SnippetsIndexPage extends React.Component {
@@ -19,17 +20,20 @@ class SnippetsIndexPage extends React.Component {
     const { snippets } = this.props;
     if (snippets.length > 0) {
       return (
-        <div>
-          <div>
-            <NavBar />
-          </div>
+        <React.Fragment>
+          <Header />
           <div className="container">
-            <button type="button" className="nav-btn">
-              <Link className="badge-mystyle newSnippet" to="/snippets/new">New Snippet</Link>
-            </button>
-            <SnippetList snippets={snippets} />
+            <div className="d-flex flex-row whitebox index-toolbar">
+              <div className="col-md-9">
+                <SearchBar />
+              </div>
+              <div className="col-md-3 text-right">
+                <Link to="/snippets/new" className="btn btn-primary">New Snippet</Link>
+              </div>
+            </div>
           </div>
-        </div>
+          <SnippetList snippets={snippets} />
+        </React.Fragment>
       );
     }
     return (
