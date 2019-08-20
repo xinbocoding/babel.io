@@ -31,16 +31,21 @@ class SnippetsEditPage extends Component {
 
     if (snippet) {
       return (
-        <div className="container">
+        <React.Fragment>
           <Header />
-          <SnippetForm
-            snippet={snippet}
-            marks={marks}
-            onSubmit={({ snippet, marks, removedMarks }) =>
-              updateSnippet(id, snippet, marks, removedMarks, history)
-            }
-          />
-        </div>
+          <div className="container">
+            <div className="d-flex flex-column whitebox p-4">
+              <h1 className="page-title">Edit Snippet</h1>
+              <SnippetForm
+                snippet={snippet}
+                marks={marks}
+                onSubmit={({ snippet, marks, removedMarks }) =>
+                  updateSnippet(id, snippet, marks, removedMarks, history)
+                }
+              />
+            </div>
+          </div>
+        </React.Fragment>
       );
     }
     return <div>loading</div>;

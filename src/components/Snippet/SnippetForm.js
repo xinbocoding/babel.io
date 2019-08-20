@@ -43,24 +43,27 @@ class SnippetForm extends React.Component {
 
     return (
       <form>
-        <div className="form-group row">
-          <label className="col-sm-2 col-form-label formTitle">Title</label>
-          <input className="col-sm-9 inputboard"
+        <div className="form-group">
+          <label>Title</label>
+          <input
+            className="form-control"
             type="text"
             value={snippet.title}
             onChange={e => this.handleSnippetChange('title', e.target.value)}
           />
         </div>
-        <div className="form-group row">
-          <label className="col-sm-2 col-form-label formNote">Note</label>
-          <textarea className="col-sm-9 noteinput" row="5"
+        <div className="form-group">
+          <label>Note</label>
+          <textarea
+            className="form-control"
+            row="5"
             value={snippet.note}
             onChange={e => this.handleSnippetChange('note', e.target.value)}
           />
         </div>
         <div className="form-group">
-          <label className="pr-2 text-bold text-gray">Edit mode:</label>
-          <select className="form-select select-sm flex-auto">
+          <label>Edit mode:</label>
+          <select className="form-control">
             <option
               type="text"
               value={snippet.mode}
@@ -78,19 +81,11 @@ class SnippetForm extends React.Component {
             onMarkRemoved={v => this.handleMarkRemoved(v)}
           />
         </div>
-        <div className="container">
-          <div className="row justify-content-end">
-            <div className="col-auto editlink showPageCol">
-              <button type="button" className="btn-edit edit showPageEdit" onClick={this.handleSubmit}>
-                Save
-              </button>
-            </div>
-            <div className="col-auto editlink showPageCol">
-              <button type="button" className="btn-edit backButton">
-                <Link className="edit showPageBack" to={`/snippets/`}>Back</Link>
-              </button>
-            </div>
-          </div>
+        <div className="form-group text-center">
+          <Link className="btn" to={`/snippets/`}>Back</Link>
+          <button type="button" className="btn btn-primary" onClick={this.handleSubmit}>
+            Save
+           </button>
         </div>
       </form >
     );

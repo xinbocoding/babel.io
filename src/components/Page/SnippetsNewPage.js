@@ -16,7 +16,7 @@ const SnippetsNewPage = ({ createSnippet, redirectTo }) => {
       <Header />
       <div className="container">
         <div className="d-flex flex-column whitebox p-4">
-          <h1 class="pb-2">Create Snippet</h1>
+          <h1 className="page-title">Create Snippet</h1>
           <SnippetForm
             onSubmit={({ snippet, marks }) => {
               createSnippet(snippet, marks);
