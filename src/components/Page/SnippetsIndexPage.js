@@ -24,11 +24,11 @@ class SnippetsIndexPage extends React.Component {
           <Header />
           <div className="container">
             <div className="d-flex flex-row whitebox index-toolbar">
-              <div className="col-md-9">
+              <div className="col-md-10">
                 <SearchBar />
               </div>
-              <div className="col-md-3 text-right">
-                <Link to="/snippets/new" className="btn btn-primary">New Snippet</Link>
+              <div className="col-md-2 text-right">
+                <Link to="/snippets/new" className="btn btn-primary btn-block">New Snippet</Link>
               </div>
             </div>
           </div>
