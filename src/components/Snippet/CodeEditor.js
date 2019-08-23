@@ -186,13 +186,13 @@ class CodeEditor extends React.Component {
     return (
       <div className="form-row">
         <div className="col-md-8 col-sm-6">
-          <button type="button" className="Btn btn-sm BtnGroup-item"
+          <button type="button" className="btn-tool btn-sm btnGroup-item"
             disabled={disableRemoveHighlight}
             onClick={() => this._removeHighlight()}
           >
             <i className="fal fa-eraser" />
           </button>
-          <button type="button" className="Btn btn-sm BtnGroup-item"
+          <button type="button" className="btn-tool btn-sm btnGroup-item"
             disabled={disableAddHighlight}
             onClick={() => this._addHighlight()}
           >
