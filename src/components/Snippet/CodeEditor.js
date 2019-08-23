@@ -184,19 +184,30 @@ class CodeEditor extends React.Component {
     }
 
     return (
-      <div className="Btngroup" role="group">
-        <button type="button" className="Btn btn-sm BtnGroup-item"
-          disabled={disableRemoveHighlight}
-          onClick={() => this._removeHighlight()}
-        >
-          <i className="fal fa-eraser" />
-        </button>
-        <button type="button" className="Btn btn-sm BtnGroup-item"
-          disabled={disableAddHighlight}
-          onClick={() => this._addHighlight()}
-        >
-          <i className="fal fa-highlighter" />
-        </button>
+      <div className="form-row">
+        <div className="col-md-8 col-sm-6">
+          <button type="button" className="Btn btn-sm BtnGroup-item"
+            disabled={disableRemoveHighlight}
+            onClick={() => this._removeHighlight()}
+          >
+            <i className="fal fa-eraser" />
+          </button>
+          <button type="button" className="Btn btn-sm BtnGroup-item"
+            disabled={disableAddHighlight}
+            onClick={() => this._addHighlight()}
+          >
+            <i className="fal fa-highlighter" />
+          </button>
+        </div>
+        <div className="col-md-4 col-sm-6">
+          <select className="form-control">
+            <option
+              type="text"
+              value="javascript"
+              onChange={v => this.handleSnippetChange('mode', v)}
+            />
+          </select>
+        </div>
       </div>
     );
   }

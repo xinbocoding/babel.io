@@ -61,26 +61,14 @@ class SnippetForm extends React.Component {
             onChange={e => this.handleSnippetChange('note', e.target.value)}
           />
         </div>
-        <div className="form-group">
-          <label>Edit mode:</label>
-          <select className="form-control">
-            <option
-              type="text"
-              value={snippet.mode}
-              onChange={v => this.handleSnippetChange('mode', v)}
-            />
-          </select>
-        </div>
-        <div className="form-group">
-          <CodeEditor
-            mode={snippet.mode}
-            code={snippet.code || ''}
-            marks={marks}
-            onCodeChange={v => this.handleSnippetChange('code', v)}
-            onMarksChange={v => this.handleMarksChange(v)}
-            onMarkRemoved={v => this.handleMarkRemoved(v)}
-          />
-        </div>
+        <CodeEditor
+          mode={snippet.mode}
+          code={snippet.code || ''}
+          marks={marks}
+          onCodeChange={v => this.handleSnippetChange('code', v)}
+          onMarksChange={v => this.handleMarksChange(v)}
+          onMarkRemoved={v => this.handleMarkRemoved(v)}
+        />
         <div className="form-group text-center">
           <Link className="btn" to={`/snippets/`}>Back</Link>
           <button type="button" className="btn btn-primary" onClick={this.handleSubmit}>

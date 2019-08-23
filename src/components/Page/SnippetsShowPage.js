@@ -8,6 +8,7 @@ import Header from '../Elements/Header';
 import { loadSnippetByIdAction } from '../../store/actions/snippetShowPageActions';
 import { SnippetShape, MarkListShap } from '../../utils/shapes';
 import '../Snippet/SnippetList.css';
+import '../Snippet/SnippetForm.css';
 
 class SnippetsShowPage extends React.Component {
   componentDidMount() {
@@ -19,24 +20,18 @@ class SnippetsShowPage extends React.Component {
     const { snippet, marks } = this.props;
     if (snippet) {
       return (
-        <div className="container">
+        <React.Fragment>
           <Header />
-          <SnippetDetail snippet={snippet} marks={marks} />
           <div className="container">
-            <div className="row justify-content-end">
-              <div className="col-auto editlink showPageCol">
-                <button type="button" className="btn-edit">
-                  <Link className="edit showPageEdit" to={`/snippets/${snippet.id}/edit`}>Edit</Link>
-                </button>
-              </div>
-              <div className="col-auto editlink showPageCol">
-                <button className="btn-edit">
-                  <Link className="edit showPageBack" to="/snippets">Back</Link>
-                </button>
+            <div className="d-flex flex-column whitebox p-4">
+              <SnippetDetail snippet={snippet} marks={marks} />
+              <div className="form-group text-center">
+                <Link className="btn" to="/snippets">Back</Link>
+                <Link className="btn btn-primary" to={`/snippets/${snippet.id}/edit`}>Edit</Link>
               </div>
             </div>
           </div>
-        </div>
+        </React.Fragment>
       );
     }
     return <b>loading</b>;
