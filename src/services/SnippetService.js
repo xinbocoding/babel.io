@@ -9,17 +9,27 @@ class SnippetService {
     return this.firebaseService.firestore().collection('snippets');
   }
 
-  findAllByUserId(userId) {
+  findAllByUserId(userId, startAfter) {
     return new Promise((resolve, reject) => {
-      this.snippets()
+      let query = this.snippets()
         .where('userId', '==', userId)
+        .orderBy('createdAt', 'desc');
+
+      if (startAfter) {
+        query = query.startAfter(startAfter);
+      }
+
+      query
+        .limit(10)
         .get()
         .then(snapshot => {
-          const items = snapshot.docs.map(doc => ({
+          const snippets = snapshot.docs.map(doc => ({
             ...doc.data(),
             id: doc.id
           }));
-          resolve(items);
+
+          const lastVisible = snapshot.docs[snapshot.docs.length - 1];
+          resolve({ snippets, lastVisible });
         })
         .catch(reject);
     });
@@ -83,11 +93,11 @@ class SnippetService {
 
   update(snippetId, snippet, marks, removedMarks) {
     return new Promise((resolve, reject) => {
-
       const { title, note, code, mode } = snippet;
       const db = this.firebaseService.firestore();
       const batch = db.batch();
       const snippetRef = this.snippets().doc(snippetId);
+
       batch.update(snippetRef, {
         title,
         note,
@@ -100,11 +110,11 @@ class SnippetService {
         batch.delete(snippetRef.collection('marks').doc(removeId));
       });
 
-      marks
-        .filter(m => !m.id)
-        .forEach(m => {
-          batch.set(snippetRef.collection('marks').doc(), m);
-        });
+      marks.forEach(({ id, from, to, type }) => {
+        const collection = snippetRef.collection('marks');
+        const markRef = id ? collection.doc(id) : collection.doc();
+        batch.set(markRef, { from, to, type });
+      });
 
       batch
         .commit()

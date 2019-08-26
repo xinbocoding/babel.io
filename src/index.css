@@ -1,6 +1,6 @@
 body {
   margin: 0;
-  font-family: "Roboto", "Helvetica Neue", Helvetica, sans-serif;
+  font-family: 'Roboto', 'Helvetica Neue', Helvetica, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   background: #f2f6f6;
@@ -29,7 +29,8 @@ body {
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
 }
 
 .CodeMirror {
@@ -50,4 +51,12 @@ code {
 .snippet-note {
   padding: 10px;
   color: #555;
+}
+
+.snippets-title {
+  font-size: 25px;
+}
+
+.code-mark-highlight {
+  background-color: rgb(255, 255, 0, 0.4);
 }

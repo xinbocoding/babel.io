@@ -41,7 +41,7 @@ export function updateSnippetAction(id, snippet, marks, removedMarks, history) {
         dispatch({
           type: Actions.UPDATE_SNIPPET_COMPLETE
         });
-        history.push(`/snippets/${id}`);
+        // history.push(`/snippets/${id}`);
       })
       .catch(error => {
         dispatch({

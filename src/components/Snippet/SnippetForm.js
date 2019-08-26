@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import CodeEditor from './CodeEditor';
 import { Link } from 'react-router-dom';
+import CodeEditor from '../Elements/CodeEditor';
 import { SnippetShape, MarkListShap } from '../../utils/shapes';
 import './SnippetForm.css';
 import './SnippetList.css';
@@ -13,7 +13,7 @@ class SnippetForm extends React.Component {
     this.state = {
       snippet: props.snippet,
       marks: props.marks,
-      removedMarks: []
+      deletedMarks: []
     };
 
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -24,12 +24,14 @@ class SnippetForm extends React.Component {
     this.props.onSubmit(this.state);
   }
 
-  handleMarksChange(marks) {
-    this.setState({ marks });
-  }
-
-  handleMarkRemoved(markId) {
-    this.setState({ removedMarks: [...this.state.removedMarks, markId] });
+  handleMarksChange(marks, deleted) {
+    this.setState(state => ({
+      marks,
+      deletedMarks:
+        deleted.length > 0
+          ? state.deletedMarks.concat(deleted)
+          : state.deletedMarks
+    }));
   }
 
   handleSnippetChange(field, value) {
@@ -46,6 +48,7 @@ class SnippetForm extends React.Component {
         <div className="form-group">
           <label>Title</label>
           <input
+            id="snippet-title"
             className="form-control"
             type="text"
             value={snippet.title}
@@ -63,19 +66,26 @@ class SnippetForm extends React.Component {
         </div>
         <CodeEditor
           mode={snippet.mode}
-          code={snippet.code || ''}
+          code={snippet.code}
           marks={marks}
           onCodeChange={v => this.handleSnippetChange('code', v)}
-          onMarksChange={v => this.handleMarksChange(v)}
-          onMarkRemoved={v => this.handleMarkRemoved(v)}
+          onMarksChange={(marksUpdated, deleted) =>
+            this.handleMarksChange(marksUpdated, deleted)
+          }
         />
         <div className="form-group text-center">
-          <Link className="btn" to={`/snippets/`}>Back</Link>
-          <button type="button" className="btn btn-primary" onClick={this.handleSubmit}>
+          <Link className="btn" to="/snippets/">
+            Back
+          </Link>
+          <button
+            type="button"
+            className="btn btn-primary"
+            onClick={this.handleSubmit}
+          >
             Save
-           </button>
+          </button>
         </div>
-      </form >
+      </form>
     );
   }
 }

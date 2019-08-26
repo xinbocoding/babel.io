@@ -1,10 +1,10 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import { Redirect } from 'react-router-dom';
 import SnippetForm from '../Snippet/SnippetForm';
 import Header from '../Elements/Header';
 import { createSnippetAction } from '../../store/actions/snippetNewPageActions';
-import { Redirect } from 'react-router-dom';
 
 const SnippetsNewPage = ({ createSnippet, redirectTo }) => {
   if (redirectTo !== null) {
@@ -35,7 +35,7 @@ SnippetsNewPage.propTypes = {
 
 SnippetsNewPage.defaultProps = {
   redirectTo: null
-}
+};
 
 const mapStateToProps = state => {
   return {
