@@ -31,7 +31,7 @@ class SnippetsShowPage extends React.Component {
                 </Link>
                 <Link
                   className="btn btn-primary"
-                  to={`/snippets/${snippet.id}/edit`}
+                  to={`/edit/${snippet.id}`}
                 >
                   Edit
                 </Link>

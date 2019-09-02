@@ -8,7 +8,7 @@ import { createSnippetAction } from '../../store/actions/snippetNewPageActions';
 
 const SnippetsNewPage = ({ createSnippet, redirectTo }) => {
   if (redirectTo !== null) {
-    return <Redirect to={`/snippets/${redirectTo}`} />;
+    return <Redirect to={`/s/${redirectTo}`} />;
   }
 
   return (

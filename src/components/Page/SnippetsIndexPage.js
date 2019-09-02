@@ -91,7 +91,7 @@ class SnippetsIndexPage extends React.Component {
     }
     return (
       <div>
-        <Link to="/snippets/new">New Snippet</Link>
+        <Link to="/new">New Snippet</Link>
       </div>
     );
   }

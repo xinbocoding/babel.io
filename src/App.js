@@ -1,9 +1,9 @@
 import React from 'react';
 import {
   BrowserRouter as Router,
+  Redirect,
   Route,
-  Switch,
-  Redirect
+  Switch
 } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PrivateRoute from './components/Router/PrivateRoute';
@@ -23,13 +23,13 @@ const App = ({ auth }) => (
         render={() => (auth.user ? <Redirect to="/snippets" /> : <HomePage />)}
       />
       <PrivateRoute exact path="/snippets" component={SnippetsIndexPage} />
-      <PrivateRoute exact path="/snippets/new" component={SnippetsNewPage} />
+      <PrivateRoute exact path="/new" component={SnippetsNewPage} />
       <PrivateRoute
         exact
-        path="/snippets/:id/edit"
+        path="/edit/:id"
         component={SnippetsEditPage}
       />
-      <Route path="/snippets/:id" component={SnippetsShowPage} />
+      <Route path="/s/:id" component={SnippetsShowPage} />
     </Switch>
   </Router>
 );

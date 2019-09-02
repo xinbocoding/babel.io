@@ -25,7 +25,7 @@ class SnippetList extends React.Component {
             id={`snippet-${m.id}`}
           >
             <div className="snippet-preview-title">
-              <Link className="edit" to={`/snippets/${m.id}`}>
+              <Link className="edit" to={`/s/${m.id}`}>
                 {m.title}
               </Link>
             </div>

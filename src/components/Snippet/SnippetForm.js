@@ -75,7 +75,7 @@ class SnippetForm extends React.Component {
           onLangChange={lang => this.handleSnippetChange('lang', lang)}
         />
         <div className="form-group text-center">
-          <Link className="btn" to="/snippets/">
+          <Link className="btn" to="/s/">
             Back
           </Link>
           <button

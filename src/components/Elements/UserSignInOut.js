@@ -12,7 +12,7 @@ const UserSignInOut = ({ auth, signOut, signIn }) => {
   if (auth.user) {
     return (
       <ul className="navbar-nav">
-        <Link to="/snippets/new" className="btn btn-primary mr-3">
+        <Link to="/new" className="btn btn-primary mr-3">
           New Snippet
         </Link>
         <span className="navbar-text">{auth.user.name}</span>
