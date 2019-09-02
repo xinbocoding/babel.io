@@ -72,6 +72,7 @@ class SnippetForm extends React.Component {
           onMarksChange={(marksUpdated, deleted) =>
             this.handleMarksChange(marksUpdated, deleted)
           }
+          onLangChange={lang => this.handleSnippetChange('lang', lang)}
         />
         <div className="form-group text-center">
           <Link className="btn" to="/snippets/">

@@ -32,32 +32,53 @@ import 'codemirror/mode/swift/swift';
 import 'codemirror/mode/xml/xml';
 import 'codemirror/mode/yaml/yaml';
 
-export const LangList = [
-  {
-    value: 'javascript',
-    label: 'JavaScript',
-    file: 'javascript',
-    mime: 'text/javascript'
-  },
-  {
-    value: 'json',
-    label: 'Json',
-    file: 'json',
-    mime: 'application/json'
-  },
-  {
-    value: 'scala',
-    label: 'Scala',
-    file: 'clike',
-    mime: 'text/x-scala'
-  }
-].sort((a, b) => a.value - b.value);
+export const languages = [
+  ['dart', 'Dart', 'application/dart'],
+  ['javascript', 'JavaScript', 'application/javascript'],
+  ['clojure', 'Clojure', 'text/x-clojure'],
+  ['json', 'JSON', 'application/x-json'],
+  ['typescript', 'TypeScript', 'text/typescript'],
+  ['coffeescript', 'CoffeeScript', 'text/coffeescript'],
+  ['php', 'PHP', 'application/x-httpd-php'],
+  ['shell', 'Shell', 'text/x-sh'],
+  ['xml', 'XML', 'application/xml'],
+  ['css', 'CSS', 'text/css'],
+  ['markdown', 'Markdown', 'text/markdown'],
+  ['text', 'Plain Text', 'text/plain'],
+  ['rust', 'Rust', 'text/rust'],
+  ['c', 'C', 'text/x-c'],
+  ['commonlisp', 'CommonLISP', 'text/x-common-lisp'],
+  ['crystal', 'Crystal', 'text/x-crystal'],
+  ['python', 'Python', 'text/x-python'],
+  ['diff', 'Diff', 'text/x-diff'],
+  ['dockerfile', 'Docker File', 'text/x-dockerfile'],
+  ['erlang', 'Erlang', 'text/x-erlang'],
+  ['sql', 'SQL', 'text/x-sql'],
+  ['go', 'Go', 'text/x-go'],
+  ['groovy', 'Groovy', 'text/x-groovy'],
+  ['java', 'Java', 'text/x-java'],
+  ['protobuf', 'Protobuf', 'text/x-protobuf'],
+  ['r', 'R', 'text/x-rsrc'],
+  ['rust', 'Rust', 'ext/x-ruby'],
+  ['swift', 'Swift', 'text/x-swift'],
+  ['yaml', 'YAML', 'text/yaml'],
+  ['xml', 'XML', 'text/xml']
+].sort((a, b) => a[0] - b[0]);
 
-export const LangOptions = LangList.map(lang => {
-  return { value: lang.value, label: lang.label };
-});
+export const getCodeMirrorMode = value =>
+  languages.find(item => item[0] === value);
 
-export const getOptionFromValue = value => {
-  const found = LangList.find(lang => lang.value === value);
-  return { value: found.value, label: found.label };
+export const langDropdownOptions = languages.map(item => ({
+  value: item[0],
+  label: item[1]
+}));
+
+console.log(`support ${languages.map(i => i[0]).join('|')}`);
+
+export const getSelectedDropdownOption = value => {
+  const mode = getCodeMirrorMode(value);
+  return {
+    value: mode[0],
+    label: mode[1]
+  };
 };

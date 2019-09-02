@@ -6,6 +6,7 @@ import './CodeEditor.css';
 import { Controlled as CodeMirror } from 'react-codemirror2';
 import CodeToolbar from './CodeToolbar';
 import { MarkListShap } from '../../data/shapes';
+import { getCodeMirrorMode } from '../../data/modes';
 
 const Actions = {
   REMOVE_HIGHLIGHT: 'remove-highlight',
@@ -32,6 +33,7 @@ class CodeEditor extends React.Component {
       code: props.code,
       lang: props.lang
     };
+    console.log(props);
   }
 
   getAllFormattedMarks() {
@@ -82,9 +84,9 @@ class CodeEditor extends React.Component {
     }
   }
 
-  changeLang(value) {
-    const { editor } = this.state;
-    editor.setOption('mode', 'python');
+  changeLang(lang) {
+    this.setState({ lang });
+    this.props.onLangChange(lang);
   }
 
   findMarksInRange(from, to, type) {
@@ -183,7 +185,13 @@ class CodeEditor extends React.Component {
   }
 
   render() {
-    const { code, lang } = this.state;
+    const { code, lang, editor } = this.state;
+
+    let modeConfig = 'text';
+    if (editor) {
+      const mode = getCodeMirrorMode(lang);
+      modeConfig = editor.constructor.mimeModes[mode[2]];
+    }
 
     return (
       <div className="code-editor">
@@ -196,7 +204,7 @@ class CodeEditor extends React.Component {
         <CodeMirror
           value={code}
           options={{
-            mode: lang,
+            mode: modeConfig,
             lineNumbers: true
           }}
           editorDidMount={editor => this.codeMirrorDidMount(editor)}
@@ -215,7 +223,8 @@ CodeEditor.propTypes = {
   lang: PropTypes.string.isRequired,
   marks: MarkListShap.isRequired,
   onMarksChange: PropTypes.func.isRequired,
-  onCodeChange: PropTypes.func.isRequired
+  onCodeChange: PropTypes.func.isRequired,
+  onLangChange: PropTypes.func.isRequired
 };
 
 export default CodeEditor;

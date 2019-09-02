@@ -50,7 +50,7 @@ service cloud.firestore {
       // Rules:
       //        - must be a known lang
       function validate_snippet_field_lang() {
-        return request.resource.data.lang.matches('javascript|scala|ruby');
+        return request.resource.data.lang.matches('dart|javascript|clojure|json|typescript|coffeescript|php|shell|xml|css|markdown|text|rust|c|commonlisp|crystal|python|diff|dockerfile|erlang|sql|go|groovy|java|protobuf|r|rust|swift|yaml|xml');
       }
 
       // Field: title
