@@ -1,7 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import CodeEditor from './CodeEditor';
-import { SnippetShape, MarkListShap } from '../../utils/shapes';
+import { Link } from 'react-router-dom';
+import CodeEditor from '../Elements/CodeEditor';
+import { SnippetShape, MarkListShap } from '../../data/shapes';
+import './SnippetForm.css';
+import './SnippetList.css';
 
 class SnippetForm extends React.Component {
   constructor(props) {
@@ -10,7 +13,7 @@ class SnippetForm extends React.Component {
     this.state = {
       snippet: props.snippet,
       marks: props.marks,
-      removedMarks: []
+      deletedMarks: []
     };
 
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -21,12 +24,14 @@ class SnippetForm extends React.Component {
     this.props.onSubmit(this.state);
   }
 
-  handleMarksChange(marks) {
-    this.setState({ marks });
-  }
-
-  handleMarkRemoved(markId) {
-    this.setState({ removedMarks: [...this.state.removedMarks, markId] });
+  handleMarksChange(marks, deleted) {
+    this.setState(state => ({
+      marks,
+      deletedMarks:
+        deleted.length > 0
+          ? state.deletedMarks.concat(deleted)
+          : state.deletedMarks
+    }));
   }
 
   handleSnippetChange(field, value) {
@@ -39,45 +44,49 @@ class SnippetForm extends React.Component {
     const { snippet, marks } = this.state;
 
     return (
-      <div className="container">
-        <form>
-          <div className="form-group">
-            <label>Title</label>
-            <input
-              type="text"
-              value={snippet.title}
-              onChange={e => this.handleSnippetChange('title', e.target.value)}
-            />
-          </div>
-          <div className="form-group">
-            <label>Note</label>
-            <textarea row="5"
-              value={snippet.note}
-              onChange={e => this.handleSnippetChange('note', e.target.value)}
-            />
-          </div>
-          <div className="form-group">
-            <input
-              type="text"
-              value={snippet.mode}
-              onChange={v => this.handleSnippetChange('mode', v)}
-            />
-          </div>
-          <div className="form-group">
-            <CodeEditor
-              mode={snippet.mode}
-              code={snippet.code || ''}
-              marks={marks}
-              onCodeChange={v => this.handleSnippetChange('code', v)}
-              onMarksChange={v => this.handleMarksChange(v)}
-              onMarkRemoved={v => this.handleMarkRemoved(v)}
-            />
-          </div>
-          <button className="btn btn-primary" onClick={this.handleSubmit}>
+      <form>
+        <div className="form-group">
+          <label>Title</label>
+          <input
+            id="snippet-title"
+            className="form-control"
+            type="text"
+            value={snippet.title}
+            onChange={e => this.handleSnippetChange('title', e.target.value)}
+          />
+        </div>
+        <div className="form-group">
+          <label>Note</label>
+          <textarea
+            className="form-control"
+            row="5"
+            value={snippet.note}
+            onChange={e => this.handleSnippetChange('note', e.target.value)}
+          />
+        </div>
+        <CodeEditor
+          lang={snippet.lang}
+          code={snippet.code}
+          marks={marks}
+          onCodeChange={v => this.handleSnippetChange('code', v)}
+          onMarksChange={(marksUpdated, deleted) =>
+            this.handleMarksChange(marksUpdated, deleted)
+          }
+          onLangChange={lang => this.handleSnippetChange('lang', lang)}
+        />
+        <div className="form-group text-center">
+          <Link className="btn" to="/s/">
+            Back
+          </Link>
+          <button
+            type="button"
+            className="btn btn-primary"
+            onClick={this.handleSubmit}
+          >
             Save
           </button>
-        </form>
-      </div>
+        </div>
+      </form>
     );
   }
 }
@@ -92,7 +101,7 @@ SnippetForm.defaultProps = {
   snippet: {
     title: '',
     note: '',
-    mode: 'javascript',
+    lang: 'javascript',
     code: ''
   },
   marks: []

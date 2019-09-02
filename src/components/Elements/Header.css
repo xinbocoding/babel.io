@@ -1,0 +1,31 @@
+header {
+  background: #fff;
+}
+
+.top-nav a.navbar-brand {
+  font-weight: bold;
+  font-family: 'Roboto Mono', Courier, monospace;
+  text-transform: uppercase;
+  color: #089b81;
+}
+
+.top-nav a {
+  font-size: 16px;
+}
+
+.sign-in-button {
+  font-weight: bold;
+}
+
+.search-form {
+  width: 500px;
+}
+
+.search-form input {
+  border-color: #ddd;
+}
+
+.search-form input:focus {
+  box-shadow: none;
+  border-color: #ddd;
+}

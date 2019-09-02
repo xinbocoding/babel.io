@@ -1,26 +1,30 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import ReactRouterPropTypes from 'react-router-prop-types';
 import PropTypes from 'prop-types';
-import SnippetForm from '../Snippet/SnippetForm';
-import NavBar from '../NavBar';
-import { createSnippetAction } from '../../store/actions/snippetNewPageActions';
 import { Redirect } from 'react-router-dom';
+import SnippetForm from '../Snippet/SnippetForm';
+import Header from '../Elements/Header';
+import { createSnippetAction } from '../../store/actions/snippetNewPageActions';
 
 const SnippetsNewPage = ({ createSnippet, redirectTo }) => {
   if (redirectTo !== null) {
-    return <Redirect to={`/snippets/${redirectTo}`} />;
+    return <Redirect to={`/s/${redirectTo}`} />;
   }
 
   return (
-    <div className="container-fluid">
-      <NavBar />
-      <SnippetForm
-        onSubmit={({ snippet, marks }) => {
-          createSnippet(snippet, marks);
-        }}
-      />
-    </div>
+    <React.Fragment>
+      <Header />
+      <div className="container">
+        <div className="d-flex flex-column whitebox p-4">
+          <h1 className="page-title">Create Snippet</h1>
+          <SnippetForm
+            onSubmit={({ snippet, marks }) => {
+              createSnippet(snippet, marks);
+            }}
+          />
+        </div>
+      </div>
+    </React.Fragment>
   );
 };
 
@@ -31,7 +35,7 @@ SnippetsNewPage.propTypes = {
 
 SnippetsNewPage.defaultProps = {
   redirectTo: null
-}
+};
 
 const mapStateToProps = state => {
   return {

@@ -1,14 +1,17 @@
 import React from 'react';
-import { SnippetShape, MarkListShap } from '../../utils/shapes';
+import { SnippetShape, MarkListShap } from '../../data/shapes';
+import './SnippetDetail.css';
 
 const SnippetDetail = ({ snippet, marks }) => {
   return (
-    <div clss="container">
-      <div>{`${snippet.title} (${snippet.mode})`}</div>
-      <pre>
-        <code>{snippet.code}</code>
-      </pre>
-      <div>{JSON.stringify(marks)}</div>
+    <div className="snippet">
+      <h1 className="snippet-title">{snippet.title}</h1>
+      <div className="snippet-note">{snippet.note}</div>
+      <div className="snippet-code">
+        <pre className="codeEdit">
+          <code>{snippet.code}</code>
+        </pre>
+      </div>
     </div>
   );
 };

@@ -19,7 +19,7 @@
     "no-console": "off",
     "react/sort-comp": "off",
     "react/destructuring-assignment": [
-      1,
+      0,
       "always",
       {
         "ignoreClassFields": true

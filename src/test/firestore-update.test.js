@@ -8,7 +8,7 @@ const existsId = `S${new Date().getTime()}`;
 const existsData = {
   userId: USER_ID,
   title: 'Example Snippet',
-  mode: 'javascript',
+  lang: 'javascript',
   code: 'example();',
   note: 'example note',
   createdAt: firestore.FieldValue.serverTimestamp()

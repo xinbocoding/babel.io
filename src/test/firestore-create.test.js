@@ -5,7 +5,7 @@ const USER_ID = `U${new Date().getTime()}`;
 
 const baseDataForAllTest = {
   title: 'Example Snippet',
-  mode: 'javascript',
+  lang: 'javascript',
   code: 'example();',
   note: 'example note',
   createdAt: firestore.FieldValue.serverTimestamp()
@@ -67,17 +67,17 @@ describe('create snippet', () => {
     await expect(user.create(blankUserId)).toDeny();
   });
 
-  test(`validate mode`, async () => {
-    // empty mode
-    const blankMode = { ...baseData, mode: '' };
-    await expect(user.create(blankMode)).toDeny();
+  test(`validate lang`, async () => {
+    // empty lang
+    const blankLang = { ...baseData, lang: '' };
+    await expect(user.create(blankLang)).toDeny();
 
-    // null mode
-    const nullMode = { ...baseData, mode: null };
-    await expect(user.create(nullMode)).toDeny();
+    // null lang
+    const nullLang = { ...baseData, lang: null };
+    await expect(user.create(nullLang)).toDeny();
 
-    // unknown mode name
-    const unknownName = { ...baseData, mode: 'unknown-a8df2h' };
+    // unknown lang name
+    const unknownName = { ...baseData, lang: 'unknown-a8df2h' };
     await expect(user.create(unknownName)).toDeny();
   });
 

@@ -4,9 +4,11 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import SnippetDetail from '../Snippet/SnippetDetail';
-import NavBar from '../NavBar';
+import Header from '../Elements/Header';
 import { loadSnippetByIdAction } from '../../store/actions/snippetShowPageActions';
-import { SnippetShape, MarkListShap } from '../../utils/shapes';
+import { SnippetShape, MarkListShap } from '../../data/shapes';
+import '../Snippet/SnippetList.css';
+import '../Snippet/SnippetForm.css';
 
 class SnippetsShowPage extends React.Component {
   componentDidMount() {
@@ -18,12 +20,25 @@ class SnippetsShowPage extends React.Component {
     const { snippet, marks } = this.props;
     if (snippet) {
       return (
-        <div className="container">
-          <NavBar />
-          <SnippetDetail snippet={snippet} marks={marks} />
-          <Link to={`/snippets/${snippet.id}/edit`}>Edit</Link>
-          <Link to="/snippets">Back</Link>
-        </div>
+        <React.Fragment>
+          <Header />
+          <div className="container">
+            <div className="d-flex flex-column whitebox p-4">
+              <SnippetDetail snippet={snippet} marks={marks} />
+              <div className="form-group text-center">
+                <Link className="btn" to="/snippets">
+                  Back
+                </Link>
+                <Link
+                  className="btn btn-primary"
+                  to={`/edit/${snippet.id}`}
+                >
+                  Edit
+                </Link>
+              </div>
+            </div>
+          </div>
+        </React.Fragment>
       );
     }
     return <b>loading</b>;

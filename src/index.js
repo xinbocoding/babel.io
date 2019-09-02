@@ -6,8 +6,8 @@ import * as serviceWorker from './serviceWorker';
 import App from './App';
 import configureStore from './store';
 
-import './index.css';
 import 'bootstrap/dist/css/bootstrap.css';
+import './index.css';
 
 const store = configureStore();
 
