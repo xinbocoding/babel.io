@@ -25,7 +25,8 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "lint": "node_modules/.bin/eslint ./src",
-    "lint-then-fix": "node_modules/.bin/eslint --fix ./src"
+    "lint-then-fix": "node_modules/.bin/eslint --fix ./src",
+    "deploy-hosting-prod": "firebase deploy --only hosting:babel-production"
   },
   "eslintConfig": {
     "extends": "react-app"

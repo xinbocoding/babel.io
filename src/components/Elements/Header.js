@@ -9,7 +9,7 @@ const Header = () => {
         babel.io
       </a>
       <form className="search-form mx-auto">
-        <input type="text" className="form-control" placeholder="search..." />
+        {/* <input type="text" className="form-control" placeholder="search..." /> */}
       </form>
       <UserSignInOut />
     </header>

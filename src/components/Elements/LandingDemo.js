@@ -1,11 +1,7 @@
-import React, { Component } from 'react'
+import React, { Component } from 'react';
 
 export default class LandingDemo extends Component {
   render() {
-    return (
-      <div className="text-muted">
-        [ DEMO HERE ]
-      </div>
-    )
+    return <div className="text-muted" />;
   }
 }
