@@ -38,19 +38,19 @@ service cloud.firestore {
       //        - one of the timestamp must be appeared
       function validate_snippet_keys_for_create() {
         return request.resource.data.keys().size() == 6 &&
-                request.resource.data.keys().hasAll(['userId', 'title', 'mode', 'code', 'note', 'createdAt']);
+                request.resource.data.keys().hasAll(['userId', 'title', 'lang', 'code', 'note', 'createdAt']);
       }
 
       function validate_snippet_keys_for_update() {
         return request.resource.data.keys().size() == 7 &&
-                request.resource.data.keys().hasAll(['userId', 'title', 'mode', 'code', 'note', 'createdAt', 'updatedAt']);
+                request.resource.data.keys().hasAll(['userId', 'title', 'lang', 'code', 'note', 'createdAt', 'updatedAt']);
       }
       
-      // Field: mode
+      // Field: lang
       // Rules:
-      //        - must be a known mode id
-      function validate_snippet_field_mode() {
-        return request.resource.data.mode.matches('javascript|scala|ruby');
+      //        - must be a known lang
+      function validate_snippet_field_lang() {
+        return request.resource.data.lang.matches('javascript|scala|ruby');
       }
 
       // Field: title
@@ -145,7 +145,7 @@ service cloud.firestore {
                 // fields
                 validate_snippet_keys_for_create() &&
                 validate_snippet_field_user_id() &&
-                validate_snippet_field_mode() &&
+                validate_snippet_field_lang() &&
                 validate_snippet_field_title() &&
                 validate_snippet_field_note() &&
                 validate_snippet_field_code() &&
@@ -163,7 +163,7 @@ service cloud.firestore {
                 user_id_not_changed() &&
                 // fields
                 validate_snippet_keys_for_update() &&
-                validate_snippet_field_mode() &&
+                validate_snippet_field_lang() &&
                 validate_snippet_field_title() &&
                 validate_snippet_field_note() &&
                 validate_snippet_field_code() &&

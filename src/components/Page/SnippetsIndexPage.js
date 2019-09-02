@@ -3,26 +3,19 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import Header from '../Elements/Header';
-import { fetchSnippetsAction } from '../../store/actions/snippetIndexPageActions';
+import {
+  loadSnippetPageAction,
+  deleteSnippetAction
+} from '../../store/actions/snippetIndexPageActions';
 import SnippetList from '../Snippet/SnippetList';
-import { AuthShape, SnippetShape } from '../../utils/shapes';
-import SearchBar from '../Elements/SearchBar';
+import { AuthShape, SnippetShape } from '../../data/shapes';
 import './SnippetsIndexPage.css';
 
 class SnippetsIndexPage extends React.Component {
   constructor(props) {
     super(props);
-
-    const { auth, snippetsByPage, fetchSnippets } = this.props;
-
-    // load the first page if not loaded yet
-    if (snippetsByPage.length === 0) {
-      fetchSnippets(auth.user.id);
-    }
-
-    this.state = {
-      currentPage: 1
-    };
+    const { auth, loadPage } = this.props;
+    loadPage(auth.user.id, 1);
   }
 
   previousPage() {
@@ -34,56 +27,43 @@ class SnippetsIndexPage extends React.Component {
   }
 
   nextPage() {
-    const {
-      auth,
-      fetchSnippets,
-      snippetsByPage,
-      lastVisibleByPage
-    } = this.props;
-    const { currentPage } = this.state;
+    const { auth, loadPage, snippetsByPage } = this.props;
+    const { currentPage } = this.props;
     const nextPage = currentPage + 1;
 
-    this.setState({ currentPage: nextPage });
-
-    if (!snippetsByPage[nextPage - 1]) {
-      fetchSnippets(auth.user.id, lastVisibleByPage[currentPage - 1]);
+    if (!snippetsByPage[nextPage]) {
+      loadPage(auth.user.id, snippetsByPage[currentPage][-1]);
     }
     window.scrollTo(0, 0);
   }
 
   shouldPreviousPageDisabled() {
-    const { currentPage } = this.state;
-    return currentPage === 1;
+    return this.props.currentPage === 1;
   }
 
   shouldNextPageDisabled() {
-    const { currentPage } = this.state;
-    const { snippetsByPage } = this.props;
+    const { snippetsByPage, currentPage } = this.props;
 
-    return snippetsByPage[currentPage - 1].length < 10;
+    return snippetsByPage[currentPage].length < 10;
+  }
+
+  onSnippetDelete(id) {
+    this.props.deleteSnippet(id);
   }
 
   render() {
-    const { snippetsByPage } = this.props;
-    const { currentPage } = this.state;
+    const { snippetsByPage, currentPage } = this.props;
 
-    const snippets = snippetsByPage[currentPage - 1];
+    const snippets = snippetsByPage[currentPage];
 
     if (snippets) {
       return (
         <React.Fragment>
           <Header />
-          <div className="container">
-            <div className="d-flex flex-row whitebox index-toolbar">
-              <div className="col-md-10">{/* <SearchBar /> */}</div>
-              <div className="col-md-2 text-right">
-                <Link to="/snippets/new" className="btn btn-primary btn-block">
-                  New Snippet
-                </Link>
-              </div>
-            </div>
-          </div>
-          <SnippetList snippets={snippets} />
+          <SnippetList
+            snippets={snippets}
+            onDelete={id => this.onSnippetDelete(id)}
+          />
           <div className="container">
             <div className="row text-center">
               <div className="btn-group">
@@ -119,12 +99,11 @@ class SnippetsIndexPage extends React.Component {
 
 SnippetsIndexPage.propTypes = {
   auth: AuthShape.isRequired,
+  currentPage: PropTypes.number.isRequired,
   snippetsByPage: PropTypes.arrayOf(PropTypes.arrayOf(SnippetShape)).isRequired,
-  lastVisibleByPage: PropTypes.arrayOf(SnippetShape).isRequired,
-  fetchSnippets: PropTypes.func.isRequired
+  loadPage: PropTypes.func.isRequired,
+  deleteSnippet: PropTypes.func.isRequired
 };
-
-SnippetsIndexPage.defaultProps = {};
 
 const mapStateToProps = state => {
   const {
@@ -141,8 +120,11 @@ const mapStateToProps = state => {
 };
 
 const mapDispatchToProps = dispatch => ({
-  fetchSnippets: (userId, startAfter) => {
-    dispatch(fetchSnippetsAction(userId, startAfter));
+  loadPage: (userId, page, lastVisible) => {
+    dispatch(loadSnippetPageAction(userId, page, lastVisible));
+  },
+  deleteSnippet: (id, currentPage) => {
+    dispatch(deleteSnippetAction(id, currentPage));
   }
 });
 

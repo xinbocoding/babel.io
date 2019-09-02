@@ -16,3 +16,16 @@ header {
 .sign-in-button {
   font-weight: bold;
 }
+
+.search-form {
+  width: 500px;
+}
+
+.search-form input {
+  border-color: #ddd;
+}
+
+.search-form input:focus {
+  box-shadow: none;
+  border-color: #ddd;
+}

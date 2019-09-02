@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom';
 import SnippetDetail from '../Snippet/SnippetDetail';
 import Header from '../Elements/Header';
 import { loadSnippetByIdAction } from '../../store/actions/snippetShowPageActions';
-import { SnippetShape, MarkListShap } from '../../utils/shapes';
+import { SnippetShape, MarkListShap } from '../../data/shapes';
 import '../Snippet/SnippetList.css';
 import '../Snippet/SnippetForm.css';
 
@@ -26,8 +26,15 @@ class SnippetsShowPage extends React.Component {
             <div className="d-flex flex-column whitebox p-4">
               <SnippetDetail snippet={snippet} marks={marks} />
               <div className="form-group text-center">
-                <Link className="btn" to="/snippets">Back</Link>
-                <Link className="btn btn-primary" to={`/snippets/${snippet.id}/edit`}>Edit</Link>
+                <Link className="btn" to="/snippets">
+                  Back
+                </Link>
+                <Link
+                  className="btn btn-primary"
+                  to={`/snippets/${snippet.id}/edit`}
+                >
+                  Edit
+                </Link>
               </div>
             </div>
           </div>

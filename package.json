@@ -15,6 +15,7 @@
     "react-router-dom": "^5.0.1",
     "react-router-prop-types": "^1.0.4",
     "react-scripts": "3.0.1",
+    "react-select": "^3.0.4",
     "redux": "^4.0.4",
     "redux-thunk": "^2.3.0"
   },

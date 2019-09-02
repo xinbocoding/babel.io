@@ -1,5 +1,5 @@
 import React from 'react';
-import { SnippetShape, MarkListShap } from '../../utils/shapes';
+import { SnippetShape, MarkListShap } from '../../data/shapes';
 import './SnippetDetail.css';
 
 const SnippetDetail = ({ snippet, marks }) => {

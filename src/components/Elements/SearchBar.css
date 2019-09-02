@@ -1,8 +1,0 @@
-.search-form input {
-  border-color: #ddd;
-}
-
-.search-form input:focus {
-  box-shadow: none;
-  border-color: #ddd;
-}

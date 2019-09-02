@@ -1,31 +1,37 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 import {
   userSignInAction,
   userSignOutAction
 } from '../../store/actions/authActions';
-import { AuthShape } from '../../utils/shapes';
+import { AuthShape } from '../../data/shapes';
 
 const UserSignInOut = ({ auth, signOut, signIn }) => {
   if (auth.user) {
     return (
-      <ul className="navbar-nav ml-auto">
-        <li className="nav-item active">
-          <a className="nav-link" href="#">{auth.user.name}</a>
-        </li>
+      <ul className="navbar-nav">
+        <Link to="/snippets/new" className="btn btn-primary mr-3">
+          New Snippet
+        </Link>
+        <span className="navbar-text">{auth.user.name}</span>
         <li className="nav-item">
           <button type="button" className="btn" onClick={signOut}>
             Sign Out
-        </button>
+          </button>
         </li>
       </ul>
     );
   }
   return (
-    <ul className="navbar-nav ml-auto">
+    <ul className="navbar-nav">
       <li className="nav-item">
-        <button type="button" className="btn btn-primary sign-in-button" onClick={signIn}>
+        <button
+          type="button"
+          className="btn btn-primary sign-in-button"
+          onClick={signIn}
+        >
           Sign In with Github
         </button>
       </li>

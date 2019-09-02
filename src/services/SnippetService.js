@@ -71,7 +71,7 @@ class SnippetService {
 
   create(snippet, marks) {
     return new Promise((resolve, reject) => {
-      const { title, code, note, mode } = snippet;
+      const { title, code, note, lang } = snippet;
       const db = this.firebaseService.firestore();
       const batch = db.batch();
       const snippetRef = this.snippets().doc();
@@ -80,7 +80,7 @@ class SnippetService {
         title,
         code,
         note,
-        mode,
+        lang,
         createdAt: firebase.firestore.FieldValue.serverTimestamp()
       });
       marks.forEach(m => batch.set(snippetRef.collection('marks').doc(), m));
@@ -93,7 +93,7 @@ class SnippetService {
 
   update(snippetId, snippet, marks, removedMarks) {
     return new Promise((resolve, reject) => {
-      const { title, note, code, mode } = snippet;
+      const { title, note, code, lang } = snippet;
       const db = this.firebaseService.firestore();
       const batch = db.batch();
       const snippetRef = this.snippets().doc(snippetId);
@@ -102,7 +102,7 @@ class SnippetService {
         title,
         note,
         code,
-        mode,
+        lang,
         updatedAt: firebase.firestore.FieldValue.serverTimestamp()
       });
 

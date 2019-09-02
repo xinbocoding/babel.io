@@ -12,7 +12,7 @@ import SnippetsIndexPage from './components/Page/SnippetsIndexPage';
 import SnippetsNewPage from './components/Page/SnippetsNewPage';
 import SnippetsEditPage from './components/Page/SnippetsEditPage';
 import SnippetsShowPage from './components/Page/SnippetsShowPage';
-import { AuthShape } from './utils/shapes';
+import { AuthShape } from './data/shapes';
 
 const App = ({ auth }) => (
   <Router>
@@ -20,9 +20,7 @@ const App = ({ auth }) => (
       <Route
         exact
         path="/"
-        render={() =>
-          auth.user ? <Redirect to="/snippets" /> : <HomePage />
-        }
+        render={() => (auth.user ? <Redirect to="/snippets" /> : <HomePage />)}
       />
       <PrivateRoute exact path="/snippets" component={SnippetsIndexPage} />
       <PrivateRoute exact path="/snippets/new" component={SnippetsNewPage} />

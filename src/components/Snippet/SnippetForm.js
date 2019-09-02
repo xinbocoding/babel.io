@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import CodeEditor from '../Elements/CodeEditor';
-import { SnippetShape, MarkListShap } from '../../utils/shapes';
+import { SnippetShape, MarkListShap } from '../../data/shapes';
 import './SnippetForm.css';
 import './SnippetList.css';
 
@@ -65,7 +65,7 @@ class SnippetForm extends React.Component {
           />
         </div>
         <CodeEditor
-          mode={snippet.mode}
+          lang={snippet.lang}
           code={snippet.code}
           marks={marks}
           onCodeChange={v => this.handleSnippetChange('code', v)}
@@ -100,7 +100,7 @@ SnippetForm.defaultProps = {
   snippet: {
     title: '',
     note: '',
-    mode: 'javascript',
+    lang: 'javascript',
     code: ''
   },
   marks: []

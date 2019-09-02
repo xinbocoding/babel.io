@@ -8,7 +8,7 @@ import {
   loadSnippetForEditAction,
   updateSnippetAction
 } from '../../store/actions/snippetEditPageActions';
-import { SnippetShape, MarkListShap } from '../../utils/shapes';
+import { SnippetShape, MarkListShap } from '../../data/shapes';
 import '../Snippet/SnippetForm.css';
 
 class SnippetsEditPage extends Component {

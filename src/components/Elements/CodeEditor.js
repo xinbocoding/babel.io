@@ -4,8 +4,8 @@ import 'codemirror/mode/javascript/javascript';
 import PropTypes from 'prop-types';
 import './CodeEditor.css';
 import { Controlled as CodeMirror } from 'react-codemirror2';
-import CodeToolbar from './CodeEditor/CodeToolbar';
-import { MarkListShap } from '../../utils/shapes';
+import CodeToolbar from './CodeToolbar';
+import { MarkListShap } from '../../data/shapes';
 
 const Actions = {
   REMOVE_HIGHLIGHT: 'remove-highlight',
@@ -30,7 +30,7 @@ class CodeEditor extends React.Component {
     this.state = {
       editor: undefined,
       code: props.code,
-      mode: props.mode
+      lang: props.lang
     };
   }
 
@@ -50,6 +50,7 @@ class CodeEditor extends React.Component {
   }
 
   codeMirrorDidMount(editor) {
+    window.cm = editor;
     this.setState({ editor }, () => {
       const { marks } = this.props;
       marks.forEach(m => {
@@ -79,6 +80,11 @@ class CodeEditor extends React.Component {
       default:
         console.error(`Unknown action ${action}`);
     }
+  }
+
+  changeLang(value) {
+    const { editor } = this.state;
+    editor.setOption('mode', 'python');
   }
 
   findMarksInRange(from, to, type) {
@@ -177,18 +183,20 @@ class CodeEditor extends React.Component {
   }
 
   render() {
-    const { code, mode } = this.state;
+    const { code, lang } = this.state;
 
     return (
       <div className="code-editor">
         <CodeToolbar
+          lang={lang}
           buttons={Buttons}
           onAction={action => this.doAction(action)}
+          onLangChange={value => this.changeLang(value)}
         />
         <CodeMirror
           value={code}
           options={{
-            mode,
+            mode: lang,
             lineNumbers: true
           }}
           editorDidMount={editor => this.codeMirrorDidMount(editor)}
@@ -204,7 +212,7 @@ class CodeEditor extends React.Component {
 
 CodeEditor.propTypes = {
   code: PropTypes.string.isRequired,
-  mode: PropTypes.string.isRequired,
+  lang: PropTypes.string.isRequired,
   marks: MarkListShap.isRequired,
   onMarksChange: PropTypes.func.isRequired,
   onCodeChange: PropTypes.func.isRequired

@@ -2,7 +2,7 @@ import React from 'react';
 import { Route, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { AuthShape } from '../../utils/shapes';
+import { AuthShape } from '../../data/shapes';
 
 const PrivateRoute = ({ component: Component, auth, ...rest }) => {
   return (

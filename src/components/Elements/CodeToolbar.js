@@ -1,7 +1,10 @@
 import React from 'react';
 import { PropTypes } from 'prop-types';
+import Select from 'react-select';
+import { LangOptions, getOptionFromValue } from '../../data/modes';
+import { ToolbarButtonListShape } from '../../data/shapes';
 
-const CodeToolbar = ({ buttons, onAction }) => {
+const CodeToolbar = ({ lang, buttons, onAction, onLangChange }) => {
   return (
     <div className="form-row">
       <div className="col-md-8 col-sm-6">
@@ -21,30 +24,20 @@ const CodeToolbar = ({ buttons, onAction }) => {
         </div>
       </div>
       <div className="col-md-4 col-sm-6">
-        <div className="input-group">
-          <div className="input-group-prepend">
-            <span className="input-group-text" id="basic-addon1">
-              Language
-            </span>
-          </div>
-          <select className="custom-select" defaultValue="javascript">
-            <option type="text" value="javascript">
-              JavaScript
-            </option>
-          </select>
-        </div>
+        <Select
+          defaultValue={getOptionFromValue(lang)}
+          onChange={option => onLangChange(option.value)}
+          options={LangOptions}
+        />
       </div>
     </div>
   );
 };
 
 CodeToolbar.propTypes = {
-  buttons: PropTypes.arrayOf(
-    PropTypes.shape({
-      action: PropTypes.string,
-      icon: PropTypes.string
-    })
-  ).isRequired,
+  lang: PropTypes.string.isRequired,
+  onLangChange: PropTypes.func.isRequired,
+  buttons: ToolbarButtonListShape.isRequired,
   onAction: PropTypes.func.isRequired
 };
 
