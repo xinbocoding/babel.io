@@ -1,4 +1,5 @@
 import { snippetService } from '../../services';
+import { getUserInfoAction } from './userActions';
 
 const PREFIX = 'page:snippet-show';
 
@@ -10,7 +11,7 @@ export const Actions = {
 export function loadSnippetByIdAction(id) {
   return dispatch => {
     snippetService
-      .findById(id, true)
+      .findById(id)
       .then(({ snippet, marks }) => {
         dispatch({
           type: Actions.LOAD_SNIPPET_COMPLETE,
@@ -19,6 +20,7 @@ export function loadSnippetByIdAction(id) {
             marks
           }
         });
+        dispatch(getUserInfoAction(snippet.userId));
       })
       .catch(console.log);
   };

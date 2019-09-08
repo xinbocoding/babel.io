@@ -1,5 +1,5 @@
 import React from 'react';
-import { SnippetShape, MarkListShap } from '../../data/shapes';
+import { SnippetShape, MarkListShape } from '../../data/shapes';
 import './SnippetDetail.css';
 
 const SnippetDetail = ({ snippet, marks }) => {
@@ -18,7 +18,7 @@ const SnippetDetail = ({ snippet, marks }) => {
 
 SnippetDetail.propTypes = {
   snippet: SnippetShape.isRequired,
-  marks: MarkListShap.isRequired
+  marks: MarkListShape.isRequired
 };
 
 export default SnippetDetail;

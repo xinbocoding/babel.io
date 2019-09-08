@@ -35,7 +35,7 @@ class SnippetService {
     });
   }
 
-  findById(snippetId, withMarks = false) {
+  findById(snippetId) {
     return new Promise((resolve, reject) => {
       this.snippets()
         .doc(snippetId)
@@ -46,21 +46,17 @@ class SnippetService {
             ...docRef.data()
           };
           if (docRef.exists) {
-            if (withMarks) {
-              this.snippets()
-                .doc(docRef.id)
-                .collection('marks')
-                .get()
-                .then(markSnap => {
-                  const marks = markSnap.docs.map(doc => ({
-                    ...doc.data(),
-                    id: doc.id
-                  }));
-                  resolve({ snippet, marks });
-                });
-            } else {
-              resolve({ snippet, marks: [] });
-            }
+            this.snippets()
+              .doc(docRef.id)
+              .collection('marks')
+              .get()
+              .then(markSnap => {
+                const marks = markSnap.docs.map(doc => ({
+                  ...doc.data(),
+                  id: doc.id
+                }));
+                resolve({ snippet, marks });
+              });
           } else {
             reject(new Error('No such document'));
           }

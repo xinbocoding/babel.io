@@ -73,8 +73,6 @@ export const langDropdownOptions = languages.map(item => ({
   label: item[1]
 }));
 
-console.log(`support ${languages.map(i => i[0]).join('|')}`);
-
 export const getSelectedDropdownOption = value => {
   const mode = getCodeMirrorMode(value);
   return {

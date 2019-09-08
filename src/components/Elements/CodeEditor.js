@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import './CodeEditor.css';
 import { Controlled as CodeMirror } from 'react-codemirror2';
 import CodeToolbar from './CodeToolbar';
-import { MarkListShap } from '../../data/shapes';
+import { MarkListShape } from '../../data/shapes';
 import { getCodeMirrorMode } from '../../data/modes';
 
 const Actions = {
@@ -52,9 +52,8 @@ class CodeEditor extends React.Component {
   }
 
   codeMirrorDidMount(editor) {
-    window.cm = editor;
+    const { marks } = this.props;
     this.setState({ editor }, () => {
-      const { marks } = this.props;
       marks.forEach(m => {
         this.codeMirrorMarkText(m.id, m.from, m.to, m.type);
       });
@@ -207,11 +206,11 @@ class CodeEditor extends React.Component {
             mode: modeConfig,
             lineNumbers: true
           }}
-          editorDidMount={editor => this.codeMirrorDidMount(editor)}
-          onBeforeChange={(editor, data, changedCode) =>
+          editorDidMount={_editor => this.codeMirrorDidMount(_editor)}
+          onBeforeChange={(_editor, data, changedCode) =>
             this.codeMirrorCodeChanged(changedCode)
           }
-          onSelection={(editor, data) => this.codeMirrorCodeSelected(data)}
+          onSelection={(_editor, data) => this.codeMirrorCodeSelected(data)}
         />
       </div>
     );
@@ -221,7 +220,7 @@ class CodeEditor extends React.Component {
 CodeEditor.propTypes = {
   code: PropTypes.string.isRequired,
   lang: PropTypes.string.isRequired,
-  marks: MarkListShap.isRequired,
+  marks: MarkListShape.isRequired,
   onMarksChange: PropTypes.func.isRequired,
   onCodeChange: PropTypes.func.isRequired,
   onLangChange: PropTypes.func.isRequired

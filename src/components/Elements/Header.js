@@ -1,13 +1,14 @@
 import React from 'react';
 import UserSignInOut from './UserSignInOut';
+import { Link } from 'react-router-dom';
 import './Header.css';
 
 const Header = () => {
   return (
     <header className="navbar navbar-expand-lg navbar-light mb-5 top-nav">
-      <a className="navbar-brand" href="/">
+      <Link to="/" className="navbar-brand">
         babel.io
-      </a>
+      </Link>
       <form className="search-form mx-auto">
         {/* <input type="text" className="form-control" placeholder="search..." /> */}
       </form>

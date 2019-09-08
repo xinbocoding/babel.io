@@ -6,7 +6,7 @@ export default function snippetNewPageReducer(state = {}, action) {
       return {
         ...state,
         redirectTo: action.payload.id
-      }
+      };
     case Actions.CREATE_SNIPPET_ERROR:
       return {
         error: action.payload.error,

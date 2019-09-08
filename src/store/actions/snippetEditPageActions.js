@@ -33,23 +33,18 @@ export function loadSnippetForEditAction(id) {
   };
 }
 
-export function updateSnippetAction(id, snippet, marks, removedMarks, history) {
+export function updateSnippetAction(id, { snippet, marks, deletedMarks }, cb) {
   return dispatch => {
     snippetService
-      .update(id, snippet, marks, removedMarks)
+      .update(id, snippet, marks, deletedMarks)
       .then(() => {
         dispatch({
           type: Actions.UPDATE_SNIPPET_COMPLETE
         });
-        // history.push(`/snippets/${id}`);
+        cb();
       })
       .catch(error => {
-        dispatch({
-          type: Actions.UPDATE_SNIPPET_ERROR,
-          payload: {
-            error
-          }
-        });
+        console.log(error);
       });
   };
 }

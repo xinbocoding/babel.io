@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import CodeEditor from '../Elements/CodeEditor';
-import { SnippetShape, MarkListShap } from '../../data/shapes';
+import { MarkListShape, SnippetShape } from '../../data/shapes';
 import './SnippetForm.css';
 import './SnippetList.css';
 
@@ -59,7 +59,7 @@ class SnippetForm extends React.Component {
           <label>Note</label>
           <textarea
             className="form-control"
-            row="5"
+            rows="5"
             value={snippet.note}
             onChange={e => this.handleSnippetChange('note', e.target.value)}
           />
@@ -69,13 +69,11 @@ class SnippetForm extends React.Component {
           code={snippet.code}
           marks={marks}
           onCodeChange={v => this.handleSnippetChange('code', v)}
-          onMarksChange={(marksUpdated, deleted) =>
-            this.handleMarksChange(marksUpdated, deleted)
-          }
+          onMarksChange={(all, deleted) => this.handleMarksChange(all, deleted)}
           onLangChange={lang => this.handleSnippetChange('lang', lang)}
         />
         <div className="form-group text-center">
-          <Link className="btn" to="/s/">
+          <Link className="btn" to="/snippets/">
             Back
           </Link>
           <button
@@ -93,7 +91,7 @@ class SnippetForm extends React.Component {
 
 SnippetForm.propTypes = {
   snippet: SnippetShape,
-  marks: MarkListShap,
+  marks: MarkListShape,
   onSubmit: PropTypes.func.isRequired
 };
 

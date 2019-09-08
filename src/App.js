@@ -24,11 +24,7 @@ const App = ({ auth }) => (
       />
       <PrivateRoute exact path="/snippets" component={SnippetsIndexPage} />
       <PrivateRoute exact path="/new" component={SnippetsNewPage} />
-      <PrivateRoute
-        exact
-        path="/edit/:id"
-        component={SnippetsEditPage}
-      />
+      <PrivateRoute exact path="/edit/:id" component={SnippetsEditPage} />
       <Route path="/s/:id" component={SnippetsShowPage} />
     </Switch>
   </Router>

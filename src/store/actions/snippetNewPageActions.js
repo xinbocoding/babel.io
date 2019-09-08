@@ -7,7 +7,7 @@ export const Actions = {
   CREATE_SNIPPET_ERROR: `${PREFIX}:create-snippet-error`
 };
 
-export function createSnippetAction(snippet, marks) {
+export function createSnippetAction(snippet, marks, cb) {
   return dispatch => {
     snippetService
       .create(snippet, marks)
@@ -18,6 +18,7 @@ export function createSnippetAction(snippet, marks) {
             id: snippetId
           }
         });
+        cb(snippetId);
       })
       .catch(error => {
         dispatch({

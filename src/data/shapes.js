@@ -12,7 +12,7 @@ export const MarkShape = PropTypes.shape({
   to: MarkPosShape
 });
 
-export const MarkListShap = PropTypes.arrayOf(MarkShape);
+export const MarkListShape = PropTypes.arrayOf(MarkShape);
 
 export const SnippetShape = PropTypes.shape({
   title: PropTypes.string,

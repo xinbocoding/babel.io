@@ -1,5 +1,5 @@
 import React from 'react';
-import { Route, Redirect } from 'react-router-dom';
+import { Redirect, Route } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { AuthShape } from '../../data/shapes';
@@ -17,7 +17,7 @@ const PrivateRoute = ({ component: Component, auth, ...rest }) => {
 
 PrivateRoute.propTypes = {
   // eslint-disable-next-line react/forbid-prop-types
-  component: PropTypes.object.isRequired,
+  component: PropTypes.oneOfType([PropTypes.object, PropTypes.func]).isRequired,
   auth: AuthShape.isRequired
 };
 

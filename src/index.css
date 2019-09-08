@@ -44,6 +44,11 @@ code {
   margin-bottom: 10px;
 }
 
+.snippet-header {
+  height: 70px;
+  border-bottom: 1px solid #eee;
+}
+
 .snippet-title {
   font-size: 25px;
 }
@@ -53,10 +58,17 @@ code {
   color: #555;
 }
 
-.snippets-title {
-  font-size: 25px;
+
+.snippet-actions {
+  position: absolute;
+  bottom: 0;
 }
 
 .code-mark-highlight {
   background-color: rgb(255, 255, 0, 0.4);
+}
+
+.CodeMirror-gutters {
+  background: #fff;
+  border: none;
 }

@@ -1,16 +1,12 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { Redirect } from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
 import SnippetForm from '../Snippet/SnippetForm';
 import Header from '../Elements/Header';
 import { createSnippetAction } from '../../store/actions/snippetNewPageActions';
 
-const SnippetsNewPage = ({ createSnippet, redirectTo }) => {
-  if (redirectTo !== null) {
-    return <Redirect to={`/s/${redirectTo}`} />;
-  }
-
+const SnippetsNewPage = ({ createSnippet, history }) => {
   return (
     <React.Fragment>
       <Header />
@@ -19,7 +15,7 @@ const SnippetsNewPage = ({ createSnippet, redirectTo }) => {
           <h1 className="page-title">Create Snippet</h1>
           <SnippetForm
             onSubmit={({ snippet, marks }) => {
-              createSnippet(snippet, marks);
+              createSnippet(snippet, marks, id => history.push(`/s/${id}`));
             }}
           />
         </div>
@@ -29,12 +25,8 @@ const SnippetsNewPage = ({ createSnippet, redirectTo }) => {
 };
 
 SnippetsNewPage.propTypes = {
-  redirectTo: PropTypes.string,
-  createSnippet: PropTypes.func.isRequired
-};
-
-SnippetsNewPage.defaultProps = {
-  redirectTo: null
+  createSnippet: PropTypes.func.isRequired,
+  history: PropTypes.object.isRequired
 };
 
 const mapStateToProps = state => {
@@ -45,11 +37,13 @@ const mapStateToProps = state => {
 };
 
 const mapDispatchToProps = dispatch => ({
-  createSnippet: (snippet, marks) =>
-    dispatch(createSnippetAction(snippet, marks))
+  createSnippet: (snippet, marks, cb) =>
+    dispatch(createSnippetAction(snippet, marks, cb))
 });
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(SnippetsNewPage);
+export default withRouter(
+  connect(
+    mapStateToProps,
+    mapDispatchToProps
+  )(SnippetsNewPage)
+);

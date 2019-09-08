@@ -2,20 +2,24 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import ReactRouterPropTypes from 'react-router-prop-types';
+import { Redirect, withRouter } from 'react-router-dom';
 import SnippetForm from '../Snippet/SnippetForm';
 import Header from '../Elements/Header';
 import {
   loadSnippetForEditAction,
   updateSnippetAction
 } from '../../store/actions/snippetEditPageActions';
-import { SnippetShape, MarkListShap } from '../../data/shapes';
+import { MarkListShape, SnippetShape } from '../../data/shapes';
 import '../Snippet/SnippetForm.css';
 
 class SnippetsEditPage extends Component {
   constructor(props) {
     super(props);
     const { match } = props;
-    this.state = { id: match.params.id };
+    this.state = {
+      id: match.params.id,
+      redirect: false
+    };
   }
 
   componentDidMount() {
@@ -24,7 +28,11 @@ class SnippetsEditPage extends Component {
 
   render() {
     const { snippet, marks, updateSnippet } = this.props;
-    const { id } = this.state;
+    const { id, redirect } = this.state;
+
+    if (redirect) {
+      return <Redirect to={`/s/${id}`} />;
+    }
 
     if (snippet) {
       return (
@@ -36,12 +44,9 @@ class SnippetsEditPage extends Component {
               <SnippetForm
                 snippet={snippet}
                 marks={marks}
-                onSubmit={data => {
-                  updateSnippet(
-                    id,
-                    data.snippet,
-                    data.marks,
-                    data.deletedMarks
+                onSubmit={changeset => {
+                  updateSnippet(id, changeset, () =>
+                    this.setState({ redirect: true })
                   );
                 }}
               />
@@ -59,7 +64,7 @@ SnippetsEditPage.propTypes = {
   fetchSnippet: PropTypes.func.isRequired,
   updateSnippet: PropTypes.func.isRequired,
   snippet: SnippetShape,
-  marks: MarkListShap
+  marks: MarkListShape
 };
 
 SnippetsEditPage.defaultProps = {
@@ -77,12 +82,13 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     fetchSnippet: id => dispatch(loadSnippetForEditAction(id)),
-    updateSnippet: (id, snippet, marks, removedMarks) =>
-      dispatch(updateSnippetAction(id, snippet, marks, removedMarks))
+    updateSnippet: (id, data, cb) => dispatch(updateSnippetAction(id, data, cb))
   };
 };
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(SnippetsEditPage);
+export default withRouter(
+  connect(
+    mapStateToProps,
+    mapDispatchToProps
+  )(SnippetsEditPage)
+);

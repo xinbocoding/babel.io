@@ -14,12 +14,6 @@ export default function snippetEditPageReducer(state = {}, action) {
         snippet: null,
         marks: null
       };
-    case Actions.UPDATE_SNIPPET_ERROR:
-      return {
-        ...state,
-        snippet: null,
-        marks: null
-      };
     case Actions.LOAD_SNIPPET_ERROR:
       return {
         ...state,
