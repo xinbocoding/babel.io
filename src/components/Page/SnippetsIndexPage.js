@@ -65,7 +65,7 @@ class SnippetsIndexPage extends React.Component {
             onDelete={id => this.onSnippetDelete(id)}
           />
           <div className="container">
-            <div className="row text-center">
+            <div className="row justify-content-center text-center">
               <div className="btn-group">
                 <button
                   type="button"
