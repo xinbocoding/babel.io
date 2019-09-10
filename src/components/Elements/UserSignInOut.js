@@ -15,9 +15,9 @@ const UserSignInOut = ({ auth, signOut, signIn }) => {
         <Link to="/new" className="btn btn-primary mr-3">
           New Snippet
         </Link>
-        <span className="navbar-text">{auth.user.name}</span>
         <li className="nav-item">
-          <button type="button" className="btn" onClick={signOut}>
+          <span className="navbar-text btn-align">{auth.user.name}</span>
+          <button type="button" className="btn btn-default" onClick={signOut}>
             Sign Out
           </button>
         </li>
