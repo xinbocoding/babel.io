@@ -28,10 +28,10 @@ class SnippetsShowPage extends React.Component {
           <Header />
           <div className="container whitebox snippet">
             <div className="row snippet-header">
-              <div className="col-md-8 snippet-top">
+              <div className="col-md-8 align-self-center">
                 <h1 className="snippet-title">{snippet.title}</h1>
               </div>
-              <div className="col-md-4 align-self-center text-center">{userName}</div>
+              <div className="col-md-4 snippet-head">{userName}</div>
             </div>
             <div className="row">
               <div className="col-md-8">
@@ -39,13 +39,13 @@ class SnippetsShowPage extends React.Component {
                   <CodeViewer code={snippet.code} marks={marks} />
                 </div>
               </div>
-              <div className="col-md-4">
+              <div className="col-md-4 note-body">
                 <div className="snippet-note">{snippet.note}</div>
-                <div className="snippet-actions">
+                <section className="snippet-actions">
                   <Link className="btn" to={`/edit/${snippet.id}`}>
                     <i className="fal fa-edit" />
                   </Link>
-                </div>
+                </section>
               </div>
             </div>
           </div>

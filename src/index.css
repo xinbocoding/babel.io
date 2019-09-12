@@ -6,6 +6,12 @@ body {
   background: #f2f6f6;
 }
 
+section {
+  border-top: 1px solid #eee;
+  width: 200%;
+  margin-left: -15px;
+}
+
 .container {
   max-width: 960px;
 }
@@ -50,12 +56,17 @@ code {
 
 .snippet-title {
   font-size: 25px;
-  padding-top: 3%;
 }
 
-.snippet-top {
-  border-right: 1px solid #eee;
-  /* height: 100%; */
+.snippet-head {
+  border-left: 1px solid #eee;
+  padding: 22px 16px 16px;
+  right: 0;
+  height: 70px;
+}
+
+.note-body {
+  border-left: 1px solid #eee;
 }
 
 .snippet-note {
