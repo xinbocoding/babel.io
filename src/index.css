@@ -87,3 +87,13 @@ code {
   background: #fff;
   border: none;
 }
+
+@media (max-width: 767px) {
+  .note-body {
+    border-top: 1px solid #eee;
+  }
+  .snippet-actions {
+    position: relative;
+    bottom: 0;
+  }
+}
