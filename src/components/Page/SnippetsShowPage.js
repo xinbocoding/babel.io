@@ -28,10 +28,10 @@ class SnippetsShowPage extends React.Component {
           <Header />
           <div className="container whitebox snippet">
             <div className="row snippet-header">
-              <div className="col-md-8 align-self-center">
+              <div className="col-md-8 col-8 align-self-center">
                 <h1 className="snippet-title">{snippet.title}</h1>
               </div>
-              <div className="col-md-4 snippet-head">{userName}</div>
+              <div className="col-md-4 col-4 align-self-center snippet-head">{userName}</div>
             </div>
             <div className="row">
               <div className="col-md-8">
