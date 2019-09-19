@@ -11,15 +11,17 @@ import { AuthShape } from '../../data/shapes';
 const UserSignInOut = ({ auth, signOut, signIn }) => {
   if (auth.user) {
     return (
-      <ul className="navbar-nav">
-        <Link to="/new" className="btn btn-primary mr-3">
-          New Snippet
-        </Link>
+      <ul className="navbar-nav ml-auto">
+        <li className="nav-item">
+          <Link to="/new" className="btn btn-primary mr-3">
+            New Snippet
+          </Link>
+        </li>
         <li className="nav-item">
           <span className="navbar-text btn-align">{auth.user.name}</span>
           <button type="button" className="btn btn-default" onClick={signOut}>
             Sign Out
-          </button>
+            </button>
         </li>
       </ul>
     );

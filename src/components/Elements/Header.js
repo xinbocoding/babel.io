@@ -12,7 +12,12 @@ const Header = () => {
       <form className="search-form mx-auto">
         {/* <input type="text" className="form-control" placeholder="search..." /> */}
       </form>
-      <UserSignInOut />
+      <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive">
+        <span className="navbar-toggler-icon"></span>
+      </button>
+      <div className="collapse navbar-collapse" id="navbarResponsive">
+        <UserSignInOut />
+      </div>
     </header>
   );
 };
