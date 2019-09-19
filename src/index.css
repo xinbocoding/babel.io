@@ -88,6 +88,13 @@ code {
   border: none;
 }
 
+@media (max-width: 1000px) {
+  .navbar-nav li {
+    padding-right: 20px;
+    text-align: right;
+  }
+}
+
 @media (max-width: 767px) {
   .note-body {
     border-top: 1px solid #eee;
@@ -95,5 +102,12 @@ code {
   .snippet-actions {
     position: relative;
     bottom: 0;
+  }
+}
+
+@media(max-width: 680px) {
+  .navbar-nav li {
+    padding-right: 20px;
+    text-align: left;
   }
 }

@@ -9,7 +9,7 @@ const Header = () => {
       <Link to="/" className="navbar-brand">
         babel.io
       </Link>
-      <form className="search-form mx-auto">
+      <form className="search-form ml-auto">
         {/* <input type="text" className="form-control" placeholder="search..." /> */}
       </form>
       <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive">
