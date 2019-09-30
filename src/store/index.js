@@ -1,7 +1,7 @@
 import { applyMiddleware, createStore, compose } from 'redux';
 import thunk from 'redux-thunk';
 import rootReducer from './reducers';
-import { observeAuthAction } from './actions/authActions';
+// import { observeAuthAction } from './actions/authActions';
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
@@ -18,7 +18,7 @@ export default function configureStore(preloadedState) {
     composeEnhancers(applyMiddleware(thunk))
   );
 
-  store.dispatch(observeAuthAction());
+  // store.dispatch(observeAuthAction());
 
   return store;
 }

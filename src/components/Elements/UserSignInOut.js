@@ -7,6 +7,11 @@ import {
   userSignOutAction
 } from '../../store/actions/authActions';
 import { AuthShape } from '../../data/shapes';
+import GoogleLogin from 'react-google-login';
+
+const responseGoogle = (response) => {
+  console.error("TODO");
+}
 
 const UserSignInOut = ({ auth, signOut, signIn }) => {
   if (auth.user) {
@@ -27,13 +32,13 @@ const UserSignInOut = ({ auth, signOut, signIn }) => {
   return (
     <ul className="navbar-nav">
       <li className="nav-item">
-        <button
-          type="button"
-          className="btn btn-primary sign-in-button"
-          onClick={signIn}
-        >
-          Sign In with Github
-        </button>
+        <GoogleLogin
+          clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID}
+          buttonText="Login"
+          onSuccess={({ tokenId }) => signIn(tokenId)}
+          onFailure={responseGoogle}
+          cookiePolicy={'single_host_origin'}
+        />
       </li>
     </ul>
   );
@@ -55,7 +60,7 @@ const mapStateToProps = state => ({
 
 // need to change actions here
 const mapDispatchToProps = dispatch => ({
-  signIn: () => dispatch(userSignInAction()),
+  signIn: (token) => dispatch(userSignInAction(token)),
   signOut: () => dispatch(userSignOutAction())
 });
 

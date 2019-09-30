@@ -1,4 +1,4 @@
-import firebase from 'firebase/app';
+// import firebase from 'firebase/app';
 
 class SnippetService {
   constructor(firebaseService) {
@@ -77,7 +77,7 @@ class SnippetService {
         code,
         note,
         lang,
-        createdAt: firebase.firestore.FieldValue.serverTimestamp()
+        // createdAt: firebase.firestore.FieldValue.serverTimestamp()
       });
       marks.forEach(m => batch.set(snippetRef.collection('marks').doc(), m));
       batch
@@ -99,7 +99,7 @@ class SnippetService {
         note,
         code,
         lang,
-        updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+        // updatedAt: firebase.firestore.FieldValue.serverTimestamp()
       });
 
       removedMarks.forEach(removeId => {

@@ -1,56 +1,34 @@
-import firebase from 'firebase';
-import { firebaseService } from '../../services';
+import axios from 'axios';
 
 const PREFIX = 'global:auth';
+
 
 export const Actions = {
   SIGN_IN_USER: `${PREFIX}:sign-in-user`,
   SIGN_OUT_USER: `${PREFIX}:sign-out-user`
 };
 
-export const observeAuthAction = () => {
+export const userSignInAction = (tokenId) => {
   return dispatch => {
-    firebaseService.auth().onAuthStateChanged(result => {
-      const user = result
-        ? {
-          id: result.uid,
-          name: result.displayName
-        }
-        : null;
-      dispatch(
-        user === null
-          ? { type: Actions.SIGN_OUT_USER }
-          : { type: Actions.SIGN_IN_USER, payload: { user } }
-      );
-    });
-  };
-};
-
-const authProvider = new firebase.auth.GithubAuthProvider();
-
-export const userSignInAction = () => {
-  return dispatch => {
-    // initliaze provider
-    firebaseService
-      .auth()
-      .setPersistence(firebase.auth.Auth.Persistence.LOCAL)
-      .then(() => {
-        firebaseService
-          .auth()
-          .signInWithPopup(authProvider)
-          .then()
-          .catch(console.log); // TODO
+    axios.post('http://localhost:5000/api/login', {
+      username: 'x-token-auth',
+      password: tokenId
+    })
+      .then((response) => {
+        console.log(response);
       })
-      .catch(console.log); // TODO
+      .catch((err) => {
+        console.log(err);
+      });
   };
-};
+}
 
 export const userSignOutAction = () => {
-  return dispatch => {
-    firebaseService
-      .auth()
-      .signOut()
-      .then()
-      .catch(console.log); // TODO
-  };
+  // return dispatch => {
+  //   firebaseService
+  //     .auth()
+  //     .signOut()
+  //     .then()
+  //     .catch(console.log); // TODO
+  // };
 };
